@@ -1,5 +1,6 @@
 function Hosheader() {
     return (
-        <h1>header</h1>
+        <h2>header</h2>
+
     )
 }
