@@ -1,0 +1,42 @@
+/* Header.css */
+.header-container {
+    padding: 10px;
+    background-color: #28467A; /* 배경색 설정 */
+    height: 80px;
+}
+
+.header-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: row; /* 가로 방향으로 정렬 */
+    gap: 20px; /* 항목 간 간격 */
+    height: auto;
+    margin: 0; /* 기본 마진 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+}
+
+.header-nav-item {
+    text-align: right; /* 텍스트 가운데 정렬 */
+}
+
+.header-nav-item img {
+    width: 80px; /* 이미지 너비 조정 */
+    height: auto; /* 비율 유지 */
+    display: block;
+    margin-right: 800px;
+    margin-left: 20px;
+}
+
+.header-nav-item span {
+    display: block; /* 블록 요소로 설정하여 텍스트를 이미지 아래로 배치 */
+    margin-top: 28px; /* 텍스트와 이미지 간 간격 */
+    color: white;
+    margin-left: auto;
+    justify-content: flex-end;
+    gap: 20px;
+    
+}
+
+.header-nav-item:not(:first-child) {
+    margin-left: 40px; /* 첫 번째 항목을 제외한 나머지 항목에 왼쪽 마진 추가 */
+}
