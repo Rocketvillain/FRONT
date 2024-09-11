@@ -10,38 +10,38 @@ function Header() {
 
     return (
         <div className="header-container">
-        <ul className="nav-list">
-            <li className="nav-item">
+        <ul className="header-nav-list">
+            <li className="header-nav-item">
                 <NavLink to="/" exact>
                     <img className="mainImage" src="/images/main.png" alt="메인 이미지" />
                 </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="header-nav-item">
                 <NavLink to="/hospitalview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>병원검색</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="header-nav-item">
                 <NavLink to="/reserstatus" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>병원예약</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="header-nav-item">
                 <NavLink to="/expenses" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>평균 진료비 보기</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="header-nav-item">
                 <NavLink to="/review" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>후기보기</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="header-nav-item">
                 <NavLink to="/login" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>Login</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="header-nav-item">
                 <NavLink to="/signup" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>Signup</span>
                 </NavLink>
