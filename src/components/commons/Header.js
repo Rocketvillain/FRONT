@@ -13,7 +13,7 @@ function Header() {
         <ul className="nav-list">
             <li className="nav-item">
                 <NavLink to="/" exact>
-                    <img className="mainImage" src="/images/main.png" alt="메인 이미지" />
+                    <img className="mainImage" src="/images/logo.png" alt="메인 이미지" />
                 </NavLink>
             </li>
             <li className="nav-item">

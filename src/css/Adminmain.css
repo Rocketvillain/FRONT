@@ -1,16 +1,12 @@
-/* Header.css */
-.admin-header-container {
+/* adminmain.css */
+.adminmain-container {
     padding: 20px;
-    background-color: #E3AB1B; /* 배경색 설정 */
-    color: black;
 }
 
 .adminnav-list {
     list-style: none;
     display: flex;
-    flex-direction: row; /* 가로 방향으로 정렬 */
     gap: 20px; /* 항목 간 간격 */
-    justify-content: flex-start; /* 왼쪽 정렬 */
 }
 
 .adminnav-item {
@@ -21,15 +17,10 @@
     width: 100px; /* 이미지 크기 조정 */
     height: 100px; /* 이미지 크기 조정 */
     display: block; /* 블록 요소로 설정 */
-    margin-right: auto; /* 이미지를 왼쪽으로 붙이기 위해 오른쪽 마진 자동 설정 */
 }
 
 .adminnav-item span {
     display: block; /* 블록 요소로 설정하여 텍스트를 이미지 아래로 배치 */
     margin-top: 10px; /* 텍스트와 이미지 간 간격 */
-    color: white;
-}
-
-.adminnav-item:not(:first-child) {
-    margin-left: 40px; /* 첫 번째 항목을 제외한 나머지 항목에 왼쪽 마진 추가 */
+    
 }
