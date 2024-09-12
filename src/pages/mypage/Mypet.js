@@ -1,7 +1,7 @@
 //  마이페이지 마이 펫 페이지
-import '../../css/component/Mypage.css';
+import '../../css/component/MyPage.css';
 
-function Mypet() {
+function MyPet() {
     const pets = [
         { id: 1, name: "바둑이", type: "강아지", gender: "남", weight: 12.4, age: 6, kind: "웰시코기" },
         { id: 2, name: "나비", type: "고양이", gender: "여", weight: 3.5, age: 4, kind: "코리안숏헤어" }
@@ -31,4 +31,4 @@ function Mypet() {
     );
 }
 
-export default Mypet;
+export default MyPet;

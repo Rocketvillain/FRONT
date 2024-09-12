@@ -1,9 +1,9 @@
-import '../../css/component/Mypage.css'
+import '../../css/component/MyPage.css'
 import React, { useState } from 'react';
 
 //  마이페이지 내 정보 조회
 
-function Myinfo() {
+function MyInfo() {
 
     const [image, setImage] = useState(null);
 
@@ -15,7 +15,6 @@ function Myinfo() {
         <div className="page-content">
             <div className='myinfo'>
                 <h1>개인 정보</h1>
-                <hr />
                 <div className="info-section">
                     <label>ID</label>
                     <input name="ID" type="text" placeholder="user01" disabled />
@@ -29,11 +28,10 @@ function Myinfo() {
                     <input name="pwd" type="password" placeholder="********" />
                     <p className="info-note">*비밀번호는 반드시 특수문자와 함께 8자리 이상 입력해주세요.</p>
                 </div>
-                <hr />
                 <div className="button-container">
-                    <p>※이메일 또는 전화번호를 통해 예약 메시지를 수신할 수 있습니다.</p>
-                    <p>※정보를 수정하신 후 확인 버튼을 클릭하셔야 정보 수정이 완료됩니다.</p>
-                    <p>※회원 이미지는 선택사항입니다.</p>
+                    <p style={{color: 'red'}}>※이메일 또는 전화번호를 통해 예약 메시지를 수신할 수 있습니다.</p>
+                    <p style={{color: 'red'}}>※정보를 수정하신 후 확인 버튼을 클릭하셔야 정보 수정이 완료됩니다.</p>
+                    <p style={{color: 'blue'}}>※회원 이미지는 선택사항입니다.</p>
                     <button className='checkbutton'>확인</button>
                 </div>
                 <div className='profile-image-container'>
@@ -47,4 +45,4 @@ function Myinfo() {
     );
 }
 
-export default Myinfo;
+export default MyInfo;
