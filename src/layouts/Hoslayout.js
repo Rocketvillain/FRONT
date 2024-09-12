@@ -1,11 +1,11 @@
-import Hosheader from "../components/commons/header/Hosheader";
 import { Outlet } from "react-router-dom";
+import HosHeader from "../components/commons/header/HosHeader";
 
-function Hoslayout() {
+function HosLayout() {
 
     return(
         <>
-        <Hosheader/>
+        <HosHeader/>
         <div>
         <Outlet/>
         </div>
@@ -13,4 +13,4 @@ function Hoslayout() {
     )
 }
 
-export default Hoslayout;
+export default HosLayout;

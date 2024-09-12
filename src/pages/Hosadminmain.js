@@ -1,8 +1,8 @@
 // 병원관리자 메인 페이지
 import { NavLink } from "react-router-dom"
-import '../css/Hosadminmain.css';
+import '../css/HosAdminMain.css';
 
-function Hosadminmain() {
+function HosAdminMain() {
 
     return(
         <>
@@ -32,4 +32,4 @@ function Hosadminmain() {
     )
 }
 
-export default Hosadminmain;
+export default HosAdminMain;

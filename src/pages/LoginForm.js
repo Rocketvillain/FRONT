@@ -31,8 +31,8 @@ function LoginForm() {
 
     return (
     <form onSubmit={handleSubmit}>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="ID를 입력하세요" />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="PW를 입력하세요" />
         <button type="submit">Login</button>
         {error && <p>{error}</p>}
     </form>

@@ -1,6 +1,5 @@
 /* Header.css */
 .admin-header-container {
-    padding: 20px;
     background-color: #E3AB1B; /* 배경색 설정 */
     color: black;
 }
@@ -27,7 +26,7 @@
 .adminnav-item span {
     display: block; /* 블록 요소로 설정하여 텍스트를 이미지 아래로 배치 */
     margin-top: 10px; /* 텍스트와 이미지 간 간격 */
-    color: white;
+    /* color: white; */
 }
 
 .adminnav-item:not(:first-child) {

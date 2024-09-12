@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
-import '../../../css/Hosheader.css'
+import '../../../css/HosHeader.css'
 
-function Hosheader() {
+function HosHeader() {
     const activeStyle = {
         backgroundColor: 'white',
         color: 'black'
@@ -44,4 +44,4 @@ function Hosheader() {
     )
 }
 
-export default Hosheader;
+export default HosHeader;

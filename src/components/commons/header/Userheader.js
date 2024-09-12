@@ -1,8 +1,8 @@
 // 로그인 후 사용자 헤더
 import { NavLink } from "react-router-dom";
-import '../../../css/Userheader.css'
+import '../../../css/UserHeader.css'
 
-function Userheader() {
+function UserHeader() {
 
     const activeStyle = {
         backgroundColor: 'white',
@@ -49,4 +49,4 @@ function Userheader() {
     )
 }
 
-export default Userheader;
+export default UserHeader;

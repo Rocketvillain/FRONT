@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
+import '../../../css/AdminHeader.css';
 
-function Adminheader() {
+function AdminHeader() {
     const activeStyle = {
-        backgroundColor: 'white',
-        color: 'black'
+        // backgroundColor: 'white',
+        color: 'white'
     }
 
     return(
@@ -45,4 +46,4 @@ function Adminheader() {
     )
 }
 
-export default Adminheader;
+export default AdminHeader;

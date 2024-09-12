@@ -1,8 +1,8 @@
 // 관리자 메인 페이지
 import { NavLink } from "react-router-dom"
-import '../css/Adminmain.css';
+import '../css/AdminMain.css';
 
-function Main() {
+function AdminMain() {
 
     return(
         <>
@@ -32,4 +32,4 @@ function Main() {
     )
 }
 
-export default Main;          
+export default AdminMain;          
