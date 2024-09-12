@@ -3,6 +3,7 @@ import Layout from "./layouts/Layout";
 import Main from "./pages/Main";
 import MypageLayout from "./layouts/Mypagelayout";
 import Myinfo from "./pages/mypage/Myinfo";
+import Mypet from "./pages/mypage/Mypet";
 
 
 function App() {
@@ -19,8 +20,8 @@ function App() {
             <Route index element={<Myinfo />} />
             {/* <Route path="/reserstatus" element />
             <Route path="/clinichistory" element />
-            <Route path="/myreviews" element />
-            <Route path="/mypet" element /> */}
+            <Route path="/myreviews" element /> */}
+            <Route path="/myinfo/mypet" element={<Mypet/>} />
           </Route>
         </Routes>
       </BrowserRouter>

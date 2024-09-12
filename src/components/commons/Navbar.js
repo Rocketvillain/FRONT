@@ -18,22 +18,22 @@ function Navbar() {
                     </NavLink>
                 </li>
                 <li className="mypage-nav-item">
-                    <NavLink to="/reserstatus" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/myinfo/reserstatus" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>예약 현황</span>
                     </NavLink>
                 </li>
                 <li className="mypage-nav-item">
-                    <NavLink to="/clinichistory" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/myinfo/clinichistory" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>진료 기록</span>
                     </NavLink>
                 </li>
                 <li className="mypage-nav-item">
-                    <NavLink to="/myreviews" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/myinfo/myreviews" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>나의 후기</span>
                     </NavLink>
                 </li>
                 <li className="mypage-nav-item">
-                    <NavLink to="/mypet" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/myinfo/mypet" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>마이펫</span>
                     </NavLink>
                 </li>
