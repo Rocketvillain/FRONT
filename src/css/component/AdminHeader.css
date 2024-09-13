@@ -1,0 +1,73 @@
+/* Header.css */
+.admin-header-container {
+    padding: 10px;
+    background-color: #E3AB1B; /* 배경색 설정 */
+    color: #28467A;
+    height: 60px; /* 헤더 높이 */
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: space-between; /* 양 끝 정렬 */
+}
+
+.logo-admincontainer {
+    margin-left: 35px; /* 로고 이미지를 왼쪽에서 8px 떨어지도록 설정 */
+}
+
+.logo-adminlink {
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* 수직 정렬 */
+    align-items: center; /* 로고 이미지와 텍스트 수평 가운데 정렬 */
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+}
+
+.logo-admincontainer span {
+    color: #28467A;
+    font-size: 14px; /* 텍스트 크기 조정 */
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+.mainImage {
+    width: 80px; /* 이미지 크기 축소 */
+    height: 80px; /* 이미지 크기 축소 */
+}
+
+
+.adminnav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 50px; /* 항목 간 간격 조정 */
+    height: auto;
+    margin-top: -3px;
+    text-decoration: none;
+}
+
+.adminnav-item {
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    text-align: center;
+    padding: 15px;
+}
+
+.adminnav-item span {
+    color: #28467A;
+    font-size: 14px; /* 텍스트 크기 조정 */
+}
+
+.logout-admincontainer {
+    display: flex;
+    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    margin-right: 30px;
+}
+
+.logout-admincontainer img {
+    width: 25px; /* 로그아웃 아이콘 크기 */
+    height: 25px; /* 로그아웃 아이콘 크기 */
+    margin-right: 5px; /* 이미지와 텍스트 간 간격 */
+}
+
+.logout-admincontainer span {
+    color: #28467A;
+    font-size: 14px; /* 텍스트 크기 */
+}
