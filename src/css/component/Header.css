@@ -1,4 +1,5 @@
-.userheader-container {
+/* Header.css */
+.header-container {
     padding: 10px;
     background-color: #28467A;
     color: white;
@@ -8,18 +9,18 @@
     justify-content: space-between; /* 양 끝 정렬 */
 }
 
-.logo-container {
+.logo-h-container {
     margin-left: 35px; /* 로고 이미지를 왼쪽에서 8px 떨어지도록 설정 */
 }
 
-.logo-link {
+.logo-h-link {
     display: flex; /* Flexbox 사용 */
     flex-direction: column; /* 수직 정렬 */
     align-items: center; /* 로고 이미지와 텍스트 수평 가운데 정렬 */
     text-decoration: none; /* 링크의 기본 밑줄 제거 */
 }
 
-.logo-container span {
+.logo-h-container span {
     color: white; /* 텍스트를 하얀색으로 */
     font-size: 14px; /* 텍스트 크기 조정 */
     margin-top: -20px;
@@ -31,41 +32,50 @@
     height: 80px; /* 이미지 크기 축소 */
 }
 
-.usernav-list {
+.header-nav-list {
     list-style: none;
     display: flex;
     flex-direction: row;
     gap: 50px; /* 항목 간 간격 조정 */
     height: auto;
-    margin-top: -3px;
+    /* margin-top: -1px; */
     text-decoration: none; /* 링크의 기본 밑줄 제거 */
 }
 
-.usernav-item {
+.header-nav-item {
     display: flex; /* Flexbox 사용 */
     align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
     text-align: center;
     padding: 15px;
 }
 
-.usernav-item span {
+.header-nav-item span {
     color: white;
     font-size: 14px; /* 텍스트 크기 조정 */
 }
 
-.logout-container {
-    display: flex;
+.log-container {
+    display: flex; /* Flexbox 사용 */
     align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    justify-content: space-between; /* 로그인, 회원가입 간격 조정 */
     margin-right: 30px;
+    gap: 15px; /* 로그인/회원가입 간격 조정 */
 }
 
-.logout-container img {
+.login-container,
+.sign-container {
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+}
+
+.log-container img {
     width: 25px; /* 로그아웃 아이콘 크기 */
     height: 25px; /* 로그아웃 아이콘 크기 */
     margin-right: 5px; /* 이미지와 텍스트 간 간격 */
 }
 
-.logout-container span {
+.log-container span {
     color: white; /* 텍스트를 하얀색으로 */
     font-size: 14px; /* 텍스트 크기 */
 }

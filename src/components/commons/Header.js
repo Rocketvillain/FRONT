@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom"
-import '../css/Header.css'
+import '../../css/component/Header.css'
+
 
 function Header() {
 
@@ -16,29 +17,29 @@ function Header() {
                     <span>Healing Pets</span>
                 </NavLink>
             </div>
-        <ul className="nav-list">
-            <li className="nav-item">
+        <ul className="header-nav-list">
+            <li className="header-nav-item">
                 <NavLink to="/hospitalview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>병원검색</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
-                <NavLink to="/reserstatus" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            <li className="header-nav-item">
+                <NavLink to="/hosreser" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>병원예약</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="header-nav-item">
                 <NavLink to="/expenses" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>평균 진료비 보기</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
-                <NavLink to="/review" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            <li className="header-nav-item">
+                <NavLink to="/allreview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>후기보기</span>
                 </NavLink>
             </li>
-            <li className="nav-item">
-                <NavLink to="/review" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            <li className="header-nav-item">
+                <NavLink to="/myinfo" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>마이페이지</span>
                 </NavLink>
             </li>
@@ -56,17 +57,5 @@ function Header() {
     </div>
     )
 }
-
-{/* <div>
-<ul>
-    <li><NavLink to="/"><img src="/images/main.png"/></NavLink></li>
-    <li><NavLink to="/hospitalview" style={({isActive}) => isActive? activeStyle: undefined}>병원검색</NavLink></li>
-    <li><NavLink to="/reserstatus" style={({isActive}) => isActive? activeStyle: undefined}>병원예약</NavLink></li>
-    <li><NavLink to="/expenses" style={({isActive}) => isActive? activeStyle: undefined}>평균 진료비 보기</NavLink></li>
-    <li><NavLink to="/review" style={({isActive}) => isActive? activeStyle: undefined}>후기보기</NavLink></li>
-    <li><NavLink to="/login" style={({isActive}) => isActive? activeStyle: undefined}>Login</NavLink></li>
-    <li><NavLink to="/signup" style={({isActive}) => isActive? activeStyle: undefined}>Signup</NavLink></li>
-</ul>
-</div> */}
 
 export default Header;

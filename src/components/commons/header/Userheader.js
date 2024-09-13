@@ -1,6 +1,6 @@
 // 로그인 후 사용자 헤더
 import { NavLink } from "react-router-dom";
-import '../../../css/UserHeader.css'
+import '../../../css/component/UserHeader.css';
 
 function UserHeader() {
 
