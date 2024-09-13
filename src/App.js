@@ -26,6 +26,7 @@ function App() {
         </Route>
         <Route path="/myinfo" element={<MyPageLayout />}>
           <Route index element={<MyInfo />} />
+          <Route path="/myinfo/myinfo" element={<MyInfo />} />
           {/* <Route path="/reserstatus" element />
             <Route path="/clinichistory" element />
             <Route path="/myreviews" element /> */}
@@ -37,7 +38,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </BrowserRouter>
-    
+
   );
 }
 
