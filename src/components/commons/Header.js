@@ -4,18 +4,19 @@ import '../css/Header.css'
 function Header() {
 
     const activeStyle = {
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         color: 'black'
     }
 
     return (
         <div className="header-container">
-        <ul className="nav-list">
-            <li className="nav-item">
-                <NavLink to="/" exact>
+            <div className="logo-h-container">
+                <NavLink to="/" exact className="logo-h-link">
                     <img className="mainImage" src="/images/logo.png" alt="메인 이미지" />
+                    <span>Healing Pets</span>
                 </NavLink>
-            </li>
+            </div>
+        <ul className="nav-list">
             <li className="nav-item">
                 <NavLink to="/hospitalview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>병원검색</span>
@@ -37,16 +38,21 @@ function Header() {
                 </NavLink>
             </li>
             <li className="nav-item">
-                <NavLink to="/login" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                    <span>Login</span>
-                </NavLink>
-            </li>
-            <li className="nav-item">
-                <NavLink to="/signup" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                    <span>Signup</span>
+                <NavLink to="/review" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <span>마이페이지</span>
                 </NavLink>
             </li>
         </ul>
+        <div className="log-container">
+        <NavLink to="/login" className="login-container" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <img src="/images/Login_2.png" alt="로그인" />
+                <span>LOGIN</span>
+        </NavLink>
+        <NavLink to="/signup" className="sign-container"style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <img src="/images/signup_logout_1.png" alt="회원가입" />
+                <span>SIGNUP</span>
+        </NavLink>
+        </div>
     </div>
     )
 }

@@ -9,6 +9,7 @@ import Main from "./pages/Main";
 import Layout from "./layouts/Layout";
 import UserLayout from "./layouts/UserLayout";
 import UserMain from "./pages/UserMain";
+import Expenses from "./pages/user/Expenses";
 
 function App() {
   // const token = localStorage.getItem('token');
@@ -24,7 +25,8 @@ function App() {
         <Route  path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="" element />
-          <Route path="" element />
+          <Route path="/expenses" element={<Expenses/>} />
+
         </Route>
         {/* <Route path="/myinfo" element={<MypageLayout/>}>
           <Route index element={<Myinfo />} />
