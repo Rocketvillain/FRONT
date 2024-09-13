@@ -6,6 +6,7 @@ import Layout from "./layouts/Layout";
 import MyPageLayout from "./layouts/MyPageLayout";
 import MyInfo from "./pages/mypage/MyInfo";
 import MyPet from "./pages/mypage/MyPet";
+import Expenses from "./pages/user/Expenses";
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="" element />
-          <Route path="" element />
+          <Route path="/expenses" element={<Expenses/>} />
+
         </Route>
         <Route path="/myinfo" element={<MyPageLayout />}>
           <Route index element={<MyInfo />} />

@@ -3,17 +3,17 @@ import '../../../css/HosHeader.css'
 
 function HosHeader() {
     const activeStyle = {
-        backgroundColor: 'white',
-        color: 'black'
+        color: 'white'
     }
     return(
         <div className="hosheader-container">
+            <div className="logo-hoscontainer">
+                <NavLink to="/" exact className="logo-hoslink">
+                    <img className="mainImage" src="/images/logo.png" alt="메인 이미지" />
+                    <span>Healing Pets</span>
+                </NavLink>
+            </div>
             <ul className="hosnav-list">
-                <li className="hosnav-item">
-                    <NavLink to="/" exact>
-                        <img className="mainImage" src="/images/logo.png" alt="메인 이미지" />
-                    </NavLink>
-                </li>
                 <li className="hosnav-item">
                     <NavLink to="/hospitalview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>예약관리</span>
@@ -34,12 +34,11 @@ function HosHeader() {
                         <span>병원관리</span>
                     </NavLink>
                 </li>
-                <li className="hosnav-item">
-                    <NavLink to="/logout" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        <span>Logout</span>
-                    </NavLink>
-                </li>
             </ul>
+            <NavLink to="/logout" className="logout-hoscontainer" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <img src="/images/signup_logout_1.png" alt="로그아웃 아이콘" />
+                <span>LOGOUT</span>
+            </NavLink>
         </div>
     )
 }
