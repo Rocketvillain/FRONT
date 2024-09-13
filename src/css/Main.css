@@ -1,27 +1,42 @@
 /* Main.css */
 .main-container {
     padding: 20px;
+    text-align: center; /* 전체 텍스트 가운데 정렬 */
 }
 
 .nav-list {
     list-style: none;
     display: flex;
-    gap: 20px; /* 항목 간 간격 */
+    justify-content: center; /* 항목을 중앙에 정렬 */
+    gap: 40px; /* 항목 간 간격 */
+    padding: 0;
+    margin-top: 50px; /* 상단 여백 추가 */
 }
 
 .nav-item {
-    text-align: center; /* 텍스트 가운데 정렬 */
+    text-align: center; /* 각 아이템 텍스트 가운데 정렬 */
 }
 
 .nav-item img {
-    width: 100px; /* 이미지 크기 조정 */
-    height: 100px; /* 이미지 크기 조정 */
+    width: 150px; /* 이미지 크기 조정 */
+    height: 150px; /* 이미지 크기 조정 */
     display: block; /* 블록 요소로 설정 */
+    margin: 0 auto; /* 이미지를 가운데 정렬 */
 }
 
 .nav-item span {
     display: block; /* 블록 요소로 설정하여 텍스트를 이미지 아래로 배치 */
     margin-top: 10px; /* 텍스트와 이미지 간 간격 */
-    color: black;
-    
+    color: white;
+    font-size: 18px; /* 텍스트 크기 조정 */
+    font-weight: bold; /* 텍스트 굵게 설정 */
+}
+
+.footer-container {
+    background-color: #28467A; /* 헤더와 동일한 색상 */
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 50px; /* 상단과의 간격 */
 }
