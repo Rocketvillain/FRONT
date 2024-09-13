@@ -22,5 +22,6 @@
 .nav-item span {
     display: block; /* 블록 요소로 설정하여 텍스트를 이미지 아래로 배치 */
     margin-top: 10px; /* 텍스트와 이미지 간 간격 */
+    color: black;
     
 }
