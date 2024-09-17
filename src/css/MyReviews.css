@@ -1,0 +1,139 @@
+
+.reviews-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 20px;
+}
+
+
+.reviews-table th {
+    background-color: #E3AB1B;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 5px solid white;
+    text-align: center;
+}
+
+.reviews-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.view-btn, .review-delete-btn {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 4px;
+}
+
+.view-btn {
+    background-color: #43ABAE;
+}
+
+.review-delete-btn {
+    background-color: #fc5c65;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.pagination .active {
+    background-color: #45aaf2;
+    color: white;
+}
+
+/* 모달 CSS */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* 검은 배경 제거 */
+    
+
+}
+
+.modal-content {
+    background-color: #E3AB1B;
+    padding: 20px;
+    padding-top: 50px; /* 모달 상단의 여유 공간 추가 */
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.modal-content h2 {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white; /* 글씨를 흰색으로 설정 */
+    padding: 10px;
+    font-size: 20px;
+}
+
+.modal-buttons {
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.save-btn {
+    background-color: #43ABAE;
+    color: white;
+}
+
+.close-btn {
+    background-color: #fc5c65;
+    color: white;
+}
+
+.confirm-btn {
+    background-color: #43ABAE;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 4px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-size: 16px;
+    box-sizing: border-box;
+
+}

@@ -237,18 +237,29 @@ body {
 }
 
 /* 수정 버튼 스타일 */
-.update-btn, .delete-btn {
-    background-color: #43ABAE;
-    color: white;
+.update-btn, .pet-delete-btn {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+    min-width: 100px; /* 최소 너비 설정 */
+    height: 40px; /* 높이를 고정 */
+    line-height: 20px; /* 텍스트의 세로 정렬 */
+}
+
+.update-btn {
+    background-color: #43ABAE;
+    color: white;
 }
 
 /* 삭제 버튼의 색상 */
-.delete-btn {
+.pet-delete-btn {
     background-color: #f15f5f;
+    color: white;
+    position: relative; /* 상대 위치 지정 */
 }
 
 /* 버튼 호버 시 색상 변경 */

@@ -184,7 +184,7 @@ function MyPet() {
                             <button className="update-btn" onClick={() => handleEditToggle(pet.id)}>
                                 {editMode === pet.id ? '저장' : '수정'}
                             </button>
-                            <button className="delete-btn" onClick={() => handleDeletePet(pet.id)}>삭제</button>
+                            <button className="pet-delete-btn" onClick={() => handleDeletePet(pet.id)}>삭제</button>
                         </div>
                     </div>
                 </div>

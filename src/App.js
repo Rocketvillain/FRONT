@@ -7,6 +7,9 @@ import MyPageLayout from "./layouts/MyPageLayout";
 import MyInfo from "./pages/mypage/MyInfo";
 import MyPet from "./pages/mypage/MyPet";
 import Expenses from "./pages/user/Expenses";
+import ReserStatus from "./pages/mypage/ReserStatus";
+import MyReviews from "./pages/mypage/MyReviews";
+import ClinicHistory from "./pages/mypage/ClinicHistory";
 
 
 function App() {
@@ -29,9 +32,9 @@ function App() {
         <Route path="/myinfo" element={<MyPageLayout />}>
           <Route index element={<MyInfo />} />
           <Route path="/myinfo/myinfo" element={<MyInfo />} />
-          {/* <Route path="/reserstatus" element />
-            <Route path="/clinichistory" element />
-            <Route path="/myreviews" element /> */}
+          <Route path="/myinfo/reserstatus" element={<ReserStatus/>} />
+            <Route path="/myinfo/clinichistory" element={<ClinicHistory/>} />
+            <Route path="/myinfo/myreviews" element={<MyReviews/>} />
           <Route path="/myinfo/mypet" element={<MyPet />} />
         </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
