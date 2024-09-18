@@ -7,6 +7,7 @@ import MyPageLayout from "./layouts/MyPageLayout";
 import MyInfo from "./pages/mypage/MyInfo";
 import MyPet from "./pages/mypage/MyPet";
 import Expenses from "./pages/user/Expenses";
+import HospitalView from "./pages/hospital/HospitalView";
 
 
 function App() {
@@ -24,8 +25,12 @@ function App() {
           <Route index element={<Main />} />
           <Route path="" element />
           <Route path="/expenses" element={<Expenses/>} />
-
+          <Route path="/hospitalview" element={<HospitalView />} />
+          <Route path="/hospital/detail/:hospitalId" element={<HospitalDetail />} /> {/* 병원 상세 페이지 라우트 */}
+          <Route path="/reservation/treatment/:hospitalId" element={<TreatmentReservation />} /> {/* 진료 예약 페이지 라우트 */}
+          <Route path="/reservation/grooming/:hospitalId" element={<GroomingReservation />} /> {/* 미용 예약 페이지 라우트 */}
         </Route>
+        
         <Route path="/myinfo" element={<MyPageLayout />}>
           <Route index element={<MyInfo />} />
           <Route path="/myinfo/myinfo" element={<MyInfo />} />
@@ -34,11 +39,14 @@ function App() {
             <Route path="/myreviews" element /> */}
           <Route path="/myinfo/mypet" element={<MyPet />} />
         </Route>
+
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}
         {role === 'user' && <Route path="/" element={<UserMain />} />}
         <Route path="*" element={<Navigate to="/" />} /> */}
+        
       </Routes>
+      
     </BrowserRouter>
 
   );
