@@ -22,7 +22,7 @@ function Navbar() {
                 </li>
                 <li className="mypage-nav-item">
                     <NavLink
-                        to=" /myinfo/reserstatus"
+                        to="/myinfo/reserstatus"
                         className={({ isActive }) => (isActive ? 'active' : '')}
                     >
                         <span>예약 현황</span>
