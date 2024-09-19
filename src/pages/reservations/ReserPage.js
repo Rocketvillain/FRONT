@@ -1,9 +1,10 @@
+// 진료/수술 예약 페이지
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import "../../css/BeautyReserPage.css"; // CSS 파일 추가
+import "../../css/ReserPage.css"; // CSS 파일 추가
 
-function BeautyReserPage() {
+function ReserPage() {
     const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜 상태
     const [selectedTime, setSelectedTime] = useState(null); // 선택된 시간 상태
     const [availableTimes, setAvailableTimes] = useState([]); // 선택된 날짜에 예약 가능한 시간대
@@ -12,7 +13,7 @@ function BeautyReserPage() {
     const handleDateChange = (date) => {
         setSelectedDate(date);
         // 날짜에 따라 가능한 시간대를 업데이트하는 예시 (여기서는 임의 시간대를 넣음)
-        setAvailableTimes(['10:00', '11:00', '14:00', '16:00']);
+        setAvailableTimes(['10:00', '11:00', '12:00', '14:00', '16:00', '19:00']);
     };
 
     const handleTimeClick = (time) => {
@@ -24,8 +25,8 @@ function BeautyReserPage() {
     };
 
     return (
-        <div className="beauty-reser-container">
-            <h1 className="page-title">🎀미용 예약🎀</h1>
+        <div className="range-reser-container">
+            <h1 className="page-title">🩺진료 및 수술 예약🩺</h1>
 
             {/* 이용 약관 동의 섹션 (맨 위로 이동) */}
             <div className="terms-section">
@@ -34,12 +35,12 @@ function BeautyReserPage() {
                     본 서비스를 이용하기 위해 아래 약관에 동의해 주셔야 합니다. 예약 취소는 예약 하루 전까지 가능합니다.
                 </p>
                 <p>
-                    1. 전영병 등의 우려로 인해 광견병 예방접종과 기본5종백신 접종 및 항체검사 완료 또한 입양한 날부터 3주, 생후 3개월 이상, 병원 건강검진을 1회 이상 마친 후 미용 가능합니다.
-                    <br/>
-                    2. 사람에게 공격성이 강한 반려견/반려묘의 경우 아이와 미용사의 안전을 위해 미용 거부 또는 중단될 수 있습니다. (미용사 상해 시 배상청구. 미용보다 교육 & 안전이 우선입니다.)
-                    <br/>
-                    3. 노령견 및 지병이 있거나 수술 후(슬개골 수술 포함) 불편한 경우는 미리 말씀해주셔야 하며, 아이가 협조하지 않으면 미용이 중단될 수 있습니다. 
-                    <br/>미용이 진행되더라도 상황에 따라 깔끔한 미용은 불가능한 점 인지 바랍니다. (미용비 환불 불가)
+                    1. . 본인은 진료 및 백신접종 도중에 불가항력적으로 합병증이 발생하거나, 동물의 특이체질로 인하여 우발적인 사고가 일어날 수 있다는 것을 사전에 설명을 들었고,
+                    <br/>상기 진료를 시행하는데 동의하며, 본 동의에 따른 의학적 처리를 담당 수의사 판단에 위임할 것을 서면으로 동의합니다.
+                    <br/>2. 반려견은 동물등록된 경우에 지원 가능 하며, 미등록견은 등록 후 지원 가능합니다.
+                    <br/>「수의사법』 제13조의2 및 같은 법 시행규칙 제13조의3에 따라 위와 같이 수의사로부터 수술등중대진료에 관한 설명을 들었으며,
+                    <br/>수술등 중대진료 및 그 전후에 발생할 수 있는 어떤 일에 대해서도 일체의 민형사상 이의를 제기하지 않을 것을 서약하며,
+                    <br/>수술등 중대진료와 관련한 수의학적 처리를 담당 수의사에게 위임할 것을 서면으로 동의합니다.
                 </p>
                 <div className="form-group">
                     <label>
@@ -124,22 +125,13 @@ function BeautyReserPage() {
                     <div className="form-group">
                         {/* 체크박스 그룹 */}
                         <div className="form-group-check">
-                            <label>미용 서비스 선택</label>
+                            <label>유형 선택</label>
                             <div className="checkbox-group">
                                 <label>
-                                    <input type="checkbox" name="service" value="목욕" disabled={!termsAccepted} /> 목욕
+                                    <input type="checkbox" name="service" value="진료" disabled={!termsAccepted} /> 진료
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="service" value="염색" disabled={!termsAccepted} /> 염색
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="service" value="전체미용" disabled={!termsAccepted} /> 전체미용(+목욕)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="service" value="부분미용" disabled={!termsAccepted} /> 부분미용
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="service" value="위생미용" disabled={!termsAccepted} /> 위생미용
+                                    <input type="checkbox" name="service" value="수술" disabled={!termsAccepted} /> 수술
                                 </label>
                             </div>
                         </div>
@@ -155,4 +147,4 @@ function BeautyReserPage() {
     );
 }
 
-export default BeautyReserPage;
+export default ReserPage;
