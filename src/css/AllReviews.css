@@ -13,6 +13,7 @@
     padding: 20px;
     border-radius: 8px;
     width: 100%; /* 병원 섹션의 너비를 100%로 설정 */
+    text-align: center;
 }
 
 /* 리뷰 카드들을 그리드로 배치하는 컨테이너 */
