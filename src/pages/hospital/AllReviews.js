@@ -53,7 +53,7 @@ function AllReviews() {
                         {hospital.reviews.map((review, reviewIndex) => (
                             <div key={reviewIndex} className="review-card">
                                 <div className="hospital-info">
-                                    <p>사용자 ID: {review.userId}</p>
+                                    <p>ID: {review.userId}</p>
                                     <div className="dates">
                                         <p>생성일: {review.createdAt}</p>
                                         <p>수정일: {review.updatedAt}</p>
