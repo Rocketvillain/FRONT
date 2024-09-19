@@ -14,6 +14,8 @@ import { useState } from "react";
 import AllReviews from "./pages/hospital/AllReviews";
 import UserLayout from "./layouts/UserLayout";
 import Login from "./pages/login/Login";
+import FindID from "./pages/login/FindID";
+import ChangePWD from "./pages/login/ChangePWD";
 
 
 function App() {
@@ -45,6 +47,8 @@ const addReview = (newReview) => {
           <Route path="" element />
           <Route path="/expenses" element={<Expenses />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/findID" element={<FindID />} />
+          <Route path="/changePWD" element={<ChangePWD />} />
         </Route>
 
         <Route path="/myinfo" element={<MyPageLayout />}>

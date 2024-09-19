@@ -90,3 +90,37 @@
 
     color: #FFFFFF;
 }
+
+#find-ID {
+    position: absolute;
+    left: 11.89%;
+    right: 79.3%;
+    top: 72.49%;
+    bottom: 22.26%;
+
+    font-family: 'Poor Story';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #28467A;
+}
+
+#change-PWD {
+    position: absolute;
+    left: 21.07%;
+    right: 60%;
+    top: 72.49%;
+    bottom: 22.26%;
+
+    font-family: 'Poor Story';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #28467A;
+}

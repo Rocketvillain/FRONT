@@ -2,6 +2,7 @@ import '../../css/Login.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { callLoginAPI } from '../../api/UserAPICalls';
+import { NavLink } from 'react-router-dom';
 
 function Login() {
 
@@ -42,8 +43,12 @@ function Login() {
             <input type="text" name="id" id='login-id' value={ loginInfo.id } onChange={ onChangeHandler } placeholder="ID" /> &nbsp;&nbsp;&nbsp;
             <input type="password" name="password" id='login-pwd' value={ loginInfo.password } onChange={ onChangeHandler } placeholder="PWD" />
                 <button id='login-button' onClick={onClickHandler}>로그인</button>
-                <span id='find-ID'>ID 찾기</span>
-                <span id='change-PWD'>비밀번호 변경</span>
+                <NavLink to="/findID">
+                    <span id='find-ID'>ID 찾기</span>
+                </NavLink>
+                <NavLink to="/changePWD">
+                    <span id='change-PWD'>비밀번호 변경</span>
+                </NavLink>
         </div>
         </>
     )
