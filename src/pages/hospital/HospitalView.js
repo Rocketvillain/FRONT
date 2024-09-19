@@ -1,3 +1,4 @@
+// 병원 조회
 import React from 'react';
 import UserHeader from '../../components/commons/header/UserHeader';
 import '../../css/HospitalList.css'

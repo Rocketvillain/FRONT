@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 import React from 'react';
 // import LoginForm from "./pages/LoginForm";
 import Main from "./pages/Main";
@@ -10,8 +11,11 @@ import Expenses from "./pages/user/Expenses";
 import ReserStatus from "./pages/mypage/ReserStatus";
 import MyReviews from "./pages/mypage/MyReviews";
 import ClinicHistory from "./pages/mypage/ClinicHistory";
-import { useState } from "react";
 import HospitalView from "./pages/hospital/HospitalView";
+import ReserPage from "./pages/reservations/ReserPage";
+import BeautyReserPage from "./pages/reservations/BeautyReserPage";
+import HosDetail from "./pages/hospital/HosDetails";
+import HosSearch from "./pages/hospital/HosSearch";
 
 
 function App() {
@@ -32,9 +36,6 @@ const addReview = (newReview) => {
     setReviews((prevReviews) => [...prevReviews, newReview]); // 새 리뷰를 기존 리뷰에 추가
 };
 
-  
-
-
   return (
     <BrowserRouter>
       <Routes>
@@ -43,9 +44,10 @@ const addReview = (newReview) => {
           <Route path="" element />
           <Route path="/expenses" element={<Expenses/>} />
           <Route path="/hospitalview" element={<HospitalView />} />
-          <Route path="/hospital/detail/:hospitalId" element={<HospitalDetail />} /> {/* 병원 상세 페이지 라우트 */}
+          <Route path="/hosdetail/:hosId" element={<HosDetail />} /> {/* 병원 상세 페이지 라우트 */}
           <Route path="/reservation/reserpage/:hospitalId" element={<ReserPage />} /> {/* 진료 예약 페이지 라우트 */}
           <Route path="/reservation/beautyreserpage/:hospitalId" element={<BeautyReserPage />} /> {/* 미용 예약 페이지 라우트 */}
+          <Route path="/hossearch" element={<HosSearch />} /> 
         </Route>
         
         <Route path="/myinfo" element={<MyPageLayout />}>
