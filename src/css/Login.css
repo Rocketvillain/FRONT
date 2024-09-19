@@ -1,0 +1,92 @@
+/* Login.css  */
+
+.login-wrap {
+    position: absolute;
+    width: 1200px;
+    height: 600px;
+    left: 200px;
+    top: 200px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 10px solid #28467A;
+}
+
+#HealingPets {
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    top: 10.05%;
+    bottom: 78.21%;
+
+    font-family: 'Single Day';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 65px;
+    text-align: center;
+
+    color: #000000;
+}
+
+
+#login-id {
+    box-sizing: border-box;
+    position: absolute;
+
+    left: 11.89%;
+    right: 35.46%;
+    top: 30.91%;
+    bottom: 54.4%;
+
+    background: #FFFFFF;
+    border: 5px solid #28467A;
+
+    font-family: 'Do Hyeon';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 65px;
+    text-align: left;
+}
+
+#login-pwd {
+    box-sizing: border-box;
+    position: absolute;
+
+    left: 11.89%;
+    right: 35.46%;
+    top: 54.71%;
+    bottom: 30.6%;
+
+    background: #FFFFFF;
+    border: 5px solid #28467A;
+
+    font-family: 'Do Hyeon';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 65px;
+    text-align: left;
+}
+
+#login-button {
+    box-sizing: border-box;
+    position: absolute;
+
+    left: 70.78%;
+    right: 11.23%;
+    top: 39.72%;
+    bottom: 39.41%;
+
+    background: #E3AB1B;
+    border: 5px solid #28467A;
+
+    font-family: 'Poor Story';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 60px;
+    text-align: center;
+
+    color: #FFFFFF;
+}

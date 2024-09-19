@@ -11,6 +11,7 @@ import ReserStatus from "./pages/mypage/ReserStatus";
 import MyReviews from "./pages/mypage/MyReviews";
 import ClinicHistory from "./pages/mypage/ClinicHistory";
 import { useState } from "react";
+import Login from "./pages/login/Login";
 
 
 function App() {
@@ -40,9 +41,10 @@ const addReview = (newReview) => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="" element />
-          <Route path="/expenses" element={<Expenses/>} />
-
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/login" element={<Login />} />
         </Route>
+
         <Route path="/myinfo" element={<MyPageLayout />}>
           <Route index element={<MyInfo />} />
           <Route path="/myinfo/myinfo" element={<MyInfo />} />
