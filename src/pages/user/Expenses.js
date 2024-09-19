@@ -5,7 +5,6 @@ import '../../css/Expenses.css';
 function Expenses() {
     return (
         <>
-            <UserHeader />
             <div className="expenses-container">
                 <h1>강남 동물병원 평균 진료비 보기</h1>
                 

@@ -34,7 +34,7 @@ function Header() {
                 </NavLink>
             </li>
             <li className="header-nav-item">
-                <NavLink to="/allreview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <NavLink to="/allreviews" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>후기보기</span>
                 </NavLink>
             </li>
