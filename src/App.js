@@ -15,9 +15,9 @@ import AllReviews from "./pages/hospital/AllReviews";
 import UserLayout from "./layouts/UserLayout";
 import BeautyReserPage from "./pages/reservations/BeautyReserPage";
 import ReserPage from "./pages/reservations/ReserPage";
-import Login from "./pages/login/Login";
-import FindID from "./pages/login/FindID";
-import ChangePWD from "./pages/login/ChangePWD";
+import Login from "./pages/user/Login";
+import FindID from "./pages/user/FindID";
+import ChangePWD from "./pages/user/ChangePWD";
 
 
 function App() {
