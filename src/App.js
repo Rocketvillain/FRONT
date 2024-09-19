@@ -13,6 +13,7 @@ import ClinicHistory from "./pages/mypage/ClinicHistory";
 import { useState } from "react";
 import AllReviews from "./pages/hospital/AllReviews";
 import UserLayout from "./layouts/UserLayout";
+import BeautyReserPage from "./pages/reservations/BeautyReserPage";
 
 
 function App() {
@@ -59,6 +60,9 @@ const addReview = (newReview) => {
         </Route>
         <Route path="/expenses" element={<UserLayout/>}>
           <Route index element={<Expenses/>}/>
+        </Route>
+        <Route path="/beautyreserpage" element={<UserLayout/>}>
+          <Route index element={<BeautyReserPage/>}/>
         </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}

@@ -25,6 +25,12 @@ function Main() {
                         <span>진료비 확인하기</span>
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink to="/beautyreserpage">
+                        <img src="/images/main3.png" alt="미용 예약" />
+                        <span>미용 예약</span>
+                    </NavLink>
+                </li>
             </ul>
         </div>
         <div className="footer-container">
