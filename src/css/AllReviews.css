@@ -1,0 +1,65 @@
+/* 전체 병원 리스트를 감싸는 컨테이너 */
+.hospitals-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* 병원 간의 간격 */
+    padding: 20px;
+    width: 100%; /* 병원 리스트가 전체 너비를 차지하도록 설정 */
+}
+
+/* 병원 섹션을 나누는 스타일 */
+.hospital-section {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%; /* 병원 섹션의 너비를 100%로 설정 */
+}
+
+/* 리뷰 카드들을 그리드로 배치하는 컨테이너 */
+.reviews-container {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 최소 너비 250px로 칸 자동 조정 */
+    gap: 16px; /* 카드 간 간격 */
+    margin-top: 16px;
+    width: 100%; /* 그리드 컨테이너가 전체 너비를 차지하도록 설정 */
+}
+
+/* 개별 리뷰 카드의 스타일 */
+.review-card {
+    background: #e6acc3;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 카드 내부의 균형 잡힌 배치 */
+    min-height: 200px; /* 카드의 최소 높이를 설정해 동일한 높이 유지 */
+    max-width: 100%; /* 각 카드가 그리드 칸에 맞게 너비가 조정되도록 설정 */
+    color: black;
+}
+
+/* 병원 정보와 리뷰 날짜 관련 스타일 */
+.hospital-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.dates {
+    margin-bottom: 10px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.rating span {
+    margin-right: 8px;
+}
+
+/* 리뷰 내용 스타일 */
+.review-content {
+    margin-top: 12px;
+}
