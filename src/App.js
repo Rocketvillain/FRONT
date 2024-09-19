@@ -14,6 +14,7 @@ import { useState } from "react";
 import AllReviews from "./pages/hospital/AllReviews";
 import UserLayout from "./layouts/UserLayout";
 import BeautyReserPage from "./pages/reservations/BeautyReserPage";
+import ReserPage from "./pages/reservations/ReserPage";
 
 
 function App() {
@@ -63,6 +64,9 @@ const addReview = (newReview) => {
         </Route>
         <Route path="/beautyreserpage" element={<UserLayout/>}>
           <Route index element={<BeautyReserPage/>}/>
+        </Route>
+        <Route path="/reserpage" element={<UserLayout/>}>
+          <Route index element={<ReserPage/>}/>
         </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}

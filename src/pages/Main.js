@@ -31,6 +31,12 @@ function Main() {
                         <span>미용 예약</span>
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink to="/reserpage">
+                        <img src="/images/main2.png" alt="진료 및 수술 예약" />
+                        <span>진료 및 수술 예약</span>
+                    </NavLink>
+                </li>
             </ul>
         </div>
         <div className="footer-container">
