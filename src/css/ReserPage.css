@@ -118,17 +118,20 @@
 /* 시간 선택 섹션 */
 .time-selection {
     text-align: center;
+    max-width: 800px; /* 부모 컨테이너의 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
 }
 
 .time-buttons {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: center; /* 버튼을 중앙으로 정렬 */
+    flex-wrap: wrap; /* 버튼들이 화면에 맞게 줄바꿈 */
+    gap: 10px; /* 버튼들 간의 간격을 줄이기 위한 속성 */
 }
 
 .time-button {
     padding: 10px 20px;
-    margin: 5px;
+    margin: 0; /* 기존 margin을 없애기 */
     border: 2px solid #888;
     background-color: white;
     cursor: pointer;
@@ -209,5 +212,7 @@ textarea {
 .terms-section {
     border: 5px solid #28467A;
     padding-left: 20px;
+    width: 1300px;
+    transform: translate(85px);
 }
 
