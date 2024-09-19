@@ -11,6 +11,8 @@ import ReserStatus from "./pages/mypage/ReserStatus";
 import MyReviews from "./pages/mypage/MyReviews";
 import ClinicHistory from "./pages/mypage/ClinicHistory";
 import { useState } from "react";
+import AllReviews from "./pages/hospital/AllReviews";
+import UserLayout from "./layouts/UserLayout";
 import Login from "./pages/login/Login";
 
 
@@ -49,9 +51,16 @@ const addReview = (newReview) => {
           <Route index element={<MyInfo />} />
           <Route path="/myinfo/myinfo" element={<MyInfo />} />
           <Route path="/myinfo/reserstatus" element={<ReserStatus/>} />
-            <Route path="/myinfo/clinichistory" element={<ClinicHistory addReview={addReview} reviews={reviews}/>} />
-            <Route path="/myinfo/myreviews" element={<MyReviews reviews={reviews}/>} />
+          <Route path="/myinfo/clinichistory" element={<ClinicHistory addReview={addReview} reviews={reviews}/>} />
+          <Route path="/myinfo/myreviews" element={<MyReviews reviews={reviews}/>} />
           <Route path="/myinfo/mypet" element={<MyPet />} />
+        </Route>
+
+        <Route path="/allreviews" element={<UserLayout/>}>
+          <Route index element={<AllReviews/>}/>
+        </Route>
+        <Route path="/expenses" element={<UserLayout/>}>
+          <Route index element={<Expenses/>}/>
         </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}

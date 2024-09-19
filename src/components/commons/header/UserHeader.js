@@ -24,12 +24,12 @@ function UserHeader() {
                     </NavLink>
                 </li>
                 <li className="usernav-item">
-                    <NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : '')}>
+                    <NavLink to="/expenses" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <span>평균 진료비 보기</span>
                     </NavLink>
                 </li>
                 <li className="usernav-item">
-                    <NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : '')}>
+                    <NavLink to="/allreviews" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <span>후기보기</span>
                     </NavLink>
                 </li>
