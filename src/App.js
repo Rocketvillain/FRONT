@@ -15,7 +15,7 @@ import HospitalView from "./pages/hospital/HospitalView";
 import ReserPage from "./pages/reservations/ReserPage";
 import BeautyReserPage from "./pages/reservations/BeautyReserPage";
 import HosDetail from "./pages/hospital/HosDetails";
-import HosSearch from "./pages/hospital/HosSearch";
+import HosReser from "./pages/hospital/HosReser";
 
 
 function App() {
@@ -47,7 +47,7 @@ const addReview = (newReview) => {
           <Route path="/hosdetail/:hosId" element={<HosDetail />} /> {/* 병원 상세 페이지 라우트 */}
           <Route path="/reservation/reserpage/:hospitalId" element={<ReserPage />} /> {/* 진료 예약 페이지 라우트 */}
           <Route path="/reservation/beautyreserpage/:hospitalId" element={<BeautyReserPage />} /> {/* 미용 예약 페이지 라우트 */}
-          <Route path="/hossearch" element={<HosSearch />} /> 
+          <Route path="/hosreser" element={<HosReser />} /> 
         </Route>
         
         <Route path="/myinfo" element={<MyPageLayout />}>

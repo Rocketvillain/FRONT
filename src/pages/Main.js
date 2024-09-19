@@ -14,7 +14,7 @@ function Main() {
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink to="/reserstatus">
+                    <NavLink to="/hosreser">
                         <img src="/images/main2.png" alt="병원 예약하기" />
                         <span>병원 예약하기</span>
                     </NavLink>
