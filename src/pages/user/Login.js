@@ -54,24 +54,45 @@ function Login() {
     }
     
     return (
-        <>
         <div className="login-wrap">
             <span id='HealingPets'>Healing Pets🍃</span>
-            <input type="text" name="id" id='loginForm1' value={ loginInfo.id } onChange={ onChangeHandler } placeholder="ID" /> &nbsp;&nbsp;&nbsp;
-            <input type="password" name="password" id='loginForm2' value={ loginInfo.password } onChange={ onChangeHandler } placeholder="PWD" />
+
+            {/* 입력 필드와 로그인 버튼을 감싸는 form-group */}
+            <div className="form-group">
+                <input
+                    type="text"
+                    name="id"
+                    id='loginForm1'
+                    value={loginInfo.id}
+                    onChange={onChangeHandler}
+                    placeholder="ID"
+                />
+                <input
+                    type="password"
+                    name="password"
+                    id='loginForm2'
+                    value={loginInfo.password}
+                    onChange={onChangeHandler}
+                    placeholder="PWD"
+                />
             <button id='login-button' onClick={onClickHandler}>로그인</button>
-            <NavLink to="/findID">
-                <span id='find-ID'>ID 찾기</span>
-            </NavLink>
-            <NavLink to="/changePWD">
-                <span id='change-PWD'>비밀번호 변경</span>
-            </NavLink>
+            </div>
+
+            {/* 링크를 감싸는 link-group */}
+            <div className="link-group">
+                <NavLink to="/findID">
+                    <span id='find-ID'>ID 찾기</span>
+                </NavLink>
+                <NavLink to="/changePWD">
+                    <span id='change-PWD'>비밀번호 변경</span>
+                </NavLink>
+            </div>
+            
             {showAlert && (
                 <AlertMessage1/>
             )}
         </div>
-        </>
-    )
+    );
 }
 
 export default Login;
