@@ -22,6 +22,7 @@ import BeautyReserPage from "./pages/reservations/BeautyReserPage";
 import HosDetails from "./pages/hospital/HosDetails";
 import HosReser from "./pages/hospital/HosReser";
 import Signup from "./pages/user/Signup";
+import UserLayout2 from "./layouts/UserLayout2";
 
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
         <Route path="/allreviews" element={<UserLayout/>}>
           <Route index element={<AllReviews/>}/>
         </Route>
+
         <Route path="/expenses" element={<UserLayout/>}>
           <Route index element={<Expenses/>}/>
         </Route>
@@ -85,7 +87,7 @@ function App() {
         <Route path="/reserpage" element={<UserLayout/>}>
           <Route index element={<ReserPage/>}/>
         </Route>
-        <Route path="/hosreser" element={<UserLayout />}>
+        <Route path="/hosreser" element={<UserLayout2 />}>
           <Route index element={<HosReser/>}/>
         </Route>
 

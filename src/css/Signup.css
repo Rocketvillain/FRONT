@@ -1,8 +1,8 @@
 /* 공통 스타일 */
 .signup-container {
-  width: 50%;
+  width: 80%;
   align-items: center;
-  margin: 50px auto;
+  margin: 20px auto;
   padding: 20px;
   border: 5px solid #28467a;
   background-color: #fff;
@@ -169,7 +169,7 @@
 /* 회원가입 버튼 */
 .signup-user-btn {
   margin-left:  20.5em;
-  margin-top: 540px;
+  margin-top: 500px;
   padding: 15px 0;
   font-size: 18px;
   color: white;
