@@ -18,6 +18,7 @@ import ReserPage from "./pages/reservations/ReserPage";
 import Login from "./pages/user/Login";
 import FindID from "./pages/user/FindID";
 import ChangePWD from "./pages/user/ChangePWD";
+import SignupUser from "./pages/user/SignupUser";
 
 
 function App() {
@@ -51,6 +52,7 @@ const addReview = (newReview) => {
           <Route path="/login" element={<Login />} />
           <Route path="/findID" element={<FindID />} />
           <Route path="/changePWD" element={<ChangePWD />} />
+          <Route path="/signupuser" element={<SignupUser/>}/>
         </Route>
 
         <Route path="/myinfo" element={<MyPageLayout />}>
