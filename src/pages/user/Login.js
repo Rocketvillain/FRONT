@@ -14,8 +14,8 @@ function Login() {
     /* input 태그 입력 값 state 관리 */
     const [loginInfo, setLoginInfo] = useState(
         {
-            id : '',
-            password : ''
+            userId : '',
+            userPwd : ''
         }
     );
 
@@ -35,16 +35,16 @@ function Login() {
 
     /* 로그인 버튼 클릭 시 동작 */
     const onClickHandler = () => {
-        const { id, password } = loginInfo;
+        const { userId, userPwd } = loginInfo;
 
         // 입력값 유효성 검사
-        if (!id || !password) {
+        if (!userId || !userPwd) {
             setShowAlert(true); // 경고 메시지 표시
             return;
         }
 
         /* loginInfo에 대한 유효성 검사 후 호출 */
-        // dispatch(callLoginAPI(loginInfo));
+        dispatch(callLoginAPI(loginInfo));
 
     }
 
@@ -61,17 +61,17 @@ function Login() {
             <div className="form-group">
                 <input
                     type="text"
-                    name="id"
+                    name="userId"
                     id='loginForm1'
-                    value={loginInfo.id}
+                    value={loginInfo.userId}
                     onChange={onChangeHandler}
                     placeholder="ID"
                 />
                 <input
                     type="password"
-                    name="password"
+                    name="userPwd"
                     id='loginForm2'
-                    value={loginInfo.password}
+                    value={loginInfo.userPwd}
                     onChange={onChangeHandler}
                     placeholder="PWD"
                 />
@@ -80,14 +80,14 @@ function Login() {
 
             {/* 링크를 감싸는 link-group */}
             <div className="link-group">
-                <NavLink to="/findID">
+                <NavLink style={{ textDecoration: 'none'}} to="/findID">
                     <span id='find-ID'>ID 찾기</span>
                 </NavLink>
-                <NavLink to="/changePWD">
+                <NavLink style={{textDecoration: 'none'}} to="/changePWD">
                     <span id='change-PWD'>비밀번호 변경</span>
                 </NavLink>
             </div>
-            
+
             {showAlert && (
                 <AlertMessage1/>
             )}

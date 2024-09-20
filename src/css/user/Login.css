@@ -74,14 +74,28 @@
 
 #login-button:hover {
     background-color: #d9981a;
-    transform: scale(1.05);
+    transform: translateY(-150px);
     cursor: pointer;
+}
+
+/* 링크 스타일 */
+.link-group {
+    position: absolute;
+    left: 0;
+    /* 왼쪽 정렬 */
+    display: flex;
+    justify-content: flex-start;
+    /* 왼쪽 정렬 */
+    width: 65%;
+    /* 입력 필드의 너비에 맞게 설정 */
+    margin-top: 10px;
+    transform: translate(80px, 240px);
 }
 
 #find-ID,
 #change-PWD {
     font-family: 'Poor Story', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #28467A;
     cursor: pointer;
     margin-right: 20px;
