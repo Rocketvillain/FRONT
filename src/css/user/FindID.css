@@ -1,0 +1,31 @@
+/* FindID.css */
+
+#span1 {
+    position: absolute;
+    left: 12.5%;
+    top: 18%;
+
+    font-family: 'Poor Story';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #28467A;
+}
+
+#HealingPets2 {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+
+    font-family: 'Single Day';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 65px;
+    text-align: center;
+
+    color: #000000;
+}
