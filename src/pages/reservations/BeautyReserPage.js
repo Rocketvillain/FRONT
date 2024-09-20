@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import "../../css/BeautyReserPage.css"; // CSS 파일 추가
+import "../../css/ReserPage.css"; // CSS 파일 추가
 
 function BeautyReserPage() {
     const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜 상태
@@ -24,7 +24,7 @@ function BeautyReserPage() {
     };
 
     return (
-        <div className="beauty-reser-container">
+        <div className="reser-container">
             <h1 className="page-title">🎀미용 예약🎀</h1>
 
             {/* 이용 약관 동의 섹션 (맨 위로 이동) */}
@@ -93,23 +93,23 @@ function BeautyReserPage() {
                 <div className="input-form">
                     <div className="form-group">
                         <label>예약자 성함</label>
-                        <input type="text" placeholder="예약자 성함을 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="예약자 성함을 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 몸무게</label>
-                        <input type="text" placeholder="몸무게를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="몸무게를 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>예약자 전화번호</label>
-                        <input type="text" placeholder="전화번호를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="전화번호를 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 종류</label>
-                        <input type="text" placeholder="종류를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="종류를 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 이름</label>
-                        <input type="text" placeholder="반려동물 이름을 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="반려동물 이름을 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 성별</label>
@@ -120,7 +120,7 @@ function BeautyReserPage() {
                     </div>
                     <div className="form-group">
                         <label>반려동물 나이</label>
-                        <input type="text" placeholder="나이를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="나이를 입력하세요" disabled={!termsAccepted} />
                     </div>
 
                     <div className="form-group">
@@ -145,6 +145,7 @@ function BeautyReserPage() {
                                 </label>
                             </div>
                         </div>
+                        <br/>
                         <div className="form-group">
                             <label>상세 내용</label>
                             <textarea placeholder="요청 사항을 입력하세요" disabled={!termsAccepted}></textarea>

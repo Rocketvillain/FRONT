@@ -1,5 +1,5 @@
 /* 전체 페이지 컨테이너 */
-.range-reser-container {
+.reser-container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -27,10 +27,10 @@
 /* 달력 섹션 */
 .calendar-section {
     width: 100%;
-    max-width: 1000px; /* 달력 크기를 요일에 맞춰 조정 */
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 1000px; /* 달력 크기를 최대 1000px로 제한 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 10px; /* 약간의 패딩 추가 */
+    box-sizing: border-box; /* 패딩 포함한 크기 계산 */
 }
 
 /* 달력 크기 조정 */
@@ -49,7 +49,7 @@
     font-size: 1.5rem; /* 폰트 크기를 키움 */
     font-weight: bold; /* 굵은 글씨로 표시 */
     text-align: center; /* 가운데 정렬 */
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 
@@ -70,7 +70,7 @@
 /* 연도 선택 셀렉트 박스 */
 .react-datepicker__year-select {
     font-size: 20px; /* 글자 크기를 키움 */
-    width: 100px; /* 셀렉트 박스의 너비 설정 */
+    width: auto; /* 셀렉트 박스의 너비 설정 */
     height: 30px;
 }
 
@@ -148,18 +148,19 @@
 /* 입력 폼 */
 .input-form {
     display: grid;
-    grid-template-columns: 0.5fr 0.5fr; /* 두 개의 열로 구성 */
-    gap: 20px;
-    width: 800px;
-    transform: translate(250px);
+    grid-template-columns: 1fr 1fr; /* 두 열을 균등하게 분할 */
+    gap: 40px; /* 열 사이의 간격을 적절히 조정 */
+    width: 100%; /* 전체 너비를 사용 */
+    max-width: 1200px; /* 폼의 최대 너비를 제한 */
+    margin: 0 auto; /* 중앙 정렬 */
+    box-sizing: border-box; /* 패딩과 보더를 포함하여 전체 크기 계산 */
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    margin-bottom: 20px; /* 다른 필드와 일관된 간격 */
+    margin-bottom: 20px; /* 필드 간격을 일정하게 유지 */
+    width: 100%; /* 모든 필드가 열에 맞게 크기를 차지하도록 설정 */
 }
 
 .form-group label {
@@ -168,36 +169,48 @@
 }
 
 .form-group input, .form-group select, .form-group textarea {
-    padding: 8px;
+    padding: 10px;
+    font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 100%; /* 각 필드가 열 전체 너비를 차지하도록 설정 */
+    box-sizing: border-box; /* 패딩을 포함한 전체 크기 계산 */
 }
 
+.form-group input[type="text"] {
+    width: 100%; /* 반려동물 나이 입력 필드를 다른 필드와 동일하게 */
+}
+
+.form-group textarea {
+    width: 100%; /* 텍스트 영역도 동일하게 설정 */
+}
 
 /* 예약 버튼 */
 .submit-button {
     margin-top: 20px;
     padding: 15px;
-    width: 100%; /* 버튼 너비를 100%로 설정 */
-    max-width: 900px; /* 최대 너비를 입력 폼과 동일하게 설정 */
+    width: 100%;
+    max-width: 800px; /* 버튼의 최대 너비를 제한 */
     background-color: #ffc107;
     border: none;
     border-radius: 8px;
     font-size: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    display: block; /* 버튼을 블록 요소로 만듦 */
-    transform: translateX(150px);
+    display: block;
+    margin-left: auto; /* 버튼을 오른쪽에 배치 */
+    margin-right: auto; /* 버튼을 중앙에 배치 */
 }
 
 .submit-button:hover {
     background-color: #ff9800;
 }
 
+
 .checkbox-group {
     display: flex;
-    flex-wrap: wrap; /* 두 줄로 배치 */
-    gap: 10px; /* 각 체크박스 간격 */
+    flex-wrap: wrap;
+    gap: 10px; /* 체크박스 간 간격을 추가 */
 }
 
 .checkbox-group label {
@@ -213,8 +226,18 @@
 .terms-section {
     border: 5px solid #28467A;
     padding: 20px;
-    max-width: 1500px;  /* 약관 섹션의 최대 너비를 제한 */
-    transform: translateX(110px);
+    max-width: 100%;  /* 약관 섹션의 최대 너비를 화면 너비에 맞춤 */
+    width: 100%;
+    margin: 0 auto; /* 중앙 정렬 */
+    box-sizing: border-box; /* 패딩과 보더 포함하여 전체 크기 계산 */
     text-align: left; /* 텍스트는 왼쪽 정렬 유지 */
+}
+
+.reser-form{
+    width: 100%; /* 전체 너비를 차지하도록 설정 */
+}
+
+.form-group textarea {
+    width: 500px;
 }
 
