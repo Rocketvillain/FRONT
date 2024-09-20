@@ -16,11 +16,13 @@ import UserLayout from "./layouts/UserLayout";
 import Login from "./pages/user/Login";
 import FindID from "./pages/user/FindID";
 import ChangePWD from "./pages/user/ChangePWD";
+import Signup from "./pages/user/Signup";
 import HospitalView from "./pages/hospital/HospitalView";
 import ReserPage from "./pages/reservations/ReserPage";
 import BeautyReserPage from "./pages/reservations/BeautyReserPage";
 import HosDetail from "./pages/hospital/HosDetails";
 import HosReser from "./pages/hospital/HosReser";
+import Signup from "./pages/user/Signup";
 
 
 function App() {
@@ -54,6 +56,13 @@ function App() {
           <Route path="/expenses" element={<Expenses/>} />
           <Route path="/hospitalview" element={<HospitalView />} />
           <Route path="/hosdetail/:hosId" element={<HosDetail />} /> {/* 병원 상세 페이지 라우트 */}
+          <Route index element={<Main />} />
+          <Route path="" element />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/findID" element={<FindID />} />
+          <Route path="/changePWD" element={<ChangePWD />} />
+          <Route path="/signup" element={<Signup/>}/>
         </Route>
         
         <Route path="/myinfo" element={<MyPageLayout />}>

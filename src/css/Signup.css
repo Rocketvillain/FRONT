@@ -1,0 +1,196 @@
+/* 공통 스타일 */
+.signup-container {
+  width: 50%;
+  align-items: center;
+  margin: 50px auto;
+  padding: 20px;
+  border: 5px solid #28467a;
+  background-color: #fff;
+  position: relative;
+}
+
+/* 탭 버튼 스타일 */
+.signup-tabs {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  margin: 30px;
+  border-radius: 0;
+}
+
+.tab-button {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 5px solid #264e7b;
+  background-color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px;
+  transition: transform 0.1s ease-in-out; /* 애니메이션 적용 */
+}
+
+.tab-button.active {
+  font-weight: bold;
+  color: white;
+  background-color: #264e7b;
+  border: none;
+  border-radius: 0;
+  transform: scale(1.05); /* 클릭할 때 크기를 95%로 줄임 */
+}
+
+.signup-form {
+  padding: 10px;
+  border-radius: 0;
+}
+
+.signup-form h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* 유저 정보와 병원 정보 컨테이너 스타일 */
+.user-info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-info,
+.pet-info,
+.hospital-info {
+  flex: 1 1 48%;
+  flex: 1;
+  padding: 0 20px;
+  min-width: 50%;
+  box-sizing: border-box;
+}
+
+/* 카테고리 체크박스와 라벨을 한 줄로 정렬 */
+.category-section .category-item {
+  margin-top: 20px;
+  display: flex; /* 플렉스 박스로 설정하여 정렬 */
+  align-items: center; /* 수직 정렬 */
+  margin-bottom: 15px; /* 항목 간 간격 조절 */
+}
+
+.category-section .category-item label {
+  margin-right: -180px; /* 텍스트와 체크박스 사이 간격 조절 */
+}
+
+/* 입력 필드 박스 */
+.form-input-box {
+  margin-bottom: 20px;
+}
+
+.form-input-box label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-input-box input,
+.form-input-box select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 3px solid #28467a;
+  border-radius: 0;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+}
+
+.input-with-button button {
+  transition: transform 0.1s ease-in-out;
+}
+
+.input-with-button button:active {
+  transform: scale(0.95); 
+}
+
+.input-with-button input {
+  width: 76.5%; 
+  margin-right: 5px;
+}
+
+.duplicate-check {
+  margin-left: 5px;
+  padding: 12px 15px;
+  font-size: 14px;
+  background-color: #28467A;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.duplicate-check:hover {
+  background-color: #e6a526;
+}
+
+/* SPECIES와 GENDER에만 스타일 적용 */
+.species-box .species-radio {
+  margin-left: -15px;
+  display: flex;
+  align-items: center; /* 수직 정렬 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+.gender-box .gender-radio {
+  margin-left: -10px;
+  display: flex;
+  align-items: center; /* 수직 정렬 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+.species-box .species-radio label {
+  margin-right: 45px; /* 라디오 버튼과 텍스트 사이 간격 줄이기 */
+}
+
+.gender-box .gender-radio label {
+  margin-right: 150px; /* 라디오 버튼과 텍스트 사이 간격 줄이기 */
+}
+
+/* 성별 및 종 선택 라디오 버튼 */
+.species-radio,
+.gender-radio {
+  display: flex;
+  align-items: center; /* 수직 정렬 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+
+/* 회원가입 버튼 */
+.signup-user-btn {
+  margin-left:  20.5em;
+  margin-top: 540px;
+  padding: 15px 0;
+  font-size: 18px;
+  color: white;
+  background-color: #e6a526;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  display: block;
+  position: absolute;
+  bottom: -90px;
+  align-items: center;
+  border-radius: 0;
+  box-shadow: 0 5px 15px rgba(51, 51, 51, 0.1);
+  transition: transform 0.1s ease-in-out;
+}
+
+.signup-user-btn:hover {
+  background-color: #28467A;
+}
+
+.signup-user-btn:active {
+  transform: scale(1.05);
+}
+
