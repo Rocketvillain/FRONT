@@ -25,6 +25,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #EFEEF4;
+    transform: translateY(-60px);
 }
 
 .page-content {
