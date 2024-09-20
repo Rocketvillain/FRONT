@@ -1,126 +1,93 @@
-/* Login.css  */
-
+/* 로그인 폼을 감싸는 박스 */
 .login-wrap {
-    position: absolute;
-    width: 1200px;
-    height: 600px;
-    left: 200px;
-    top: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 1000px;  /* 폼의 넓이를 확대 */
+    height: 430px;
+    margin: 150px auto;  /* 화면 중앙에 배치 */
+    padding: 40px;
+    background-color: #fff;
+    border: 5px solid #28467A;
     box-sizing: border-box;
-    background: #FFFFFF;
-    border: 10px solid #28467A;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+
 }
 
+/* Healing Pets 제목 */
 #HealingPets {
-    position: absolute;
-    left: 20%;
-    right: 20%;
-    top: 10.05%;
-    bottom: 78.21%;
-
-    font-family: 'Single Day';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 52px;
-    line-height: 65px;
+    font-family: 'Single Day', sans-serif;
+    font-size: 36px;
+    margin-bottom: 40px;
     text-align: center;
-
-    color: #000000;
+    width: 100%;
+    color: #000;
 }
 
+.form-group {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 40px;
 
-#login-id {
+}
+
+/* 입력 필드 스타일 */
+#login-id, #login-pwd {
+    width: 65%;  /* 입력 필드가 전체 너비를 차지 */
+    padding: 15px; /* 입력 필드의 높이를 넓게 설정 */
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 18px;  /* 폰트 크기 증가 */
+    border: 3px solid #28467A;
     box-sizing: border-box;
-    position: absolute;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    border-radius: 0;
 
-    left: 11.89%;
-    right: 35.46%;
-    top: 30.91%;
-    bottom: 54.4%;
-
-    background: #FFFFFF;
-    border: 5px solid #28467A;
-
-    font-family: 'Do Hyeon';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 52px;
-    line-height: 65px;
-    text-align: left;
 }
 
-#login-pwd {
-    box-sizing: border-box;
-    position: absolute;
-
-    left: 11.89%;
-    right: 35.46%;
-    top: 54.71%;
-    bottom: 30.6%;
-
-    background: #FFFFFF;
-    border: 5px solid #28467A;
-
-    font-family: 'Do Hyeon';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 52px;
-    line-height: 65px;
-    text-align: left;
-}
-
+/* 로그인 버튼 */
 #login-button {
-    box-sizing: border-box;
-    position: absolute;
-
-    left: 70.78%;
-    right: 11.23%;
-    top: 39.72%;
-    bottom: 39.41%;
-
-    background: #E3AB1B;
-    border: 5px solid #28467A;
-
-    font-family: 'Poor Story';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 48px;
-    line-height: 60px;
-    text-align: center;
-
-    color: #FFFFFF;
+    width: 20%; /* 버튼 너비를 적절하게 조정 */
+    padding: 15px;
+    height: 120px;
+    background-color: #E3AB1B;
+    border: 3px solid #28467A;
+    font-family: 'Poor Story', sans-serif;
+    font-size: 24px; /* 버튼 폰트 크기 증가 */
+    color: white;
+    cursor: pointer;
+    margin-left: 670px; /* 버튼을 오른쪽으로 정렬 */
+    transform: translateY(-150px);
 }
 
-#find-ID {
-    position: absolute;
-    left: 11.89%;
-    right: 79.3%;
-    top: 72.49%;
-    bottom: 22.26%;
-
-    font-family: 'Poor Story';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 38px;
-    text-align: center;
-
-    color: #28467A;
+#login-button:hover {
+    background-color: #d9981a;
 }
 
-#change-PWD {
+/* 링크 스타일 */
+.link-group {
     position: absolute;
-    left: 21.07%;
-    right: 60%;
-    top: 72.49%;
-    bottom: 22.26%;
+    left: 0; /* 왼쪽 정렬 */
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    width: 65%; /* 입력 필드의 너비에 맞게 설정 */
+    margin-top: 10px;
+    transform: translate(80px, 240px);
 
-    font-family: 'Poor Story';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 38px;
-    text-align: center;
+}
 
+#find-ID, #change-PWD {
+    font-family: 'Poor Story', sans-serif;
+    font-size: 14px;
     color: #28467A;
+    cursor: pointer;
+    margin-right: 20px; /* 링크 간의 간격 추가 */
+}
+
+#find-ID:hover, #change-PWD:hover {
+    text-decoration: underline;
 }

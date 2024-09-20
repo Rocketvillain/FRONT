@@ -1,0 +1,22 @@
+/* 기본 레이아웃 */
+.layout-container {
+    width: 80%;
+    margin: auto;
+    padding-top: 100px; /* Header와 Outlet 사이에 100px 간격 추가 */
+}
+
+/* 작은 화면(모바일)에서 레이아웃 조정 */
+@media (max-width: 600px) {
+    .layout-container {
+        width: 95%;  /* 모바일에서는 더 넓게 */
+        padding-top: 80px; /* 모바일에서 간격 줄이기 */
+    }
+}
+
+/* 큰 화면에서 레이아웃 고정 */
+@media (min-width: 1200px) {
+    .layout-container {
+        width: 1200px; /* 데스크탑에서는 고정된 너비 사용 */
+        padding-top: 120px; /* 큰 화면에서는 더 많은 간격 */
+    }
+}

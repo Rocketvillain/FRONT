@@ -6,9 +6,9 @@ function UserHeader() {
 
     return(
         <div className="userheader-container">
-            <div className="logo-container">
-                <NavLink to="/" exact className="logo-link">
-                    <img className="mainImage" src="/images/logo.png" alt="메인 이미지" />
+            <div className="userlogo-container">
+                <NavLink to="/" exact className="userlogo-link">
+                    <img className="usermainImage" src="/images/logo.png" alt="메인 이미지" />
                     <span>Healing Pets</span>
                 </NavLink>
             </div>

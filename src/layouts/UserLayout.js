@@ -1,15 +1,16 @@
 import UserHeader from "../components/commons/header/UserHeader";
 import { Outlet } from "react-router-dom";
+import '../css/Layout.css';
 
 function UserLayout() {
 
-    return(
-        <>
-        <UserHeader/>
-        <div>
-        <Outlet/>
+    return (
+        <div className="layout-container">
+            <UserHeader />
+            <div>
+                <Outlet />
+            </div>
         </div>
-        </>
     )
 }
 

@@ -1,81 +1,96 @@
-/* Header.css */
+/* 헤더 컨테이너 */
 .header-container {
-    padding: 10px;
+    width: 100%; /* 헤더가 화면 너비에 꽉 차도록 설정 */
+    padding: 10px 0; /* 상하 여백만 남기고 좌우는 여백 제거 */
     background-color: #28467A;
     color: white;
-    height: 60px; /* 헤더 높이 */
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 수직 가운데 정렬 */
-    justify-content: space-between; /* 양 끝 정렬 */
+    height: 80px; /* 고정된 헤더 높이 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed; /* 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
+    box-sizing: border-box; /* 전체 요소의 크기 계산에 padding과 border 포함 */
 }
 
+/* 로고와 텍스트 */
 .logo-h-container {
-    margin-left: 35px; /* 로고 이미지를 왼쪽에서 8px 떨어지도록 설정 */
+    margin-left: 35px; /* 로고 위치 조정 */
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* 로고가 줄어들지 않도록 설정 */
 }
 
 .logo-h-link {
-    display: flex; /* Flexbox 사용 */
-    flex-direction: column; /* 수직 정렬 */
-    align-items: center; /* 로고 이미지와 텍스트 수평 가운데 정렬 */
-    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    display: flex;
+    flex-direction: column; /* 로고와 텍스트를 수직으로 정렬 */
+    align-items: center;
+    text-decoration: none;
 }
 
 .logo-h-container span {
-    color: white; /* 텍스트를 하얀색으로 */
-    font-size: 14px; /* 텍스트 크기 조정 */
+    color: white;
+    font-size: 14px;
     margin-top: -20px;
     margin-bottom: 20px;
 }
 
+/* 로고 이미지 크기 */
 .mainImage {
-    width: 80px; /* 이미지 크기 축소 */
-    height: 80px; /* 이미지 크기 축소 */
+    width: 80px; /* 로고 이미지 크기 */
+    height: 80px; /* 로고 이미지 크기 */
 }
 
+
+/* 네비게이션 리스트 */
 .header-nav-list {
     list-style: none;
     display: flex;
-    flex-direction: row;
-    gap: 50px; /* 항목 간 간격 조정 */
+    flex-direction: row; /* 가로로 정렬 */
+    gap: 50px; /* 항목 간격 */
     height: auto;
-    /* margin-top: -1px; */
-    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .header-nav-item {
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    display: flex;
+    align-items: center;
     text-align: center;
     padding: 15px;
 }
 
 .header-nav-item span {
     color: white;
-    font-size: 14px; /* 텍스트 크기 조정 */
+    font-size: 14px;
+    text-decoration: none;
 }
 
 .log-container {
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
-    justify-content: space-between; /* 로그인, 회원가입 간격 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-right: 30px;
-    gap: 15px; /* 로그인/회원가입 간격 조정 */
+    gap: 15px;
+    flex-shrink: 0;
 }
 
 .login-container,
 .sign-container {
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
-    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .log-container img {
-    width: 25px; /* 로그아웃 아이콘 크기 */
-    height: 25px; /* 로그아웃 아이콘 크기 */
-    margin-right: 5px; /* 이미지와 텍스트 간 간격 */
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
 }
 
 .log-container span {
-    color: white; /* 텍스트를 하얀색으로 */
-    font-size: 14px; /* 텍스트 크기 */
+    color: white;
+    font-size: 14px;
 }
