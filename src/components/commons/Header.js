@@ -49,7 +49,7 @@ function Header() {
                 <img src="/images/Login_2.png" alt="로그인" />
                 <span>LOGIN</span>
         </NavLink>
-        <NavLink to="/signuphos" className="sign-container"style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+        <NavLink to="/signupuser" className="sign-container"style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                 <img src="/images/signup_logout_1.png" alt="회원가입" />
                 <span>SIGNUP</span>
         </NavLink>
