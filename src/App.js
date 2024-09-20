@@ -13,6 +13,9 @@ import MyReviews from "./pages/mypage/MyReviews";
 import ClinicHistory from "./pages/mypage/ClinicHistory";
 import AllReviews from "./pages/hospital/AllReviews";
 import UserLayout from "./layouts/UserLayout";
+import Login from "./pages/user/Login";
+import FindID from "./pages/user/FindID";
+import ChangePWD from "./pages/user/ChangePWD";
 import HospitalView from "./pages/hospital/HospitalView";
 import ReserPage from "./pages/reservations/ReserPage";
 import BeautyReserPage from "./pages/reservations/BeautyReserPage";
@@ -44,6 +47,10 @@ const addReview = (newReview) => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="" element />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/findID" element={<FindID />} />
+          <Route path="/changePWD" element={<ChangePWD />} />
           <Route path="/expenses" element={<Expenses/>} />
           <Route path="/hospitalview" element={<HospitalView />} />
           <Route path="/hosdetail/:hosId" element={<HosDetail />} /> {/* 병원 상세 페이지 라우트 */}
@@ -63,6 +70,12 @@ const addReview = (newReview) => {
         </Route>
         <Route path="/expenses" element={<UserLayout/>}>
           <Route index element={<Expenses/>}/>
+        </Route>
+        <Route path="/beautyreserpage" element={<UserLayout/>}>
+          <Route index element={<BeautyReserPage/>}/>
+        </Route>
+        <Route path="/reserpage" element={<UserLayout/>}>
+          <Route index element={<ReserPage/>}/>
         </Route>
         <Route path="/hosreser" element={<UserLayout />}>
           <Route index element={<HosReser/>}/>
