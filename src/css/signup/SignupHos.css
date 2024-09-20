@@ -1,0 +1,94 @@
+/* signupHos.css */
+
+/* 컨테이너 스타일 */
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #f0f0f0;
+  }
+  
+  /* 탭 버튼 스타일 */
+  .signup-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .tab-button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    color: #264e7b;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  
+  .tab-button.active {
+    background-color: #264e7b;
+    color: white;
+  }
+  
+  .tab-button:hover {
+    background-color: #264e7b;
+    color: white;
+  }
+  
+  /* 폼 스타일 */
+  .signup-form {
+    width: 400px;
+    padding: 30px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .signup-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #264e7b;
+  }
+  
+  .signup-form label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #264e7b;
+  }
+  
+  .signup-form input,
+  .signup-form select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .signup-form input:focus,
+  .signup-form select:focus {
+    border-color: #264e7b;
+  }
+  
+  .signup-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #264e7b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-form button:hover {
+    background-color: #1e3d5b;
+  }
+  
