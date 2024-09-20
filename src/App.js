@@ -11,7 +11,6 @@ import Expenses from "./pages/user/Expenses";
 import ReserStatus from "./pages/mypage/ReserStatus";
 import MyReviews from "./pages/mypage/MyReviews";
 import ClinicHistory from "./pages/mypage/ClinicHistory";
-import { useState } from "react";
 import AllReviews from "./pages/hospital/AllReviews";
 import UserLayout from "./layouts/UserLayout";
 import HospitalView from "./pages/hospital/HospitalView";
@@ -48,11 +47,7 @@ const addReview = (newReview) => {
           <Route path="/expenses" element={<Expenses/>} />
           <Route path="/hospitalview" element={<HospitalView />} />
           <Route path="/hosdetail/:hosId" element={<HosDetail />} /> {/* 병원 상세 페이지 라우트 */}
-          <Route path="/reservation/reserpage/:hospitalId" element={<ReserPage />} /> {/* 진료 예약 페이지 라우트 */}
-          <Route path="/reservation/beautyreserpage/:hospitalId" element={<BeautyReserPage />} /> {/* 미용 예약 페이지 라우트 */}
-          <Route path="/hosreser" element={<HosReser />} /> 
         </Route>
-
         
         <Route path="/myinfo" element={<MyPageLayout />}>
           <Route index element={<MyInfo />} />
@@ -68,6 +63,9 @@ const addReview = (newReview) => {
         </Route>
         <Route path="/expenses" element={<UserLayout/>}>
           <Route index element={<Expenses/>}/>
+        </Route>
+        <Route path="/hosreser" element={<UserLayout />}>
+          <Route index element={<HosReser/>}/>
         </Route>
 
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}

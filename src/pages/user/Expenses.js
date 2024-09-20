@@ -1,5 +1,4 @@
 import React from 'react';
-import UserHeader from '../../components/commons/header/UserHeader';
 import '../../css/Expenses.css';
 
 function Expenses() {

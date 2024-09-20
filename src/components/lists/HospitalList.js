@@ -33,7 +33,7 @@ function HospitalList() {
           onClick={() => handleCardClick(hospital.id)}
         >
           <img src={hospital.image} alt={hospital.name} className="hospital-image" />
-          <div className="hospital-info">
+          <div className="hospital-list-info">
             <p>{hospital.address}</p>
           </div>
           <div className="hospital-name">

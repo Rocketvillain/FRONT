@@ -29,7 +29,7 @@
     object-fit: cover;
   }
   
-  .hospital-info {
+  .hospital-list-info {
     position: absolute;
     top: 0;
     left: 0;
@@ -44,7 +44,7 @@
     transition: opacity 0.3s;
   }
   
-  .hospital-card:hover .hospital-info {
+  .hospital-card:hover .hospital-list-info {
     opacity: 1;
   }
   
