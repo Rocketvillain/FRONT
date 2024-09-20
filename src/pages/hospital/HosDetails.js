@@ -3,7 +3,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function HosDetail() {
+function HosDetails() {
   const { hosId } = useParams(); // URL에서 병원 ID를 가져옴
   const navigate = useNavigate();
 
@@ -27,4 +27,4 @@ function HosDetail() {
   );
 }
 
-export default HosDetail;
+export default HosDetails;
