@@ -1,7 +1,7 @@
 /* 전체 페이지 컨테이너 */
 .beauty-reser-container {
     width: 100%;
-    max-width: 1500px;
+    max-width: 1200px;  /* 최대 너비를 1200px로 설정 */
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -21,13 +21,12 @@
 .reservation-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 /* 달력 섹션 */
 .calendar-section {
     width: 100%;
-    max-width: 1000px; /* 달력 크기를 요일에 맞춰 조정 */
+    max-width: 100%;  /* 달력이 부모 요소에 맞게 확장 */
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -37,101 +36,59 @@
 .react-datepicker {
     width: 100%;
     max-width: 100%;
-    font-size: 1rem; /* 달력 내부 텍스트 크기 조정 */
+    font-size: 1rem;
 }
 
 .react-datepicker__month-container {
-    width: 100%; /* 달력 전체 컨테이너 크기 */
+    width: 100%;
 }
-
-/* 달력 상단의 월, 연도 표시 부분 크기 조정 */
-.react-datepicker__current-month {
-    font-size: 1.5rem; /* 폰트 크기를 키움 */
-    font-weight: bold; /* 굵은 글씨로 표시 */
-    text-align: center; /* 가운데 정렬 */
-    margin-bottom: 50px;
-}
-
 
 /* 달력 상단 네비게이션(월/년 선택) 크기 조정 */
 .react-datepicker__header {
-    font-size: 1.5rem; /* 월, 년 선택 텍스트 크기 증가 */
-
+    font-size: 1.5rem;
 }
 
-/* 월 선택 셀렉트 박스 */
-.react-datepicker__month-select {
-    margin-top: 30px;
-    font-size: 20px; /* 글자 크기를 키움 */
-    width: 150px; /* 셀렉트 박스의 너비 설정 */
-    height: 30px;
-}
-
-/* 연도 선택 셀렉트 박스 */
-.react-datepicker__year-select {
-    font-size: 20px; /* 글자 크기를 키움 */
-    width: 100px; /* 셀렉트 박스의 너비 설정 */
-    height: 30px;
-}
-
-
-/* 달력의 각 날짜 셀 크기 조정 */
+/* 날짜 셀 크기 */
 .react-datepicker__day {
-    width: 138px; /* 날짜 셀의 너비를 요일 셀에 맞춤 */
-    height: 70px; /* 날짜 셀의 높이를 요일 셀에 맞춤 */
+    width: auto;
+    height: 60px;  /* 날짜 셀 높이 */
     line-height: 50px;
-    margin: 0; /* 날짜 셀의 마진 제거 */
+    margin: 0;
     text-align: center;
     font-size: 1rem;
 }
 
-/* 선택된 날짜의 크기 조정 */
+/* 선택된 날짜 */
 .react-datepicker__day--selected {
     background-color: #4caf50;
     color: white;
-    width: 138px;
-    height: 70px;
-    line-height: 50px;
-    font-size: 1rem;
 }
 
-
-/* 요일 부분 텍스트 크기 조정 */
+/* 요일 부분 텍스트 크기 */
 .react-datepicker__day-names {
     display: flex;
-    justify-content: space-between; /* 요일을 균등하게 배치 */
-    padding: 60px 60px; /* 좌우 여백 제거 */
-}
-
-.react-datepicker__day-name {
-    font-size: 1rem;
-    width: 50px; /* 요일 셀 너비 */
-    text-align: center;
-}
-
-.calendar-title {
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
+    justify-content: space-between;
+    padding: 0 10px;
 }
 
 /* 시간 선택 섹션 */
 .time-selection {
     text-align: center;
-    max-width: 800px; /* 부모 컨테이너의 최대 너비 설정 */
-    margin: 0 auto; /* 가운데 정렬 */
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .time-buttons {
     display: flex;
-    justify-content: center; /* 버튼을 중앙으로 정렬 */
-    flex-wrap: wrap; /* 버튼들이 화면에 맞게 줄바꿈 */
-    gap: 10px; /* 버튼들 간의 간격을 줄이기 위한 속성 */
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
+/* 시간 선택 버튼 */
 .time-button {
     padding: 10px 20px;
-    margin: 0; /* 기존 margin을 없애기 */
+    margin: 0;
     border: 2px solid #888;
     background-color: white;
     cursor: pointer;
@@ -148,59 +105,59 @@
 /* 입력 폼 */
 .input-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    width: 1100px;
-    transform: translate(230px);
+    grid-template-columns: 0.5fr 0.5fr; /* 두 개의 열로 구성 */
+    gap: 20px;
+    width: 800px;
+    transform: translate(250px);
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-bottom: 20px; /* 다른 필드와 일관된 간격 */
 }
 
-.form-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
+
+/* 체크박스와 세부 항목 */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.form-group input, .form-group select, .form-group textarea {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-textarea {
-    resize: none;
-    height: 100px;
+.checkbox-group label {
+    margin-right: 10px;
 }
 
 /* 예약 버튼 */
 .submit-button {
     margin-top: 20px;
     padding: 15px;
-    width: 1150px;
-    transform: translate(200px);
+    width: 100%; /* 버튼 너비를 100%로 설정 */
+    max-width: 900px; /* 최대 너비를 입력 폼과 동일하게 설정 */
     background-color: #ffc107;
     border: none;
     border-radius: 8px;
     font-size: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: block; /* 버튼을 블록 요소로 만듦 */
+    transform: translateX(150px);
 }
 
 .submit-button:hover {
     background-color: #ff9800;
 }
 
-.checkbox-group {
-    display: flex;
-    flex-wrap: wrap; /* 두 줄로 배치 */
-    gap: 10px; /* 각 체크박스 간격 */
-}
-
-.checkbox-group label {
-    margin-right: 20px; /* 체크박스와 텍스트 사이 간격 */
+/* 약관 동의 섹션 */
+.terms-section {
+    border: 5px solid #28467A;
+    padding: 20px;
+    max-width: 1000px;  /* 약관 섹션의 최대 너비를 제한 */
+    margin-right: 220px;  /* 오른쪽 정렬 해제 */
+    text-align: left; /* 텍스트는 왼쪽 정렬 유지 */
 }
 
 /* 약관에 동의하지 않으면 폼을 어둡게 처리 */
@@ -208,11 +165,3 @@ textarea {
     opacity: 0.5; /* 폼을 어둡게 처리 */
     pointer-events: none; /* 클릭 이벤트 비활성화 */
 }
-
-.terms-section {
-    border: 5px solid #28467A;
-    padding-left: 20px;
-    width: 1300px;
-    transform: translate(85px);
-}
-
