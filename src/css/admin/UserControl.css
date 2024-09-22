@@ -102,7 +102,7 @@
     background-color: #f0f0f0;
 }
 
-.modal {
+.user-control-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -114,7 +114,7 @@
     z-index: 1000;
 }
 
-.modal-content {
+.user-control-modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 0px;
@@ -123,13 +123,13 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-buttons {
+.user-control-modal-buttons {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-.modal-buttons button {
+.user-control-modal-buttons button {
     margin: 0 10px;
     padding: 10px 20px;
     border: none;
@@ -140,7 +140,7 @@
     color: black;
 }
 
-.modal-buttons button:hover {
+.user-control-modal-buttons button:hover {
     background-color: #F0C60A;
 }
 

@@ -167,10 +167,10 @@ function UserControl() {
 
             {/* 삭제 확인 모달 */}
             {showConfirmModal && (
-                <div className="modal">
-                    <div className="modal-content">
+                <div className="user-control-modal">
+                    <div className="user-control-modal-content">
                         <p>삭제하시겠습니까?</p>
-                        <div className="modal-buttons">
+                        <div className="user-control-modal-buttons">
                             <button onClick={handleDelete}>확인</button>
                             <button onClick={() => setShowConfirmModal(false)}>취소</button>
                         </div>
@@ -180,10 +180,10 @@ function UserControl() {
 
             {/* 삭제 완료 모달 */}
             {showCompleteModal && (
-                <div className="modal">
-                    <div className="modal-content">
+                <div className="user-control-modal">
+                    <div className="user-control-modal-content">
                         <p>삭제가 완료되었습니다.</p>
-                        <div className="modal-buttons">
+                        <div className="user-control-modal-buttons">
                             <button onClick={closeCompleteModal}>확인</button>
                         </div>
                     </div>
