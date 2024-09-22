@@ -19,6 +19,7 @@ import Login from "./pages/user/Login";
 import FindID from "./pages/user/FindID";
 import ChangePWD from "./pages/user/ChangePWD";
 import Signup from "./pages/user/Signup";
+import ReserControl from "./pages/admin/ReserControl";
 
 
 function App() {
@@ -75,6 +76,10 @@ function App() {
         </Route>
         <Route path="/reserpage" element={<UserLayout />}>
           <Route index element={<ReserPage />} />
+        </Route>
+
+        <Route path="/resercontrol" element={<UserLayout />}>
+          <Route index element={<ReserControl />} />
         </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}
