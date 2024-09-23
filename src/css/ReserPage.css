@@ -11,21 +11,21 @@
 }
 
 /* 제목 */
-.page-title {
+.reser-page-title {
     text-align: center;
     font-size: 2rem;
     color: #333;
 }
 
 /* 예약 폼 전체 */
-.reservation-form {
+.reser-reservation-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 /* 달력 섹션 */
-.calendar-section {
+.reser-calendar-section {
     width: 100%;
     max-width: 1000px; /* 달력 크기를 최대 1000px로 제한 */
     margin: 0 auto; /* 중앙 정렬 */
@@ -116,20 +116,20 @@
 }
 
 /* 시간 선택 섹션 */
-.time-selection {
+.reser-time-selection {
     text-align: center;
     max-width: 800px; /* 부모 컨테이너의 최대 너비 설정 */
     margin: 0 auto; /* 가운데 정렬 */
 }
 
-.time-buttons {
+.reser-time-buttons {
     display: flex;
     justify-content: center; /* 버튼을 중앙으로 정렬 */
     flex-wrap: wrap; /* 버튼들이 화면에 맞게 줄바꿈 */
     gap: 10px; /* 버튼들 간의 간격을 줄이기 위한 속성 */
 }
 
-.time-button {
+.reser-time-button {
     padding: 10px 20px;
     margin: 0; /* 기존 margin을 없애기 */
     border: 2px solid #888;
@@ -140,13 +140,13 @@
     transition: background-color 0.3s ease;
 }
 
-.time-button.selected {
+.reser-time-button.selected {
     background-color: #d1e8ff;
     border-color: #4caf50;
 }
 
 /* 입력 폼 */
-.input-form {
+.reser-input-form {
     display: grid;
     grid-template-columns: 1fr 1fr; /* 두 열을 균등하게 분할 */
     gap: 40px; /* 열 사이의 간격을 적절히 조정 */
@@ -156,41 +156,40 @@
     box-sizing: border-box; /* 패딩과 보더를 포함하여 전체 크기 계산 */
 }
 
-.form-group {
+.reser-form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px; /* 필드 간격을 일정하게 유지 */
     width: 100%; /* 모든 필드가 열에 맞게 크기를 차지하도록 설정 */
 }
 
-.form-group label {
-    margin-bottom: 5px;
+.reser-form-group label {
+    margin-bottom: 20px;
     font-weight: bold;
 }
 
-.form-group input, .form-group select, .form-group textarea {
+.reser-form-group input, .reser-form-group select, .reser-form-group textarea {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%; /* 각 필드가 열 전체 너비를 차지하도록 설정 */
     box-sizing: border-box; /* 패딩을 포함한 전체 크기 계산 */
 }
 
-.form-group input[type="text"] {
-    width: 100%; /* 반려동물 나이 입력 필드를 다른 필드와 동일하게 */
-}
 
-.form-group textarea {
-    width: 100%; /* 텍스트 영역도 동일하게 설정 */
+.reser-form-group textarea {
+    width: 100%; /* 텍스트박스의 너비를 전체로 설정 */
+    max-width: 500px; /* 텍스트박스의 최대 너비를 설정 */
+    height: 150px; /* 적당한 높이 설정 */
+    margin-bottom: 50px;
 }
 
 /* 예약 버튼 */
-.submit-button {
+.reser-submit-button {
     margin-top: 20px;
     padding: 15px;
     width: 100%;
-    max-width: 800px; /* 버튼의 최대 너비를 제한 */
+    max-width: 1000px; /* 버튼의 최대 너비를 제한 */
     background-color: #ffc107;
     border: none;
     border-radius: 8px;
@@ -202,19 +201,23 @@
     margin-right: auto; /* 버튼을 중앙에 배치 */
 }
 
-.submit-button:hover {
+.reser-submit-button:hover {
     background-color: #ff9800;
 }
 
 
-.checkbox-group {
+.reser-checkbox-group {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* 체크박스 간 간격을 추가 */
+    flex-wrap: wrap; /* 체크박스와 라벨을 수평으로 배치 */
+    gap: 20px; /* 체크박스 사이에 간격 추가 */
+    margin-top: 20px;
 }
 
-.checkbox-group label {
-    margin-right: 20px; /* 체크박스와 텍스트 사이 간격 */
+.reser-checkbox-group label {
+    display: flex;
+    align-items: center; /* 체크박스와 텍스트를 수평으로 정렬 */
+    gap: 5px; /* 체크박스와 라벨 사이의 간격을 설정 */
+    white-space: nowrap;
 }
 
 /* 약관에 동의하지 않으면 폼을 어둡게 처리 */
@@ -223,21 +226,18 @@
     pointer-events: none; /* 클릭 이벤트 비활성화 */
 }
 
-.terms-section {
+.reser-terms-section {
     border: 5px solid #28467A;
     padding: 20px;
     max-width: 100%;  /* 약관 섹션의 최대 너비를 화면 너비에 맞춤 */
-    width: 100%;
-    margin: 0 auto; /* 중앙 정렬 */
     box-sizing: border-box; /* 패딩과 보더 포함하여 전체 크기 계산 */
     text-align: left; /* 텍스트는 왼쪽 정렬 유지 */
 }
 
-.reser-form{
-    width: 100%; /* 전체 너비를 차지하도록 설정 */
+.reser-term-section-check {
+    margin-right: 10px;
+    text-align: left;
 }
 
-.form-group textarea {
-    width: 500px;
-}
+
 

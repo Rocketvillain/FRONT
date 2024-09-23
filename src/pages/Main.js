@@ -43,6 +43,13 @@ function Main() {
                         <span>관리자 회원 관리</span>
                     </NavLink>
                 </li>
+
+                <li className="nav-item">
+                    <NavLink to="/resercontrol">
+                        <img src="/images/main2.png" alt="관리자 예약 관리" />
+                        <span>관리자 예약 관리</span>
+                    </NavLink>
+                </li>
             </ul>
         </div>
         <div className="footer-container">
