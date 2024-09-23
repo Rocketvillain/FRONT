@@ -40,12 +40,14 @@ function ReserControl() {
     // 검색어 변경 처리
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
+        setSearchClicked(false); // 검색어가 변경되면 검색이 자동으로 적용되지 않도록 설정
     };
 
     // 진료 유형 선택 처리
     const handleTypeChange = (e) => {
         setSelectedType(e.target.value);
         setCurrentPage(1); // 진료 유형 변경 시 첫 페이지로 이동
+        setSearchClicked(false); // 진료 유형이 변경되면 검색이 자동으로 적용되지 않도록 설정
     };
 
     // 검색 버튼 클릭 처리

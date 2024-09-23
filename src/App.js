@@ -84,7 +84,7 @@ function App() {
         <Route path="/usercontrol" element={<AdminLayout />}>
           <Route index element={<UserControl />} />
         </Route>
-        <Route path="/reserrcontrol" element={<AdminLayout />}>
+        <Route path="/resercontrol" element={<AdminLayout />}>
           <Route index element={<ReserControl />} />
         </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
