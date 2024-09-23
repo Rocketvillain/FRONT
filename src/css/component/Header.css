@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&family=Single+Day&display=swap');
+
 /* 헤더 컨테이너 */
 .header-container {
     width: 100%; /* 헤더가 화면 너비에 꽉 차도록 설정 */
@@ -13,6 +15,7 @@
     left: 0;
     z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
     box-sizing: border-box; /* 전체 요소의 크기 계산에 padding과 border 포함 */
+    font-family: 'Poor Story';
 }
 
 /* 로고와 텍스트 */

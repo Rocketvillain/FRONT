@@ -2,10 +2,12 @@ import '../../css/user/FindID.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import AlertMessage1 from '../../components/commons/AlertMessage1';
+import { useNavigate } from 'react-router-dom';
 
 function FindID() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     /* input 태그 입력 값 state 관리 */
     const [findIDInfo, setFindIDInfo] = useState(
@@ -44,17 +46,24 @@ function FindID() {
 
     }
 
+    const handleBackClick = () => {
+        navigate(-1); // 브라우저 히스토리에서 이전 페이지로 이동
+    };
+
     return (
         <>
             <div className="login-wrap">
                 <span id='span1'>ID 찾기</span>
                 <span id='HealingPets2'>Healing Pets🍃</span>
-                <input type="text" name="name" id='loginForm1' value={ findIDInfo.name } onChange={ onChangeHandler } placeholder="이름" /> &nbsp;&nbsp;&nbsp;
-                <input type="text" name="phone" id='loginForm2' value={ findIDInfo.phone } onChange={ onChangeHandler } placeholder="전화번호" />
+                <div className='form-group2'>
+                <input type="text" name="name" id='loginForm1' value={ findIDInfo.name } onChange={ onChangeHandler } placeholder="NAME" /> &nbsp;&nbsp;&nbsp;
+                <input type="text" name="phone" id='loginForm2' value={ findIDInfo.phone } onChange={ onChangeHandler } placeholder="PHONE" />
                 <button id='login-button' onClick={onClickHandler}>검색</button>
+                </div>
                 {showAlert && (
                     <AlertMessage1/>
                 )}
+                <button className="back-button" onClick={handleBackClick}>↩</button>
             </div>
         </>
     )

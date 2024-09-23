@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&family=Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
 /* 전체 페이지 컨테이너 */
 .reser-container {
     width: 100%;
@@ -15,6 +18,7 @@
     text-align: center;
     font-size: 2rem;
     color: #333;
+    font-family: 'Do Hyeon'
 }
 
 /* 예약 폼 전체 */
@@ -120,6 +124,7 @@
     text-align: center;
     max-width: 800px; /* 부모 컨테이너의 최대 너비 설정 */
     margin: 0 auto; /* 가운데 정렬 */
+    font-family: 'Do Hyeon'
 }
 
 .reser-time-buttons {
@@ -138,6 +143,7 @@
     border-radius: 8px;
     font-size: 1rem;
     transition: background-color 0.3s ease;
+    font-family: 'Do Hyeon'
 }
 
 .reser-time-button.selected {
@@ -161,6 +167,7 @@
     flex-direction: column;
     margin-bottom: 20px; /* 필드 간격을 일정하게 유지 */
     width: 100%; /* 모든 필드가 열에 맞게 크기를 차지하도록 설정 */
+    font-family: 'Poor Story';
 }
 
 .reser-form-group label {
@@ -174,6 +181,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box; /* 패딩을 포함한 전체 크기 계산 */
+    font-family: 'Poor Story';
 }
 
 
@@ -199,18 +207,23 @@
     display: block;
     margin-left: auto; /* 버튼을 오른쪽에 배치 */
     margin-right: auto; /* 버튼을 중앙에 배치 */
+    font-family: 'Do Hyeon'
 }
 
 .reser-submit-button:hover {
     background-color: #ff9800;
 }
 
+.reser-form-group-check {
+    font-family: 'Poor Story';
+}
 
 .reser-checkbox-group {
     display: flex;
     flex-wrap: wrap; /* 체크박스와 라벨을 수평으로 배치 */
     gap: 20px; /* 체크박스 사이에 간격 추가 */
     margin-top: 20px;
+    font-family: 'Poor Story';
 }
 
 .reser-checkbox-group label {
@@ -232,6 +245,7 @@
     max-width: 100%;  /* 약관 섹션의 최대 너비를 화면 너비에 맞춤 */
     box-sizing: border-box; /* 패딩과 보더 포함하여 전체 크기 계산 */
     text-align: left; /* 텍스트는 왼쪽 정렬 유지 */
+    
 }
 
 .reser-term-section-check {
