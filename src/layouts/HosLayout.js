@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import HosHeader from "../components/commons/header/Hosheader";
+import HosHeader from "../components/commons/header/HosHeader";
 function HosLayout() {
 
     return(

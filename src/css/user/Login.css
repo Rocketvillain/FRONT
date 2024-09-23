@@ -29,12 +29,10 @@
 }
 
 .form-group {
-    display: flex;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 40px;
-
 }
 
 /* 입력 필드 스타일 */

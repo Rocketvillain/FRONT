@@ -2,14 +2,15 @@ import '../../css/user/Login.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { callLoginAPI } from '../../api/UserAPICalls';
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import AlertMessage1 from '../../components/commons/AlertMessage1';
 
 function Login() {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const result = useSelector(state => state.userReducer);
-    const loginStatus = !!localStorage.getItem('isLogin');
+    const [token, setToken] = useState(!!localStorage.getItem('token'));
 
     /* input 태그 입력 값 state 관리 */
     const [loginInfo, setLoginInfo] = useState(
@@ -34,7 +35,7 @@ function Login() {
     };
 
     /* 로그인 버튼 클릭 시 동작 */
-    const onClickHandler = () => {
+    const onClickHandler = async () => {
         const { userId, userPwd } = loginInfo;
 
         // 입력값 유효성 검사
@@ -43,15 +44,26 @@ function Login() {
             return;
         }
 
-        /* loginInfo에 대한 유효성 검사 후 호출 */
-        dispatch(callLoginAPI(loginInfo));
+        // 로그인 요청을 디스패치()
+        const result = await dispatch(callLoginAPI(loginInfo));
+
+        // 로그인 실패 시 처리
+        if (typeof result === 'string') {
+            alert(result); // alert 메시지로 failType 표시
+        } else {
+            // 로그인 성공 시 확인
+            setToken(!!localStorage.getItem('token'));
+        }
 
     }
 
-    /* 로그인 상태인데 호출할 경우 메인으로 */
-    if(loginStatus) {
-        return <Navigate to="/" replace={ true }/>
-    }
+    // useEffect를 사용하여 로그인 상태에 따라 네비게이션 처리
+    useEffect(() => {
+        
+        if (token) {
+            window.location.href = '/'; // 로그인 성공 시 메인 페이지로 이동
+        }
+    }, [token, navigate]); // isLoggedIn이 변경될 때마다 실행
     
     return (
         <div className="login-wrap">
