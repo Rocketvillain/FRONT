@@ -8,18 +8,20 @@ export function callLoginAPI(loginInfo) {
 
     /* redux-thunk(미들 웨어)를 이용한 비동기 처리 */
     return async (dispatch, getState) => {
-        
-        /* Api의 axios 처리 참조  */
-        const userList = await request('GET', '/user');
+        try {
+            // 서버에 로그인 요청
+            const result = await request('POST', '/login', loginInfo);
 
-        /* id와 password 일치 여부 확인 - 서버에서 이루어져야 하는 로직 */
-        /* 배열의 find 메소드 : 메서드는 주어진 판별 함수를 만족하는 첫 번째 요소의 값을 반환 */
-        const result = await userList.find(user => user.id === loginInfo.id && user.password === loginInfo.password); 
+            console.log('login result : ', result); // 서버에서 반환된 유저 정보
 
-        console.log('login result : ', result);     // 해당 user 객체 반환
+            // 로그인 성공 시 action dispatch
+            dispatch(login(result));
 
-        /* action 생성 함수에 결과 전달하며 dispatch 호출 */
-        dispatch(login(result));
+        } catch (error) {
+            console.error('Login failed: ', error);
 
+            // 실패 시 에러 액션 디스패치
+            // dispatch(loginFailure(error));
+        }
     }
 }

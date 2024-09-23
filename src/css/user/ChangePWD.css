@@ -1,0 +1,41 @@
+/* ChangePWD.css */
+
+#loginForm3 {
+    box-sizing: border-box;
+    position: absolute;
+
+    left: 11.89%;
+    right: 64%;
+    top: 30.91%;
+    bottom: 54.4%;
+
+    background: #FFFFFF;
+    border: 5px solid #28467A;
+
+    font-family: 'Do Hyeon';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 65px;
+    text-align: left;
+}
+
+#loginForm4 {
+    box-sizing: border-box;
+    position: absolute;
+
+    left: 38%;
+    right: 35.46%;
+    top: 30.91%;
+    bottom: 54.4%;
+
+    background: #FFFFFF;
+    border: 5px solid #28467A;
+
+    font-family: 'Do Hyeon';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 65px;
+    text-align: left;
+}
