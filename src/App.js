@@ -18,8 +18,9 @@ import ReserPage from "./pages/reservations/ReserPage";
 import Login from "./pages/user/Login";
 import FindID from "./pages/user/FindID";
 import ChangePWD from "./pages/user/ChangePWD";
-import SignupUser from "./pages/user/SignupUser";
-
+import Signup from "./pages/user/Signup";
+import AdminLayout from "./layouts/AdminLayout";
+import UserControl from "./pages/admin/UserControl";
 
 
 function App() {
@@ -47,12 +48,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-            <Route index element={<Main />} />
-            <Route path="expenses" element={<Expenses />} />
-            <Route path="login" element={<Login />} />
-            <Route path="findID" element={<FindID />} />
-            <Route path="changePWD" element={<ChangePWD />} />
-            <Route path="signupuser" element={<SignupUser />} />
+          <Route index element={<Main />} />
+          <Route path="" element />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/findID" element={<FindID />} />
+          <Route path="/changePWD" element={<ChangePWD />} />
+          <Route path="/signup" element={<Signup/>}/>
         </Route>
 
         <Route path="/myinfo" element={<MyPageLayout />}>
@@ -75,6 +77,11 @@ function App() {
         </Route>
         <Route path="/reserpage" element={<UserLayout />}>
           <Route index element={<ReserPage />} />
+        </Route>
+
+
+        <Route path="/usercontrol" element={<AdminLayout />}>
+          <Route index element={<UserControl />} />
         </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}

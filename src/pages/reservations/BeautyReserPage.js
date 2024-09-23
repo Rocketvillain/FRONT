@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import "../../css/BeautyReserPage.css"; // CSS 파일 추가
+import "../../css/ReserPage.css"; // CSS 파일 추가
 
 function BeautyReserPage() {
     const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜 상태
@@ -24,7 +24,7 @@ function BeautyReserPage() {
     };
 
     return (
-        <div className="beauty-reser-container">
+        <div className="reser-container">
             <h1 className="page-title">🎀미용 예약🎀</h1>
 
             {/* 이용 약관 동의 섹션 (맨 위로 이동) */}
@@ -34,12 +34,14 @@ function BeautyReserPage() {
                     본 서비스를 이용하기 위해 아래 약관에 동의해 주셔야 합니다. 예약 취소는 예약 하루 전까지 가능합니다.
                 </p>
                 <p>
-                    1. 전영병 등의 우려로 인해 광견병 예방접종과 기본5종백신 접종 및 항체검사 완료 또한 입양한 날부터 3주, 생후 3개월 이상, 병원 건강검진을 1회 이상 마친 후 미용 가능합니다.
+                    1. 전영병 등의 우려로 인해 광견병 예방접종과 기본5종백신 접종 및 항체검사 완료 또한 입양한 날부터 3주, 생후 3개월 이상, <br/>병원 건강검진을 1회 이상 마친 후 미용 가능합니다.
                     <br/>
-                    2. 사람에게 공격성이 강한 반려견/반려묘의 경우 아이와 미용사의 안전을 위해 미용 거부 또는 중단될 수 있습니다. (미용사 상해 시 배상청구. 미용보다 교육 & 안전이 우선입니다.)
+                    2. 사람에게 공격성이 강한 반려견/반려묘의 경우 아이와 미용사의 안전을 위해 미용 거부 또는 중단될 수 있습니다. 
                     <br/>
-                    3. 노령견 및 지병이 있거나 수술 후(슬개골 수술 포함) 불편한 경우는 미리 말씀해주셔야 하며, 아이가 협조하지 않으면 미용이 중단될 수 있습니다. 
-                    <br/>미용이 진행되더라도 상황에 따라 깔끔한 미용은 불가능한 점 인지 바랍니다. (미용비 환불 불가)
+                    (미용사 상해 시 배상청구. 미용보다 교육 & 안전이 우선입니다.)
+                    <br/>
+                    3. 노령견 및 지병이 있거나 수술 후(슬개골 수술 포함) 불편한 경우는 미리 말씀해주셔야 하며, <br/>아이가 협조하지 않으면 미용이 중단될 수 있습니다. 
+                    미용이 진행되더라도 상황에 따라 깔끔한 미용은 불가능한 점 인지 바랍니다.<br/> (미용비 환불 불가)
                 </p>
                 <div className="form-group">
                     <label>
@@ -91,23 +93,23 @@ function BeautyReserPage() {
                 <div className="input-form">
                     <div className="form-group">
                         <label>예약자 성함</label>
-                        <input type="text" placeholder="예약자 성함을 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="예약자 성함을 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 몸무게</label>
-                        <input type="text" placeholder="몸무게를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="몸무게를 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>예약자 전화번호</label>
-                        <input type="text" placeholder="전화번호를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="전화번호를 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 종류</label>
-                        <input type="text" placeholder="종류를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="종류를 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 이름</label>
-                        <input type="text" placeholder="반려동물 이름을 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="반려동물 이름을 입력하세요" disabled={!termsAccepted} />
                     </div>
                     <div className="form-group">
                         <label>반려동물 성별</label>
@@ -118,7 +120,7 @@ function BeautyReserPage() {
                     </div>
                     <div className="form-group">
                         <label>반려동물 나이</label>
-                        <input type="text" placeholder="나이를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="나이를 입력하세요" disabled={!termsAccepted} />
                     </div>
 
                     <div className="form-group">
@@ -143,6 +145,7 @@ function BeautyReserPage() {
                                 </label>
                             </div>
                         </div>
+                        <br/>
                         <div className="form-group">
                             <label>상세 내용</label>
                             <textarea placeholder="요청 사항을 입력하세요" disabled={!termsAccepted}></textarea>

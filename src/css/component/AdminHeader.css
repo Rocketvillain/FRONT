@@ -1,63 +1,75 @@
-/* Header.css */
 .admin-header-container {
-    padding: 10px;
+    width: 100%; /* UserHeader와 동일하게 화면 너비 전체 */
+    padding: 10px 0; /* 상하 여백만 남기고 좌우 여백 없음 */
     background-color: #E3AB1B; /* 배경색 설정 */
     color: #28467A;
-    height: 60px; /* 헤더 높이 */
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 수직 가운데 정렬 */
-    justify-content: space-between; /* 양 끝 정렬 */
+    height: 80px; /* UserHeader와 동일한 높이로 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed; /* UserHeader와 동일하게 상단에 고정 */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* 다른 요소보다 위에 표시되도록 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 크기 계산에 포함 */
 }
 
 .logo-admincontainer {
-    margin-left: 35px; /* 로고 이미지를 왼쪽에서 8px 떨어지도록 설정 */
+    margin-left: 35px; /* 로고 위치 조정 */
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* 로고가 줄어들지 않도록 설정 */
 }
 
 .logo-adminlink {
-    display: flex; /* Flexbox 사용 */
-    flex-direction: column; /* 수직 정렬 */
-    align-items: center; /* 로고 이미지와 텍스트 수평 가운데 정렬 */
+    display: flex;
+    flex-direction: column; /* 로고와 텍스트를 수직으로 정렬 */
+    align-items: center;
     text-decoration: none; /* 링크의 기본 밑줄 제거 */
 }
 
 .logo-admincontainer span {
     color: #28467A;
-    font-size: 14px; /* 텍스트 크기 조정 */
+    font-size: 14px; /* 텍스트 크기 */
     margin-top: -20px;
     margin-bottom: 20px;
 }
 
 .mainImage {
-    width: 80px; /* 이미지 크기 축소 */
-    height: 80px; /* 이미지 크기 축소 */
+    width: 80px; /* 로고 이미지 크기 */
+    height: 80px; /* 로고 이미지 크기 */
 }
-
 
 .adminnav-list {
     list-style: none;
     display: flex;
-    flex-direction: row;
-    gap: 50px; /* 항목 간 간격 조정 */
-    height: auto;
-    margin-top: -3px;
+    flex-direction: row; /* 가로 정렬 */
+    gap: 50px; /* 항목 간 간격 */
     text-decoration: none;
 }
 
 .adminnav-item {
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    display: flex;
+    align-items: center; /* 항목과 텍스트를 수직 가운데 정렬 */
     text-align: center;
     padding: 15px;
 }
 
 .adminnav-item span {
     color: #28467A;
-    font-size: 14px; /* 텍스트 크기 조정 */
+    font-size: 14px; /* 텍스트 크기 */
+    text-decoration: none;
+}
+
+.adminnav-item a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    font-weight: bold; /* 글자를 두껍게 설정 */
+    color: inherit; /* 글자색 상속 */
 }
 
 .logout-admincontainer {
     display: flex;
-    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    align-items: center;
     margin-right: 30px;
 }
 
@@ -70,4 +82,11 @@
 .logout-admincontainer span {
     color: #28467A;
     font-size: 14px; /* 텍스트 크기 */
+    text-decoration: none !important;
+}
+
+.logout-admincontainer a {
+    text-decoration: none !important; /* 로그아웃 밑줄 완전 제거 */
+    font-weight: bold; /* 로그아웃 글씨 두껍게 설정 */
+    color: inherit; /* 글자색 상속 */
 }

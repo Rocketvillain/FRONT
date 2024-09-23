@@ -1,11 +1,17 @@
 import { NavLink } from "react-router-dom";
-import '../../../css/AdminHeader.css';
+import '../../../css/component/AdminHeader.css';
 
 function AdminHeader() {
     const activeStyle = {
         // backgroundColor: 'white',
         color: 'black',
     }
+
+    const linkStyle = {
+        textDecoration: 'none',
+        fontWeight: 'bold',
+        color: 'inherit',
+    };
 
     return(
         <div className="admin-header-container">
@@ -32,12 +38,17 @@ function AdminHeader() {
                     </NavLink>
                 </li>
                 <li className="adminnav-item">
+                    <NavLink to="/usercontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                        <span>회원관리</span>
+                    </NavLink>
+                </li>
+                <li className="adminnav-item">
                     <NavLink to="/reportscontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>문의/신고 관리</span>
                     </NavLink>
                 </li>
             </ul>
-            <NavLink to="/logout" className="logout-admincontainer" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            <NavLink to="/logout" className="logout-admincontainer" style={linkStyle}>
                 <img src="/images/signup_logout_2.png" alt="로그아웃 아이콘" />
                 <span>LOGOUT</span>
             </NavLink>
