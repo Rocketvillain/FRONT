@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&family=Single+Day&display=swap');
+
 /* 공통 스타일 */
 .signup-container {
-  width: 50%;
+  width: 100%;
   align-items: center;
   margin: 50px auto;
   padding: 20px;
   border: 5px solid #28467a;
   background-color: #fff;
   position: relative;
+  font-family: 'Poor Story';
 }
 
 /* 탭 버튼 스타일 */
@@ -15,6 +18,7 @@
   justify-content: flex-start; /* 왼쪽 정렬 */
   margin: 30px;
   border-radius: 0;
+  
 }
 
 .tab-button {
@@ -27,6 +31,7 @@
   font-size: 16px;
   margin: 0 5px;
   transition: transform 0.1s ease-in-out; /* 애니메이션 적용 */
+  font-family: 'Poor Story';
 }
 
 .tab-button.active {
@@ -79,6 +84,7 @@
 /* 입력 필드 박스 */
 .form-input-box {
   margin-bottom: 20px;
+  font-family: 'Poor Story';
 }
 
 .form-input-box label {
@@ -98,6 +104,7 @@
   border-radius: 0;
   box-sizing: border-box;
   background-color: #f9f9f9;
+  font-family: 'Poor Story';
 }
 
 .input-with-button {
@@ -106,21 +113,27 @@
   border-radius: 0;
 }
 
+.input-with-button2 {
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+}
+
+.input-with-button2 button {
+  width: 86px;
+  height: 42px;
+}
+
 .input-with-button button {
   transition: transform 0.1s ease-in-out;
 }
 
-.input-with-button button:active {
-  transform: scale(0.95); 
-}
-
 .input-with-button input {
-  width: 76.5%; 
-  margin-right: 5px;
+  width: 82.5%; 
 }
 
 .duplicate-check {
-  margin-left: 5px;
+  margin-left: 20px;
   padding: 12px 15px;
   font-size: 14px;
   background-color: #28467A;
@@ -128,6 +141,8 @@
   color: white;
   cursor: pointer;
   border-radius: 0px;
+  font-family: 'Poor Story';
+
 }
 
 .duplicate-check:hover {
@@ -168,7 +183,6 @@
 
 /* 회원가입 버튼 */
 .signup-user-btn {
-  margin-left:  20.5em;
   margin-top: 540px;
   padding: 15px 0;
   font-size: 18px;
@@ -182,8 +196,8 @@
   bottom: -90px;
   align-items: center;
   border-radius: 0;
-  box-shadow: 0 5px 15px rgba(51, 51, 51, 0.1);
-  transition: transform 0.1s ease-in-out;
+  transform: translateX(450px);
+  font-family: 'Poor Story';
 }
 
 .signup-user-btn:hover {
@@ -192,5 +206,28 @@
 
 .signup-user-btn:active {
   transform: scale(1.05);
+}
+
+.signupPWD-error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.valid {
+  color: green;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+/* 유효성 검사에 통과하지 못했을 때 적용되는 스타일 */
+.invalid {
+  color: red;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: inline-block;
 }
 

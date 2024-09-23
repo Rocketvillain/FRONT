@@ -1,41 +1,168 @@
-/* ChangePWD.css */
+/* ChangePWD 관련 스타일 */
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&family=Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
-#loginForm3 {
-    box-sizing: border-box;
-    position: absolute;
 
-    left: 11.89%;
-    right: 64%;
-    top: 30.91%;
-    bottom: 54.4%;
-
-    background: #FFFFFF;
-    border: 5px solid #28467A;
-
-    font-family: 'Do Hyeon';
+/* 전체 페이지 스타일 */
+#changePWD-title {
+    font-family: 'Poor Story';
     font-style: normal;
-    font-weight: 400;
-    font-size: 52px;
-    line-height: 65px;
-    text-align: left;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 38px;
+    color: #28467A;
+    margin-bottom: 20px;
+    transform: translateX(-365px);
 }
 
-#loginForm4 {
-    box-sizing: border-box;
+#changePWD-subtitle {
     position: absolute;
-
-    left: 38%;
-    right: 35.46%;
-    top: 30.91%;
-    bottom: 54.4%;
-
-    background: #FFFFFF;
-    border: 5px solid #28467A;
-
-    font-family: 'Do Hyeon';
+    right: 20px;
+    top: 10px;
+    font-family: 'Single Day';
     font-style: normal;
     font-weight: 400;
-    font-size: 52px;
+    font-size: 36px;
     line-height: 65px;
-    text-align: left;
+    color: #000000;
 }
+
+.changePWD-form-group {
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+}
+
+#changePWD-id-input,
+#changePWD-name-input {
+    width: 31.4%; /* ID와 NAME은 같은 줄에 배치되도록 각각 너비 설정 */
+    padding: 15px; /* 입력 필드의 높이를 loginForm과 유사하게 설정 */
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 18px; /* 폰트 크기 증가 */
+    border: 3px solid #28467A;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    transform: translateX(30px);
+}
+
+#changePWD-email-input {
+    width: 65%; /* EMAIL 필드는 한 줄을 모두 차지 */
+    padding: 15px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 18px;
+    border: 3px solid #28467A;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+
+#changePWD-submit-button {
+    width: 20%;
+    /* 버튼 너비를 적절하게 조정 */
+    padding: 15px;
+    height: 120px;
+    background-color: #E3AB1B;
+    border: 3px solid #28467A;
+    font-family: 'Poor Story', sans-serif;
+    font-size: 24px;
+    /* 버튼 폰트 크기 증가 */
+    color: white;
+    cursor: pointer;
+    margin-left: 670px;
+    /* 버튼을 오른쪽으로 정렬 */
+    transform: translateY(-150px);
+}
+
+#changePWD-submit-button:hover {
+    background-color: #d9981a;
+    cursor: pointer;
+}
+
+.changePWD-back-button {
+    position: absolute;
+    bottom: 70px;
+    left: 60px;
+    background-color: white;
+    color: black;
+    font-size: 24px;
+    border: 3px solid #28467A;
+    border-radius: 50%;
+    cursor: pointer;
+    font-family: 'Poor Story', sans-serif;
+}
+
+.changePWD-back-button:hover {       
+    background-color: #bac3d3;
+}
+
+/* 모달 창 스타일 */
+.changePWD-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.changePWD-modal-content {
+    background-color: white;
+    padding: 2rem;
+    text-align: center;
+    width: 400px;
+    border: 3px solid #28467A;
+}
+
+.changePWD-modal-content h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.changePWD-modal-content input {
+    width: 380px;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.changePWD-confirm-button {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: 3px solid #28467A;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.changePWD-confirm-button:hover {
+    background-color: #a1daad;
+}
+
+.changePWD-cancel-button {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: 3px solid #28467A;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.changePWD-cancel-button:hover {
+    background-color: #e29da4;
+}
+
+.changePWD-error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
