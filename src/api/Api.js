@@ -6,7 +6,10 @@ export const request = async (method, url, data) => {
     return await axios({
         method,
         url: `${DOMAIN}${url}`,
-        data
+        data,
+        headers: {
+            'Content-Type': 'application/json', // JSON으로 요청한다는 것을 명시
+        },
     })
     .then(res => res.data)
     .catch(error => {

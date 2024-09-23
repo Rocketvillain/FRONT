@@ -1,6 +1,6 @@
 import '../../css/component/AlertMessage1.css'
 
-function AlertMessage() {
+function AlertMessage1() {
 
     return (
         <div className='alertModule1'>
@@ -10,4 +10,4 @@ function AlertMessage() {
     )
 }
 
-export default AlertMessage;
+export default AlertMessage1;
