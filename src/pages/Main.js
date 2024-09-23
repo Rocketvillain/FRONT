@@ -37,6 +37,12 @@ function Main() {
                         <span>진료 및 수술 예약</span>
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink to="/usercontrol">
+                        <img src="/images/main2.png" alt="관리자 회원 관리" />
+                        <span>관리자 회원 관리</span>
+                    </NavLink>
+                </li>
 
                 <li className="nav-item">
                     <NavLink to="/resercontrol">
