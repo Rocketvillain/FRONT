@@ -27,7 +27,7 @@ function UserHeader() {
                     </NavLink>
                 </li>
                 <li className="usernav-item">
-                    <NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : '')}>
+                    <NavLink to="/hosreser" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <span>병원예약</span>
                     </NavLink>
                 </li>
