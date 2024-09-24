@@ -1,0 +1,103 @@
+.hos-info-container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 20px;
+    background-color: #EFEEF4;
+    border-radius: 10px;
+    font-family: 'Poor Story';
+}
+
+.hos-info-header {
+    display: flex;
+    justify-content: space-between; /* 제목과 로고를 양쪽 끝으로 배치 */
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000000; /* 아래쪽 선 추가 */
+}
+
+.hos-info-header h2 {
+    margin: 0; /* h2의 기본 마진 제거 */
+    font-size: 24px; /* 제목 크기 조정 */
+    color: #28467A; /* 제목 색상 조정 */
+}
+
+.hos-logo {
+    width: 80px; /* 로고 크기 조정 */
+    height: auto;
+    margin-left: 20px; /* 제목과 로고 사이 간격 */
+}
+
+.hos-info-content {
+    background-color: #fff;
+    padding: 0 30px;
+}
+
+.hos-info-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.hos-info-table th,
+.hos-info-table td {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+.hos-info-table th {
+    width: 150px;
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.image-upload-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+}
+
+.image-preview {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.image-upload-button {
+    padding: 10px 20px;
+    background-color: #28467A;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.image-upload-button:hover {
+    background-color: #4caf50;
+}
+
+.submit-button-container {
+    text-align: right;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #28467A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #4caf50;
+}
