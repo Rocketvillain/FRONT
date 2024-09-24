@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import '../../../css/HosHeader.css'
+import '../../../css/component/HosHeader.css'
 
 function HosHeader() {
     const activeStyle = {
