@@ -1,7 +1,12 @@
 import { NavLink } from "react-router-dom";
 import '../../../css/component/AdminHeader.css';
+import { useDispatch } from "react-redux";
+import { resetLoginUser } from "../../../modules/UserModule";
 
 function AdminHeader() {
+
+    const dispatch = useDispatch(); 
+    
     const activeStyle = {
         // backgroundColor: 'white',
         color: 'black',
@@ -11,6 +16,15 @@ function AdminHeader() {
         textDecoration: 'none',
         fontWeight: 'bold',
         color: 'inherit',
+    };
+
+    const handleLogout = () => {
+
+        // 로그인 상태를 리셋하는 액션을 디스패치
+        dispatch(resetLoginUser());
+
+        // 로그아웃 후 메인 페이지로 리다이렉트
+        window.location.href = '/';
     };
 
     return(
@@ -48,10 +62,11 @@ function AdminHeader() {
                     </NavLink>
                 </li>
             </ul>
-            <NavLink to="/logout" className="logout-admincontainer" style={linkStyle}>
-                <img src="/images/signup_logout_2.png" alt="로그아웃 아이콘" />
+            {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
+            <div className="logout-admincontainer" onClick={handleLogout}>
+                <img src="/images/signup_logout_1.png" alt="로그아웃 아이콘" />
                 <span>LOGOUT</span>
-            </NavLink>
+            </div>
         </div>
 
     )

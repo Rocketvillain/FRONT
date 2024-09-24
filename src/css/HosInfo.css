@@ -55,6 +55,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    border-bottom: 2px solid #000000; /* 아래쪽 선 추가 */
 }
 
 .image-upload {
@@ -79,23 +80,33 @@
     border: none;
     border-radius: 15px;
     cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
 }
 
 .image-upload-button:hover {
     background-color: #4caf50;
 }
 
+.image-upload-button:active,
+.submit-button:active{
+    transform: scale(1.2);
+}
+
 .submit-button-container {
     text-align: right;
+    padding-bottom: 20px;
+    padding-right: 20px;
 }
 
 .submit-button {
-    padding: 10px 20px;
+    padding: 15px 22px;
     background-color: #28467A;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
 }
 
 .submit-button:hover {

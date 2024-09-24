@@ -92,10 +92,10 @@ function HosInfo() {
                             </tr>
                         </tbody>
                     </table>
-                    <div className="image-u pload-section">
+                    <div className="image-upload-section">
                         <div className="image-upload">
                             <img
-                                src={previewImage.ceoImage || '/images/defaultProfile.png'}
+                                src={previewImage.ceoImage || '/images/owner.png'}
                                 alt="대표자 이미지"
                                 className="image-preview"
                             />
@@ -116,7 +116,7 @@ function HosInfo() {
                         </div>
                         <div className="image-upload">
                             <img
-                                src={previewImage.hospitalImage || '/images/defaultHospital.png'}
+                                src={previewImage.hospitalImage || '/images/hospital.jpg'}
                                 alt="병원 이미지"
                                 className="image-preview"
                             />
