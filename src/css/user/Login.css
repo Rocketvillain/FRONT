@@ -1,93 +1,108 @@
-/* 로그인 폼을 감싸는 박스 */
+/* Login.css  */
+
 .login-wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    width: 1000px;  /* 폼의 넓이를 확대 */
+    width: 1000px;
+    /* 폼의 넓이를 확대 */
     height: 430px;
-    margin: 150px auto;  /* 화면 중앙에 배치 */
+    margin: 150px auto;
+    /* 화면 중앙에 배치 */
     padding: 40px;
     background-color: #fff;
     border: 5px solid #28467A;
     box-sizing: border-box;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    transform: translateY(10px);
 
 }
 
-/* Healing Pets 제목 */
 #HealingPets {
     font-family: 'Single Day', sans-serif;
     font-size: 36px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     text-align: center;
     width: 100%;
     color: #000;
 }
 
 .form-group {
-    display: flex;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 40px;
+    margin-top: 20px;
 
 }
 
 /* 입력 필드 스타일 */
-#login-id, #login-pwd {
-    width: 65%;  /* 입력 필드가 전체 너비를 차지 */
-    padding: 15px; /* 입력 필드의 높이를 넓게 설정 */
+#loginForm1,
+#loginForm2 {
+    width: 65%;
+    /* 입력 필드가 전체 너비를 차지 */
+    padding: 15px;
+    /* 입력 필드의 높이를 넓게 설정 */
     font-family: 'Do Hyeon', sans-serif;
-    font-size: 18px;  /* 폰트 크기 증가 */
+    font-size: 18px;
+    /* 폰트 크기 증가 */
     border: 3px solid #28467A;
     box-sizing: border-box;
     margin-bottom: 20px;
     margin-left: 30px;
     border-radius: 0;
-
 }
 
 /* 로그인 버튼 */
 #login-button {
-    width: 20%; /* 버튼 너비를 적절하게 조정 */
+    width: 20%;
+    /* 버튼 너비를 적절하게 조정 */
     padding: 15px;
     height: 120px;
     background-color: #E3AB1B;
     border: 3px solid #28467A;
     font-family: 'Poor Story', sans-serif;
-    font-size: 24px; /* 버튼 폰트 크기 증가 */
+    font-size: 24px;
+    /* 버튼 폰트 크기 증가 */
     color: white;
     cursor: pointer;
-    margin-left: 670px; /* 버튼을 오른쪽으로 정렬 */
+    margin-left: 670px;
+    /* 버튼을 오른쪽으로 정렬 */
     transform: translateY(-150px);
 }
 
 #login-button:hover {
     background-color: #d9981a;
+    transform: translateY(-150px);
+    cursor: pointer;
 }
 
 /* 링크 스타일 */
 .link-group {
     position: absolute;
-    left: 0; /* 왼쪽 정렬 */
+    left: 0;
+    /* 왼쪽 정렬 */
     display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬 */
-    width: 65%; /* 입력 필드의 너비에 맞게 설정 */
+    justify-content: flex-start;
+    /* 왼쪽 정렬 */
+    width: 65%;
+    /* 입력 필드의 너비에 맞게 설정 */
     margin-top: 10px;
     transform: translate(80px, 240px);
-
 }
 
-#find-ID, #change-PWD {
+#find-ID,
+#change-PWD {
     font-family: 'Poor Story', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #28467A;
     cursor: pointer;
-    margin-right: 20px; /* 링크 간의 간격 추가 */
+    margin-right: 20px;
+    /* 링크 간의 간격 추가 */
 }
 
-#find-ID:hover, #change-PWD:hover {
+#find-ID:hover,
+#change-PWD:hover {
     text-decoration: underline;
 }

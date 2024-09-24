@@ -22,8 +22,15 @@ import BeautyReserPage from "./pages/reservations/BeautyReserPage";
 import HosDetails from "./pages/hospital/HosDetails";
 import HosReser from "./pages/hospital/HosReser";
 import Signup from "./pages/user/Signup";
+import AdminLayout from "./layouts/AdminLayout";
+import UserControl from "./pages/admin/UserControl";
+import ReserControl from "./pages/admin/ReserControl";
+import HospitalView from "./pages/hospital/HospitalView";
+import ReserPage from "./pages/reservations/ReserPage";
+import BeautyReserPage from "./pages/reservations/BeautyReserPage";
+import HosDetails from "./pages/hospital/HosDetails";
+import HosReser from "./pages/hospital/HosReser";
 import UserLayout2 from "./layouts/UserLayout2";
-
 
 function App() {
   // const token = localStorage.getItem('token');
@@ -91,6 +98,13 @@ function App() {
           <Route index element={<HosReser/>}/>
         </Route>
 
+
+        <Route path="/usercontrol" element={<AdminLayout />}>
+          <Route index element={<UserControl />} />
+        </Route>
+        <Route path="/resercontrol" element={<AdminLayout />}>
+          <Route index element={<ReserControl />} />
+        </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}
         {role === 'user' && <Route path="/" element={<UserMain />} />}
