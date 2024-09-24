@@ -1,15 +1,18 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import '../../../css/component/UserHeader.css';
+import { resetLoginUser } from "../../../modules/UserModule";
 
 function UserHeader() {
-    const navigate = useNavigate();  // react-router-dom의 useNavigate 사용
+    const dispatch = useDispatch(); 
 
     const handleLogout = () => {
-        // 로그아웃 로직: localStorage에서 토큰 삭제 등 처리
-        localStorage.removeItem('token');  // 예시: 로그인 토큰 삭제
+
+        // 로그인 상태를 리셋하는 액션을 디스패치
+        dispatch(resetLoginUser());
 
         // 로그아웃 후 메인 페이지로 리다이렉트
-        navigate('/');
+        window.location.href = '/';
     };
 
     return (
