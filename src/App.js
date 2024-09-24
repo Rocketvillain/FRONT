@@ -1,5 +1,5 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useState } from 'react';
 // import LoginForm from "./pages/LoginForm";
 import Main from "./pages/Main";
 import Layout from "./layouts/Layout";
@@ -12,20 +12,24 @@ import MyReviews from "./pages/mypage/MyReviews";
 import ClinicHistory from "./pages/mypage/ClinicHistory";
 import AllReviews from "./pages/hospital/AllReviews";
 import UserLayout from "./layouts/UserLayout";
-import BeautyReserPage from "./pages/reservations/BeautyReserPage";
-import ReserPage from "./pages/reservations/ReserPage";
 import Login from "./pages/user/Login";
 import FindID from "./pages/user/FindID";
 import ChangePWD from "./pages/user/ChangePWD";
+import HospitalView from "./pages/hospital/HospitalView";
+import ReserPage from "./pages/reservations/ReserPage";
+import BeautyReserPage from "./pages/reservations/BeautyReserPage";
+import HosDetails from "./pages/hospital/HosDetails";
+import HosReser from "./pages/hospital/HosReser";
 import Signup from "./pages/user/Signup";
 import AdminLayout from "./layouts/AdminLayout";
 import UserControl from "./pages/admin/UserControl";
 import ReserControl from "./pages/admin/ReserControl";
-import AdminMain from "./pages/AdminMain";
-import HosAdminMain from "./pages/HosAdminMain";
-import UserMain from "./pages/UserMain";
-import HosLayout from "./layouts/HosLayout";
-
+import HospitalView from "./pages/hospital/HospitalView";
+import ReserPage from "./pages/reservations/ReserPage";
+import BeautyReserPage from "./pages/reservations/BeautyReserPage";
+import HosDetails from "./pages/hospital/HosDetails";
+import HosReser from "./pages/hospital/HosReser";
+import UserLayout2 from "./layouts/UserLayout2";
 
 function App() {
 
@@ -72,6 +76,8 @@ function App() {
             <Route path="/beautyreserpage" element={<BeautyReserPage />} />
             <Route path="/reserpage" element={<ReserPage />} />
             <Route path="/expenses" element={<Expenses />} />
+            <Route path="/hospitalview" element={<HospitalView />} />
+            <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
           </Route>
         )}
         
@@ -97,8 +103,26 @@ function App() {
           <Route path="/myinfo/mypet" element={<MyPet />} />
         </Route>
 
+        <Route path="/allreviews" element={<UserLayout />}>
+          <Route index element={<AllReviews />} />
+        </Route>
+        <Route path="/expenses" element={<UserLayout />}>
+          <Route index element={<Expenses />} />
+        </Route>
+        <Route path="/beautyreserpage" element={<UserLayout />}>
+          <Route index element={<BeautyReserPage />} />
+        </Route>
+        <Route path="/reserpage" element={<UserLayout />}>
+          <Route index element={<ReserPage />} />
+        </Route>
+        <Route path="/hosreser" element={<UserLayout2 />}>
+          <Route index element={<HosReser/>}/>
+        </Route>
+
+        {/* 지정되지 않은 경로는 메인페이지로 이동 */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      
     </BrowserRouter>
 
   );

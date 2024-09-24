@@ -2,10 +2,10 @@
     box-sizing: border-box;
 
     position: absolute;
-    width: 500px;
-    height: 75px;
+    width: 370px;
+    height: 40px;
     right: 10%;
-    bottom: 10%;
+    bottom: 15%;
 
     background: #FFFFFF;
     border: 3px solid #28467A;
@@ -31,12 +31,13 @@
 .alertModule1 span {
     position: absolute;
     left: 10%;
-    top: 22.97%;
+    top: 22%;
 
     font-family: 'Do Hyeon';
     font-style: normal;
     font-weight: bold;
-    font-size: 26px;
+    font-size: 18px;
+    transform: translateX(20px);
 
     color: red;
 }
@@ -44,10 +45,11 @@
 .alertModule1 img {
     position: absolute;
 
-    width: 50px;
+    width: 28px;
     left: 86.81%;
-    right: 3.74%;
+    right: 5%;
     top: 13.51%;
     bottom: 21.62%;
+    height: 25px;
 
 }
