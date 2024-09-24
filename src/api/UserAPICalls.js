@@ -15,8 +15,6 @@ export function callLoginAPI(loginInfo) {
             console.log('login result : ', result); // 서버에서 반환된 유저 정보
 
             if (result.data.failType) {
-                console.log(result.data.failType);
-                
                 return result.data.failType; // 로그인 실패
             } 
 
