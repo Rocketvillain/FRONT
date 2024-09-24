@@ -1,0 +1,138 @@
+.review-control-container {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.review-control-title {
+    color: #333;
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.review-control-search-bar {
+    display: flex;
+    margin-bottom: 20px;
+    transform: translate(750px);
+}
+
+.review-control-search-input {
+    width: 160px;
+    padding: 10px;
+    border: 1px solid #000000; 
+    border-radius: 0px;
+    font-size: 14px;
+    color: #7D7D7D;
+    font-weight: bold;
+}
+
+.review-control-search-button {
+    padding: 10px 20px; 
+    background-color: white; 
+    color: black; 
+    border: 1px solid #000000; 
+    border-radius: 0px; 
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.review-control-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.review-control-table th, .review-control-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word; /* 긴 단어가 있으면 줄 바꿈 */
+    white-space: normal;
+}
+
+.review-control-table th {
+    background-color: #F0C60A;
+    color: black;
+}
+
+.review-control-table td {
+    background-color: #f9f9f9;
+}
+
+/* 테이블 칸의 최소 너비 설정 */
+.review-control-table th:nth-child(1), .review-control-table td:nth-child(1) { /* 번호 */
+    width: 5%;
+    white-space: nowrap;
+}
+.review-control-table th:nth-child(2), .review-control-table td:nth-child(2) { /* 아이디 */
+    width: 10%;
+}
+.review-control-table th:nth-child(3), .review-control-table td:nth-child(3) { /* 작성자 */
+    width: 10%;
+    white-space: nowrap;
+}
+.review-control-table th:nth-child(4), .review-control-table td:nth-child(4) { /* 병원 */
+    width: 15%;
+    white-space: nowrap;
+}
+.review-control-table th:nth-child(5), .review-control-table td:nth-child(5) { /* 예약유형 */
+    width: 10%;
+    white-space: nowrap;
+}
+.review-control-table th:nth-child(6), .review-control-table td:nth-child(6) { /* 작성내용 */
+    width: 30%;
+    white-space: nowrap; /* 가장 넓게 설정하여 긴 내용을 표시할 수 있도록 함 */
+}
+.review-control-table th:nth-child(7), .review-control-table td:nth-child(7) { /* 작성날짜 */
+    width: 10%;
+    white-space: nowrap;
+}
+.review-control-table th:nth-child(8), .review-control-table td:nth-child(8) { /* 최종 수정 날짜 */
+    width: 10%;
+    white-space: nowrap;
+}
+
+
+.review-control-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.review-control-pagination button {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.review-control-active {
+    color: black;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+}
+
+.review-control-pagination button:hover {
+    background-color: #f0f0f0;
+}
+
+.review-control-report-button {
+    background-color: #F0C60A;
+    color: black;
+    padding: 10px 20px;
+    border: 1px solid black;
+    cursor: pointer;
+    font-weight: bold;
+    transform: translateY(40px);
+}
+
+.review-control-report-button:hover {
+    background-color: #ff6600;
+}

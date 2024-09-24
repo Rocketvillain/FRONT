@@ -25,12 +25,10 @@ import Signup from "./pages/user/Signup";
 import AdminLayout from "./layouts/AdminLayout";
 import UserControl from "./pages/admin/UserControl";
 import ReserControl from "./pages/admin/ReserControl";
-import HospitalView from "./pages/hospital/HospitalView";
-import ReserPage from "./pages/reservations/ReserPage";
-import BeautyReserPage from "./pages/reservations/BeautyReserPage";
-import HosDetails from "./pages/hospital/HosDetails";
-import HosReser from "./pages/hospital/HosReser";
 import UserLayout2 from "./layouts/UserLayout2";
+import FooterLayout from "./layouts/FooterLayout";
+import ReviewControl from "./pages/admin/ReviewControl";
+import HosControl from "./pages/admin/HosControl";
 
 function App() {
   // const token = localStorage.getItem('token');
@@ -48,30 +46,26 @@ function App() {
   // 리뷰 추가 함수
   const addReview = (newReview) => {
     setReviews((prevReviews) => [...prevReviews, newReview]); // 새 리뷰를 기존 리뷰에 추가
-};
+  };
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+
+      <Route path="/" element={<FooterLayout />}>
           <Route index element={<Main />} />
-          <Route path="" element />
-          <Route path="/expenses" element={<Expenses />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/findID" element={<FindID />} />
-          <Route path="/changePWD" element={<ChangePWD />} />
-          <Route path="/expenses" element={<Expenses/>} />
-          <Route path="/hospitalview" element={<HospitalView />} />
-          <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
-          <Route index element={<Main />} />
-          <Route path="" element />
-          <Route path="/expenses" element={<Expenses />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/findID" element={<FindID />} />
-          <Route path="/changePWD" element={<ChangePWD />} />
-          <Route path="/signup" element={<Signup/>}/>
         </Route>
-        
+        <Route element={<Layout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/findID" element={<FindID />} />
+          <Route path="/changePWD" element={<ChangePWD />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="" element />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/hospitalview" element={<HospitalView />} />
+          <Route path="/hosdetail/:hosId" element={<HosDetails />} />
+        </Route>
+
         <Route path="/myinfo" element={<MyPageLayout />}>
           <Route index element={<MyInfo />} />
           <Route path="/myinfo/myinfo" element={<MyInfo />} />
@@ -81,21 +75,21 @@ function App() {
           <Route path="/myinfo/mypet" element={<MyPet />} />
         </Route>
 
-        <Route path="/allreviews" element={<UserLayout/>}>
-          <Route index element={<AllReviews/>}/>
+        <Route path="/allreviews" element={<UserLayout />}>
+          <Route index element={<AllReviews />} />
         </Route>
 
-        <Route path="/expenses" element={<UserLayout/>}>
-          <Route index element={<Expenses/>}/>
+        <Route path="/expenses" element={<UserLayout />}>
+          <Route index element={<Expenses />} />
         </Route>
-        <Route path="/beautyreserpage" element={<UserLayout/>}>
-          <Route index element={<BeautyReserPage/>}/>
+        <Route path="/beautyreserpage" element={<UserLayout />}>
+          <Route index element={<BeautyReserPage />} />
         </Route>
-        <Route path="/reserpage" element={<UserLayout/>}>
-          <Route index element={<ReserPage/>}/>
+        <Route path="/reserpage" element={<UserLayout />}>
+          <Route index element={<ReserPage />} />
         </Route>
         <Route path="/hosreser" element={<UserLayout2 />}>
-          <Route index element={<HosReser/>}/>
+          <Route index element={<HosReser />} />
         </Route>
 
 
@@ -105,13 +99,19 @@ function App() {
         <Route path="/resercontrol" element={<AdminLayout />}>
           <Route index element={<ReserControl />} />
         </Route>
+        <Route path="/reviewcontrol" element={<AdminLayout />}>
+          <Route index element={<ReviewControl />} />
+        </Route>
+        <Route path="/hoscontrol" element={<AdminLayout />}>
+          <Route index element={<HosControl />} />
+        </Route>
         {/* {role === 'admin' && <Route path="/" element={<AdminMain />} />}
         {role === 'hosadmin' && <Route path="/" element={<HosAdminMain />} />}
         {role === 'user' && <Route path="/" element={<UserMain />} />}
         <Route path="*" element={<Navigate to="/" />} /> */}
-        
+
       </Routes>
-      
+
     </BrowserRouter>
 
   );

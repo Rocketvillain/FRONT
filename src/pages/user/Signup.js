@@ -12,7 +12,6 @@ function Signup() {
     const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [isPasswordMatched, setIsPasswordMatched] = useState(false);
-
     const switchTab = (tab) => {
         setActiveTab(tab);
     };
@@ -146,6 +145,7 @@ function Signup() {
 
         setErrorMessage(''); // 오류 메시지 초기화
         console.log('Form Data:', formData);
+
     };
 
     return (
@@ -287,88 +287,88 @@ function Signup() {
                                     </div>
 
                                     {formData.petName && (
-                                    <>
-                                        <div className="form-input-box">
-                                            <label>AGE</label>
-                                            <input
-                                                type="number"
-                                                name="age"
-                                                value={formData.age}
-                                                onChange={handleChange}
-                                                placeholder="반려동물 나이를 입력하세요"
-                                            />
-                                        </div>
-                                        <div className="form-input-box">
-                                            <label>WEIGHT(kg)</label>
-                                            <input
-                                                type="number"
-                                                name="weight"
-                                                value={formData.weight}
-                                                onChange={handleChange}
-                                                placeholder="반려동물 몸무게를 입력하세요"
-                                            />
-                                        </div>
-                                        <div className="form-input-box species-box">
-                                            <label>SPECIES</label>
-                                            <div className="species-radio">
+                                        <>
+                                            <div className="form-input-box">
+                                                <label>AGE</label>
                                                 <input
-                                                    type="radio"
-                                                    name="species"
-                                                    value="dog"
-                                                    checked={formData.species === 'dog'}
+                                                    type="number"
+                                                    name="age"
+                                                    value={formData.age}
                                                     onChange={handleChange}
+                                                    placeholder="반려동물 나이를 입력하세요"
                                                 />
-                                                <label>DOG</label>
-                                                <input
-                                                    type="radio"
-                                                    name="species"
-                                                    value="cat"
-                                                    checked={formData.species === 'cat'}
-                                                    onChange={handleChange}
-                                                />
-                                                <label>CAT</label>
-                                                <input
-                                                    type="radio"
-                                                    name="species"
-                                                    value="other"
-                                                    checked={formData.species === 'other'}
-                                                    onChange={handleChange}
-                                                />
-                                                <label>OTHER</label>
                                             </div>
-                                        </div>
-                                        <div className="form-input-box">
-                                            <label>KIND</label>
-                                            <input
-                                                type="text"
-                                                name="kind"
-                                                value={formData.kind}
-                                                onChange={handleChange}
-                                                placeholder="반려동물 종을 입력하세요 예) 말티즈"
-                                            />
-                                        </div>
-                                        <div className="form-input-box gender-box">
-                                            <label>GENDER</label>
-                                            <div className="gender-radio">
+                                            <div className="form-input-box">
+                                                <label>WEIGHT(kg)</label>
                                                 <input
-                                                    type="radio"
-                                                    name="gender"
-                                                    value="male"
-                                                    checked={formData.gender === 'male'}
+                                                    type="number"
+                                                    name="weight"
+                                                    value={formData.weight}
                                                     onChange={handleChange}
+                                                    placeholder="반려동물 몸무게를 입력하세요"
                                                 />
-                                                <label>남</label>
-                                                <input
-                                                    type="radio"
-                                                    name="gender"
-                                                    value="female"
-                                                    checked={formData.gender === 'female'}
-                                                    onChange={handleChange}
-                                                />
-                                                <label>여</label>
                                             </div>
-                                        </div>
-                                    </>
+                                            <div className="form-input-box species-box">
+                                                <label>SPECIES</label>
+                                                <div className="species-radio">
+                                                    <input
+                                                        type="radio"
+                                                        name="species"
+                                                        value="dog"
+                                                        checked={formData.species === 'dog'}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <label>DOG</label>
+                                                    <input
+                                                        type="radio"
+                                                        name="species"
+                                                        value="cat"
+                                                        checked={formData.species === 'cat'}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <label>CAT</label>
+                                                    <input
+                                                        type="radio"
+                                                        name="species"
+                                                        value="other"
+                                                        checked={formData.species === 'other'}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <label>OTHER</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-input-box">
+                                                <label>KIND</label>
+                                                <input
+                                                    type="text"
+                                                    name="kind"
+                                                    value={formData.kind}
+                                                    onChange={handleChange}
+                                                    placeholder="반려동물 종을 입력하세요 예) 말티즈"
+                                                />
+                                            </div>
+                                            <div className="form-input-box gender-box">
+                                                <label>GENDER</label>
+                                                <div className="gender-radio">
+                                                    <input
+                                                        type="radio"
+                                                        name="gender"
+                                                        value="male"
+                                                        checked={formData.gender === 'male'}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <label>남</label>
+                                                    <input
+                                                        type="radio"
+                                                        name="gender"
+                                                        value="female"
+                                                        checked={formData.gender === 'female'}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <label>여</label>
+                                                </div>
+                                            </div>
+                                        </>
                                     )}
                                 </div>
                             </div>
@@ -486,71 +486,71 @@ function Signup() {
                                     </div>
 
                                     {isHospitalNameEntered && (
-                                    <>
-                                        <div className="form-input-box">
-                                            <label>ADDRESS</label>
-                                            <input
-                                                type="text"
-                                                name="address"
-                                                value={formData.address}
-                                                onChange={handleChange}
-                                                placeholder="병원 주소를 입력하세요"
-                                            />
-                                        </div>
-                                        <div className="form-input-box">
-                                            <label>BUSINESS_NO</label>
-                                            <input
-                                                type="text"
-                                                name="businessNo"
-                                                value={formData.businessNo}
-                                                onChange={handleChange}
-                                                placeholder="사업자 번호를 입력하세요"
-                                            />
-                                        </div>
-                                        <div className="form-input-box">
-                                            <label>OWNER</label>
-                                            <input
-                                                type="text"
-                                                name="owner"
-                                                value={formData.owner}
-                                                onChange={handleChange}
-                                                placeholder="대표자 이름을 입력하세요"
-                                            />
-                                        </div>
-                                        <div className="form-input-box category-section">
-                                            <label>CATEGORY</label>
-                                            <div className="category-item">
-                                                <label>진료</label>
+                                        <>
+                                            <div className="form-input-box">
+                                                <label>ADDRESS</label>
                                                 <input
-                                                    type="checkbox"
-                                                    name="category"
-                                                    value="진료"
-                                                    checked={formData.category.includes('진료')}
+                                                    type="text"
+                                                    name="address"
+                                                    value={formData.address}
                                                     onChange={handleChange}
+                                                    placeholder="병원 주소를 입력하세요"
                                                 />
                                             </div>
-                                            <div className="category-item">
-                                                <label>수술</label>
+                                            <div className="form-input-box">
+                                                <label>BUSINESS_NO</label>
                                                 <input
-                                                    type="checkbox"
-                                                    name="category"
-                                                    value="수술"
-                                                    checked={formData.category.includes('수술')}
+                                                    type="text"
+                                                    name="businessNo"
+                                                    value={formData.businessNo}
                                                     onChange={handleChange}
+                                                    placeholder="사업자 번호를 입력하세요"
                                                 />
                                             </div>
-                                            <div className="category-item">
-                                                <label>미용</label>
+                                            <div className="form-input-box">
+                                                <label>OWNER</label>
                                                 <input
-                                                    type="checkbox"
-                                                    name="category"
-                                                    value="미용"
-                                                    checked={formData.category.includes('미용')}
+                                                    type="text"
+                                                    name="owner"
+                                                    value={formData.owner}
                                                     onChange={handleChange}
+                                                    placeholder="대표자 이름을 입력하세요"
                                                 />
                                             </div>
-                                        </div>
-                                    </>
+                                            <div className="form-input-box category-section">
+                                                <label>CATEGORY</label>
+                                                <div className="category-item">
+                                                    <label>진료</label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="category"
+                                                        value="진료"
+                                                        checked={formData.category.includes('진료')}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div className="category-item">
+                                                    <label>수술</label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="category"
+                                                        value="수술"
+                                                        checked={formData.category.includes('수술')}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div className="category-item">
+                                                    <label>미용</label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="category"
+                                                        value="미용"
+                                                        checked={formData.category.includes('미용')}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </>
                                     )}
                                 </div>
                             </div>

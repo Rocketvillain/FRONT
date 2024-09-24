@@ -3,8 +3,19 @@
     color: white;
     text-align: center;
     font-size: 14px;
-    width: 100%; 
-    margin-top: 20vh; 
+    width: 100%;
     z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
     box-sizing: border-box; /* 전체 요소의 크기 계산에 padding과 border 포함 */
+    padding: 20px 0; /* 위아래 패딩 추가 */
+    height: 60px;
+    position: fixed; /* 화면에 고정 */
+    bottom: 0; /* 페이지 하단에 위치 */
+    left: 0; /* 페이지 왼쪽 끝에 위치 */
+
 }
+
+.footer-container a{
+    display: inline-block; /* a 태그를 블록 요소로 변경 */
+    text-decoration: none; /* 링크 밑줄 제거 (선택 사항) */
+}
+
