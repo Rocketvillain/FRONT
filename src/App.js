@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import React, { useState } from 'react';
 // import LoginForm from "./pages/LoginForm";
 import Main from "./pages/Main";
@@ -15,11 +15,6 @@ import UserLayout from "./layouts/UserLayout";
 import Login from "./pages/user/Login";
 import FindID from "./pages/user/FindID";
 import ChangePWD from "./pages/user/ChangePWD";
-import HospitalView from "./pages/hospital/HospitalView";
-import ReserPage from "./pages/reservations/ReserPage";
-import BeautyReserPage from "./pages/reservations/BeautyReserPage";
-import HosDetails from "./pages/hospital/HosDetails";
-import HosReser from "./pages/hospital/HosReser";
 import Signup from "./pages/user/Signup";
 import AdminLayout from "./layouts/AdminLayout";
 import UserControl from "./pages/admin/UserControl";
@@ -30,6 +25,10 @@ import BeautyReserPage from "./pages/reservations/BeautyReserPage";
 import HosDetails from "./pages/hospital/HosDetails";
 import HosReser from "./pages/hospital/HosReser";
 import UserLayout2 from "./layouts/UserLayout2";
+import AdminMain from "./pages/AdminMain";
+import HosLayout from "./layouts/HosLayout";
+import HosAdminMain from "./pages/HosAdminMain";
+import UserMain from "./pages/UserMain";
 
 function App() {
 
