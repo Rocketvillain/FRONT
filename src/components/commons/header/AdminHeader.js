@@ -4,6 +4,9 @@ import { useDispatch } from "react-redux";
 import { resetLoginUser } from "../../../modules/UserModule";
 
 function AdminHeader() {
+
+    const dispatch = useDispatch(); 
+    
     const activeStyle = {
         // backgroundColor: 'white',
         color: 'black',
@@ -15,8 +18,6 @@ function AdminHeader() {
         color: 'inherit',
     };
 
-    const dispatch = useDispatch();
-
     const handleLogout = () => {
 
         // 로그인 상태를 리셋하는 액션을 디스패치
@@ -26,7 +27,7 @@ function AdminHeader() {
         window.location.href = '/';
     };
 
-    return (
+    return(
         <div className="admin-header-container">
             <div className="logo-admincontainer">
                 <NavLink to="/" exact className="logo-adminlink">
@@ -59,10 +60,11 @@ function AdminHeader() {
                     <NavLink to="/reportscontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>문의/신고 관리</span>
                     </NavLink>
-                </li> 
+                </li>
             </ul>
-            <div className="logout-admincontainer" onClick={handleLogout} style={linkStyle}>
-                <img src="/images/signup_logout_2.png" alt="로그아웃 아이콘" />
+            {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
+            <div className="logout-admincontainer" onClick={handleLogout}>
+                <img src="/images/signup_logout_1.png" alt="로그아웃 아이콘" />
                 <span>LOGOUT</span>
             </div>
         </div>

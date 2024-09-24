@@ -10,6 +10,7 @@ export const request = async (method, url, data) => {
         data,
         headers: {
             'Content-Type': 'application/json', // JSON으로 요청한다는 것을 명시
+            'Authorization': localStorage.getItem('token'), // 토큰 request header에 담아주기
         },
     })
     .then(res => res.data)

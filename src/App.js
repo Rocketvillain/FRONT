@@ -21,7 +21,6 @@ import UserControl from "./pages/admin/UserControl";
 import ReserControl from "./pages/admin/ReserControl";
 import UserLayout2 from "./layouts/UserLayout2";
 import AdminMain from "./pages/AdminMain";
-import HosLayout from "./layouts/HosLayout";
 import HosAdminMain from "./pages/HosAdminMain";
 import UserMain from "./pages/UserMain";
 import FooterLayout from "./layouts/FooterLayout";
@@ -32,6 +31,7 @@ import HosDetails from "./pages/hospital/HosDetails";
 import HosReser from "./pages/hospital/HosReser";
 import HosControl from "./pages/admin/HosControl";
 import ReviewControl from "./pages/admin/ReviewControl";
+import HosLayout from "./layouts/HosLayout";
 
 function App() {
 
