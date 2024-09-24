@@ -19,16 +19,17 @@ import Signup from "./pages/user/Signup";
 import AdminLayout from "./layouts/AdminLayout";
 import UserControl from "./pages/admin/UserControl";
 import ReserControl from "./pages/admin/ReserControl";
-import HospitalView from "./pages/hospital/HospitalView";
-import ReserPage from "./pages/reservations/ReserPage";
-import BeautyReserPage from "./pages/reservations/BeautyReserPage";
-import HosDetails from "./pages/hospital/HosDetails";
-import HosReser from "./pages/hospital/HosReser";
 import UserLayout2 from "./layouts/UserLayout2";
 import AdminMain from "./pages/AdminMain";
-import HosLayout from "./layouts/HosLayout";
 import HosAdminMain from "./pages/HosAdminMain";
 import UserMain from "./pages/UserMain";
+import HosInfo from "./pages/hosadmin/HosInfo";
+import HosLayout from "./layouts/HosLayout";
+import BeautyReserPage from "./pages/reservations/BeautyReserPage";
+import ReserPage from "./pages/reservations/ReserPage";
+import HospitalView from "./pages/hospital/HospitalView";
+import HosDetails from "./pages/hospital/HosDetails";
+import HosReser from "./pages/hospital/HosReser";
 
 function App() {
 
@@ -74,7 +75,6 @@ function App() {
             <Route path="/allreviews" element={<AllReviews />} />
             <Route path="/beautyreserpage" element={<BeautyReserPage />} />
             <Route path="/reserpage" element={<ReserPage />} />
-            <Route path="/expenses" element={<Expenses />} />
             <Route path="/hospitalview" element={<HospitalView />} />
             <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
           </Route>
@@ -117,6 +117,18 @@ function App() {
         <Route path="/hosreser" element={<UserLayout2 />}>
           <Route index element={<HosReser/>}/>
         </Route>
+
+        <Route path="/usercontrol" element={<AdminLayout />}>
+          <Route index element={<UserControl />} />
+        </Route>
+        <Route path="/resercontrol" element={<AdminLayout />}>
+          <Route index element={<ReserControl />} />
+        </Route>
+
+        <Route path="/hosinfo" element={<HosLayout />}>
+          <Route index element={<HosInfo />} />
+        </Route>
+
 
         {/* 지정되지 않은 경로는 메인페이지로 이동 */}
         <Route path="*" element={<Navigate to="/" />} />

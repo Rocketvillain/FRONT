@@ -1,10 +1,25 @@
 import { NavLink } from "react-router-dom";
 import '../../../css/component/HosHeader.css'
+import { useDispatch } from "react-redux";
+import { resetLoginUser } from "../../../modules/UserModule";
 
 function HosHeader() {
+
+    const dispatch = useDispatch(); 
+    
     const activeStyle = {
         color: 'white'
     }
+
+    const handleLogout = () => {
+
+        // 로그인 상태를 리셋하는 액션을 디스패치
+        dispatch(resetLoginUser());
+
+        // 로그아웃 후 메인 페이지로 리다이렉트
+        window.location.href = '/';
+    };
+
     return(
         <div className="hosheader-container">
             <div className="logo-hoscontainer">
@@ -35,10 +50,11 @@ function HosHeader() {
                     </NavLink>
                 </li>
             </ul>
-            <NavLink to="/logout" className="logout-hoscontainer" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
+            <div className="logout-hoscontainer" onClick={handleLogout}>
                 <img src="/images/signup_logout_1.png" alt="로그아웃 아이콘" />
                 <span>LOGOUT</span>
-            </NavLink>
+            </div>
         </div>
     )
 }

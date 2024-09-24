@@ -1,12 +1,19 @@
 /* Hosheader.css */
 .hosheader-container {
-    padding: 10px;
+    width: 100%; /* 헤더가 화면 너비에 꽉 차도록 설정 */
+    padding: 10px 0; /* 상하 여백만 남기고 좌우는 여백 제거 */
     background-color: #43ABAE; /* 배경색 설정 */
     color: white;
-    height: 60px; /* 헤더 높이 축소 */
+    height: 80px; /* 헤더 높이 축소 */
     display: flex; /* Flexbox 사용 */
     align-items: center; /* 수직 가운데 정렬 */
     justify-content: space-between; /* 양 끝 정렬 */
+    position: fixed; /* 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
+    box-sizing: border-box; /* 전체 요소의 크기 계산에 padding과 border 포함 */
+    font-family: 'Poor Story';
 }
 
 .logo-hoscontainer {
@@ -38,7 +45,6 @@
     flex-direction: row; /* 가로 방향으로 정렬 */
     gap: 50px; /* 항목 간 간격 조정 */
     height: auto;
-    margin-top: -1px;
     text-decoration: none; /* 링크의 기본 밑줄 제거 */
 }
 

@@ -53,10 +53,16 @@ function Main() {
                         <span>관리자 예약 관리</span>
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink to="/hosinfo">
+                        <img src="/images/main2.png" alt="병원관리자 마이페이지" />
+                        <span>병원관리자 마이페이지</span>
+                    </NavLink>
+                </li>
             </ul>
         </div>
         <div className="footer-container">
-            우리 가족을 위한 최고의 서비스, 경기도 동물병원의 정보를 한 눈에!
+            우리 가족을 위한 최고의 서비스, 강남구 동물병원의 정보를 한 눈에!
         </div>
         </>
     )
