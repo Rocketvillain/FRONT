@@ -54,6 +54,11 @@ function HosHeader() {
                         <span>병원관리</span>
                     </NavLink>
                 </li>
+                <li className="hos-header-nav-item">
+                    <NavLink to="/hosinfo" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                        <span>마이페이지</span>
+                    </NavLink>
+                </li>
             </ul>
             <div className="hos-header-logout-container" onClick={handleLogout} style={linkStyle}>
                 <img src="/images/signup_logout_1.png" alt="로그아웃 아이콘" />

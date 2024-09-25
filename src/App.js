@@ -32,6 +32,7 @@ import HosReser from "./pages/hospital/HosReser";
 import HosControl from "./pages/admin/HosControl";
 import ReviewControl from "./pages/admin/ReviewControl";
 import HosLayout from "./layouts/HosLayout";
+import HosInfo from "./pages/hosadmin/HosInfo";
 
 function App() {
 
@@ -70,6 +71,7 @@ function App() {
         {role === 'ROLE_HOSPITAL' && (
           <Route path="/" element={<HosLayout />}>
             <Route index element={<HosAdminMain />} />
+            <Route  path="/hosinfo" element={<HosInfo />} />
           </Route>
         )}
   
@@ -83,7 +85,7 @@ function App() {
               <Route path="/reserpage" element={<ReserPage />} />
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/hospitalview" element={<HospitalView />} />
-              <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
+              <Route path="/hosdetail/:hospitalId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
             </Route>
   
             <Route path="/myinfo" element={<MyPageLayout />}>

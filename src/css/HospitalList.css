@@ -9,7 +9,7 @@
   .hospital-card {
     position: relative;
     width: 200px; /* 카드의 크기를 약간 더 키움 */
-    height: 250px; /* 카드의 높이를 키움 */
+    height: 230px; /* 카드의 높이를 키움 */
     overflow: hidden;
     border: 1px solid #ddd;
     border-radius: 8px;
