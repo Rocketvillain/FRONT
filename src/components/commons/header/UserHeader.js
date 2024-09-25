@@ -1,10 +1,9 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetLoginUser } from "../../../modules/UserModule";
 import '../../../css/component/UserHeader.css';
 
 function UserHeader() {
-    const navigate = useNavigate();  // react-router-dom의 useNavigate 사용
     const dispatch = useDispatch(); 
 
     const handleLogout = () => {
