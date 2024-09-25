@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import '../../../css/component/UserHeader.css';
 import { resetLoginUser } from "../../../modules/UserModule";
+import '../../../css/component/UserHeader.css';
 
 function UserHeader() {
     const navigate = useNavigate();  // react-router-dom의 useNavigate 사용
