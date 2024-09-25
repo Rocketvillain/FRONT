@@ -204,8 +204,9 @@
   background-color: #28467A;
 }
 
-.signup-user-btn:active {
-  transform: scale(1.05);
+button:active {
+  opacity: 0.5;
+    transition: opacity 0.3s ease;
 }
 
 .signupPWD-error-message {

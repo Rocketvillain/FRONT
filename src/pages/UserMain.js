@@ -1,37 +1,40 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 import '../css/UserMain.css';
 
 function UserMain() {
-
-    return(
+    return (
         <>
-        <div className="user-main-container">
-            <ul className="usernav-list">
-                <li className="usernav-item">
-                    <NavLink to="/hospitalview">
-                        <img src="/images/main1.png" alt="병원 검색하기" />
-                        <span>병원검색</span>
-                    </NavLink>
-                </li>
-                <li className="usernav-item">
-                    <NavLink to="/hosreser">
-                        <img src="/images/main2.png" alt="병원 예약하기" />
-                        <span>병원예약</span>
-                    </NavLink>
-                </li>
-                <li className="usernav-item">
-                    <NavLink to="/expenses">
-                        <img src="/images/main2.png" alt="평균 진료비 보기" />
-                        <span>평균 진료비 보기</span>
-                    </NavLink>
-                </li>
-            </ul>
-        </div>
-        <div className="footer-container">
-            우리 가족을 위한 최고의 서비스, 강남구 동물병원의 정보를 한 눈에!
-        </div>
+            <div className="user-main-container">
+                <div className="user-main-brand-container">
+                    <div className="user-main-brand-background">
+                        <img src="/images/main1.png" className="user-main-logo" alt="User Main Logo" />
+                        <span className="user-main-title">Healing Pets</span>
+                        <img src="/images/main2.png" className="user-main-logo" alt="User Main Logo" />
+                    </div>
+                </div>
+                <ul className="user-main-nav-list">
+                    <li className="user-main-nav-item">
+                        <NavLink to="/hospitalview">
+                            <img src="/images/main1.png" alt="병원 검색" />
+                            <span>병원<br />검색</span>
+                        </NavLink>
+                    </li>
+                    <li className="user-main-nav-item">
+                        <NavLink to="/hosreser">
+                            <img src="/images/main2.png" alt="병원 예약" />
+                            <span>병원<br />예약</span>
+                        </NavLink>
+                    </li>
+                    <li className="user-main-nav-item">
+                        <NavLink to="/expenses">
+                            <img src="/images/main2.png" alt="평균 진료비" />
+                            <span>평균<br />진료비</span>
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
         </>
-    )
+    );
 }
 
-export default UserMain;                                     
+export default UserMain;

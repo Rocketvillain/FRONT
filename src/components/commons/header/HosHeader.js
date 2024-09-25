@@ -1,18 +1,23 @@
 import { NavLink } from "react-router-dom";
-import '../../../css/component/HosHeader.css'
-import { useDispatch } from "react-redux";
-import { resetLoginUser } from "../../../modules/UserModule";
+import '../../../css/component/HosHeader.css';
+import { useDispatch } from 'react-redux';
+import { resetLoginUser } from '../../../modules/UserModule';  // 로그아웃 처리 리덕스 액션 가져오기
 
 function HosHeader() {
+    const dispatch = useDispatch();
 
-    const dispatch = useDispatch(); 
-    
     const activeStyle = {
-        color: 'white'
-    }
+        color: 'black',
+    };
 
+    const linkStyle = {
+        textDecoration: 'none',
+        fontWeight: 'bold',
+        color: 'inherit',
+    };
+
+    // 로그아웃 핸들러
     const handleLogout = () => {
-
         // 로그인 상태를 리셋하는 액션을 디스패치
         dispatch(resetLoginUser());
 
@@ -20,43 +25,42 @@ function HosHeader() {
         window.location.href = '/';
     };
 
-    return(
-        <div className="hosheader-container">
-            <div className="logo-hoscontainer">
-                <NavLink to="/" exact className="logo-hoslink">
-                    <img className="mainImage" src="/images/logo.png" alt="메인 이미지" />
+    return (
+        <div className="hos-header-container">
+            <div className="hos-header-logo-container">
+                <NavLink to="/" exact className="hos-header-logo-link">
+                    <img className="hos-header-mainImage" src="/images/logo.png" alt="메인 이미지" />
                     <span>Healing Pets</span>
                 </NavLink>
             </div>
-            <ul className="hosnav-list">
-                <li className="hosnav-item">
+            <ul className="hos-header-nav-list">
+                <li className="hos-header-nav-item">
                     <NavLink to="/hospitalview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>예약관리</span>
                     </NavLink>
                 </li>
-                <li className="hosnav-item">
+                <li className="hos-header-nav-item">
                     <NavLink to="/reserstatus" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>후기조회</span>
                     </NavLink>
                 </li>
-                <li className="hosnav-item">
+                <li className="hos-header-nav-item">
                     <NavLink to="/expenses" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>일정관리</span>
                     </NavLink>
                 </li>
-                <li className="hosnav-item">
+                <li className="hos-header-nav-item">
                     <NavLink to="/review" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>병원관리</span>
                     </NavLink>
                 </li>
             </ul>
-            {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
-            <div className="logout-hoscontainer" onClick={handleLogout}>
+            <div className="hos-header-logout-container" onClick={handleLogout} style={linkStyle}>
                 <img src="/images/signup_logout_1.png" alt="로그아웃 아이콘" />
                 <span>LOGOUT</span>
             </div>
         </div>
-    )
+    );
 }
 
 export default HosHeader;

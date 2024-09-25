@@ -23,6 +23,8 @@
     align-items: center;
     font-size: 14px;
     font-weight: bold;
+    width: 160px;
+    padding: 10px;
 }
 
 .reser-control-hospital-select label {
@@ -37,6 +39,7 @@
     background-color: white;
     color: #7D7D7D;
     font-weight: bold;
+    height: 38px;
 }
 
 .reser-control-search {
@@ -63,6 +66,7 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
+    height: 38px;
 }
 
 .reser-control-table {
@@ -79,7 +83,7 @@
 
 .reser-control-table th {
     background-color: #F0C60A;
-    color: white;
+    color: black;
 }
 
 .reser-control-table td {

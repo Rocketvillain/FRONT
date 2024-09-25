@@ -1,78 +1,93 @@
-/* Hosheader.css */
-.hosheader-container {
-    width: 100%; /* 헤더가 화면 너비에 꽉 차도록 설정 */
-    padding: 10px 0; /* 상하 여백만 남기고 좌우는 여백 제거 */
-    background-color: #43ABAE; /* 배경색 설정 */
+.hos-header-container {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #43ABAE;
     color: white;
-    height: 80px; /* 헤더 높이 축소 */
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 수직 가운데 정렬 */
-    justify-content: space-between; /* 양 끝 정렬 */
-    position: fixed; /* 화면 상단에 고정 */
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
-    box-sizing: border-box; /* 전체 요소의 크기 계산에 padding과 border 포함 */
-    font-family: 'Poor Story';
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
-.logo-hoscontainer {
-    margin-left: 35px; /* 로고 이미지를 왼쪽에서 8px 떨어지도록 설정 */
+.hos-header-logo-container {
+    margin-left: 35px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
-.logo-hoslink {
-    display: flex; /* Flexbox 사용 */
-    flex-direction: column; /* 수직 정렬 */
-    align-items: center; /* 로고 이미지와 텍스트 수평 가운데 정렬 */
-    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+.hos-header-logo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
 }
 
-.logo-hoscontainer span {
-    color: white; /* 텍스트를 하얀색으로 */
-    font-size: 14px; /* 텍스트 크기 조정 */
+.hos-header-logo-container span {
+    color: white;
+    font-size: 14px;
     margin-top: -20px;
     margin-bottom: 20px;
 }
 
-.mainImage {
-    width: 80px; /* 이미지 크기 축소 */
-    height: 80px; /* 이미지 크기 축소 */
+.hos-header-mainImage {
+    width: 80px;
+    height: 80px;
 }
 
-.hosnav-list {
+.hos-header-nav-list {
     list-style: none;
     display: flex;
-    flex-direction: row; /* 가로 방향으로 정렬 */
-    gap: 50px; /* 항목 간 간격 조정 */
-    height: auto;
-    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    flex-direction: row;
+    gap: 50px;
+    text-decoration: none;
 }
 
-.hosnav-item {
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+.hos-header-nav-item {
+    display: flex;
+    align-items: center;
     text-align: center;
     padding: 15px;
 }
 
-.hosnav-item span {
+.hos-header-nav-item span {
     color: white;
-    font-size: 14px; /* 텍스트 크기 조정 */
+    font-size: 14px;
+    text-decoration: none;
 }
 
-.logout-hoscontainer {
+.hos-header-nav-item a {
+    text-decoration: none;
+    font-weight: bold;
+    color: inherit;
+}
+
+.hos-header-logout-container {
     display: flex;
-    align-items: center; /* 아이콘과 텍스트 수직 가운데 정렬 */
+    align-items: center;
     margin-right: 30px;
+    cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능하게 표시 */
 }
 
-.logout-hoscontainer img {
-    width: 25px; /* 로그아웃 아이콘 크기 */
-    height: 25px; /* 로그아웃 아이콘 크기 */
-    margin-right: 5px; /* 이미지와 텍스트 간 간격 */
+.hos-header-logout-container img {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
 }
 
-.logout-container span {
-    color: white; /* 텍스트를 하얀색으로 */
-    font-size: 5px;
+.hos-header-logout-container span {
+    color: white;
+    font-size: 14px;
+    text-decoration: none !important;
+}
+
+.hos-header-logout-container a {
+    text-decoration: none !important;
+    font-weight: bold;
+    color: inherit;
 }
