@@ -85,7 +85,7 @@ function App() {
               <Route path="/reserpage" element={<ReserPage />} />
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/hospitalview" element={<HospitalView />} />
-              <Route path="/hosdetail/:hospitalId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
+              <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
             </Route>
   
             <Route path="/myinfo" element={<MyPageLayout />}>

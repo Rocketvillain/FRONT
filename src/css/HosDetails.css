@@ -1,36 +1,57 @@
-.hospital-detail {
-    text-align: center;
-    padding: 50px;
-  }
-  
-  .hospital-detail h1 {
-    font-size: 32px;
-    margin-bottom: 20px;
-  }
-  
-  .hospital-detail p {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .reservation-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .reservation-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
-  
-  .reservation-buttons button:hover {
-    background-color: #45a049;
-  }
-  
+/* HosDetails.css */
+.hos-detail {
+  background-color: #f5f5f5; /* 배경색 */
+  padding: 20px; /* 내부 여백 */
+  border-radius: 10px; /* 둥근 테두리 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
+  text-align: center; /* 가운데 정렬 */
+}
+
+.hospital-list-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.hospital-list-address {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.hospital-list-info {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.ownerImage-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.hospital-ownerName {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.reservation-buttons {
+  margin-top: 20px;
+}
+
+.reservation-buttons button {
+  background-color: #ffcc00; /* 버튼 배경색 */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 5px; /* 둥근 모서리 */
+  transition: background-color 0.3s ease;
+}
+
+.reservation-buttons button:hover {
+  background-color: #e6b800; /* 버튼 호버 색상 */
+}

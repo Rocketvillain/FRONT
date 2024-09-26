@@ -22,28 +22,24 @@ function HospitalList() {
 
     }, [dispatch]);  
 
-    const handleCardClick = (hospitalId) => {
-        navigate(`/hosdetail/${hospitalId}`); // 상세 페이지로 이동
+    const handleCardClick = (hosId) => {
+        navigate(`/hosdetail/${hosId}`); // 상세 페이지로 이동
     };
 
-    const testHandler = () => {
-        console.log(hospitals);
-        
-    }
-
     return (
-        <div className="hospital-container">
+        <div className="hospital-list-container">
             {hospitals.map((hospital) => (
                 <div
-                    className="hospital-card"
-                    key={hospital.id}
-                    onClick={() => handleCardClick(hospital.id)}
+                    className="hospital-list-card"
+                    key={hospital.hosId}
+                    onClick={() => handleCardClick(hospital.hosId)}
                 >
-                    <img src={hospital.infoImage} alt={hospital.name} className="hospital-image" />
+                    <img src={hospital.infoImage} alt={hospital.name} className="hospital-list-image" />
+
                     <div className="hospital-list-info">
                         <p>{hospital.address}</p>
                     </div>
-                    <div className="hospital-name">
+                    <div className="hospital-list-name">
                         <h3>{hospital.name}</h3>
                     </div>
                 </div>
