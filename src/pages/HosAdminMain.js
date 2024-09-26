@@ -14,19 +14,19 @@ function HosAdminMain() {
                 </div>
                 <ul className="hos-admin-main-nav-list">
                     <li className="hos-admin-main-nav-item">
-                        <NavLink to="/hospitalview">
+                        <NavLink to="/hosresercontrol">
                             <img src="/images/main4.png" alt="예약관리" />
                             <span>예약 관리</span>
                         </NavLink>
                     </li>
                     <li className="hos-admin-main-nav-item">
-                        <NavLink to="/reserstatus">
-                            <img src="/images/main1.png" alt="후기조회" />
-                            <span>후기 조회</span>
+                        <NavLink to="/hosreviewcontrol">
+                            <img src="/images/main1.png" alt="후기관리" />
+                            <span>후기 관리</span>
                         </NavLink>
                     </li>
                     <li className="hos-admin-main-nav-item">
-                        <NavLink to="/expenses">
+                        <NavLink to="/hosschedul">
                             <img src="/images/main1.png" alt="일정관리" />
                             <span>일정 관리</span>
                         </NavLink>
