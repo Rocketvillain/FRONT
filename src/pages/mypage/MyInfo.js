@@ -1,25 +1,30 @@
 import '../../css/component/MyPage.css';
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo, getuserInfo, updateUserInfo } from '../../api/UserAPICalls';
+import { loadUserInfo } from '../../modules/UserModule';
 
 // 마이페이지 내 정보 조회
 
 function MyInfo() {
+
+    const dispatch = useDispatch();
     const [image, setImage] = useState(null); // 미리보기 이미지
+    const userData = useSelector((state) => state.user.userInfo); // userInfo 불러오기
+    
     const [userInfo, setUserInfo] = useState({
         id: '',
         name: '',
         email: '',
         phone: '',
-        pwd: '', // 사용자가 비밀번호를 수정할 때만 이 값을 업데이트
+        pwd: '', 
+        pwdCheck: '',
         profileImage: '' // 프로필 이미지 경로
     });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     const buttonRef = useRef(null);
     const [buttonPosition, setButtonPosition] = useState({ right: 0, bottom: 0 });
     const pageContentRef = useRef(null);
-    const [originalPassword, setOriginalPassword] = useState(''); // 기존 비밀번호를 따로 저장
 
     // 프로필 이미지 변경 핸들러
     const handleImageChange = (e) => {
@@ -58,43 +63,6 @@ function MyInfo() {
         document.getElementById('fileInput').click();
     };
 
-    // 사용자 정보를 가져오는 함수
-    useEffect(() => {
-        const fetchUserInfo = async () => {
-            try {
-                const userId = localStorage.getItem('userId'); // 사용자 ID를 localStorage에서 가져옴
-                if (!userId) {
-                    setError("로그인 정보가 없습니다. 다시 로그인해주세요.");
-                    setLoading(false);
-                    return;
-                }
-                
-                const response = await fetch(`/api/userInfo?userId=${userId}`);
-                if (!response.ok) {
-                    throw new Error('사용자 정보를 불러오는 데 실패했습니다.');
-                }
-
-                const data = await response.json();
-                setUserInfo({
-                    id: data.id || '',
-                    name: data.name || '',
-                    email: data.email || '',
-                    phone: data.phone || '',
-                    pwd: '', // 비밀번호는 클라이언트로 가져오지 않음
-                    profileImage: data.profileImage || '/images/beforeUser.png' // 서버에서 받은 프로필 이미지 URL
-                });
-                setImage(data.profileImage); // 프로필 이미지 미리보기 설정
-                setOriginalPassword(data.pwd); // 서버에서 받은 비밀번호 저장
-                setLoading(false);
-            } catch (err) {
-                setError(err.message);
-                setLoading(false);
-            }
-        };
-
-        fetchUserInfo();
-    }, []);
-
     // 사용자 입력 핸들러
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -105,28 +73,42 @@ function MyInfo() {
     };
 
     // 정보 수정 후 서버에 저장하는 함수
-    const handleSave = async () => {
-        try {
-            // 비밀번호 입력 필드가 비어있다면, 기존 비밀번호를 유지
-            const updatedInfo = { ...userInfo, pwd: userInfo.pwd || originalPassword };
+    const handleSave = () => {
 
-            const response = await fetch(`/api/updateUserInfo`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedInfo),
-            });
+        const { id, name, email, phone, pwd, pwdCheck, profileImage } = userInfo;
 
-            if (!response.ok) {
-                throw new Error('정보 수정에 실패했습니다.');
-            }
+        // 비밀번호 유효성 검사
+        if (pwd !== pwdCheck) {
+            alert('비밀번호를 동일하게 입력하지 않았습니다!')
 
-            alert('정보가 성공적으로 수정되었습니다.');
-        } catch (error) {
-            console.error('정보 수정 중 오류 발생:', error);
-            alert('정보 수정 중 오류가 발생했습니다.');
+            return;
         }
+
+        // 입력값 유효성 검사
+        if (!name) {
+            alert('이름은 공백이 될 수 없습니다!')
+            return;
+        }
+        if (!email) {
+            alert('이메일은 공백이 될 수 없습니다!')
+            return;
+        }
+        if (!phone) {
+            alert('전화번호는 공백이 될 수 없습니다!')
+            return;
+        }
+        
+        const modifyUserInfo = {
+            userId: id,
+            name,
+            email,
+            phone,
+            ...(pwd && { userPwd: pwd }) // 비밀번호가 입력된 경우에만 포함
+        };
+
+        dispatch(updateUserInfo(id, modifyUserInfo)); // Redux 액션으로 정보 업데이트
+        alert('정보가 성공적으로 수정되었습니다.');
+        
     };
 
     useLayoutEffect(() => {
@@ -148,13 +130,19 @@ function MyInfo() {
         };
     }, []);
 
-    if (loading) {
-        return <p>로딩 중...</p>;
+    useEffect(() => {
+    if (userData) {
+        setUserInfo({
+            id: userData.userId || '',
+            name: userData.userName || '',
+            email: userData.email || '',
+            phone: userData.phone || '',
+            pwd: '', 
+            pwdCheck: '',
+            profileImage: '' // 프로필 이미지 경로
+        });
     }
-
-    if (error) {
-        return <p>오류 발생: {error}</p>;
-    }
+}, [userData]);
 
     return (
         <div className="page-content">
@@ -196,6 +184,9 @@ function MyInfo() {
 
                     <label>PWD</label>
                     <input name="pwd" type="password" value={userInfo.pwd} onChange={handleInputChange} placeholder="새로운 비밀번호를 입력하세요" />
+
+                    <label>PWD 확인</label>
+                    <input name="pwdCheck" type="password" value={userInfo.pwdCheck} onChange={handleInputChange} placeholder="비밀번호를 다시 입력하세요" />
 
                     {/* ※문구들은 비밀번호 필드 아래로 이동 */}
                     <p className="info-note">

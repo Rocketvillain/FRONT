@@ -9,7 +9,6 @@ function Login() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const result = useSelector(state => state.userReducer);
     const [token, setToken] = useState(!!localStorage.getItem('token'));
 
     /* input 태그 입력 값 state 관리 */
@@ -61,9 +60,9 @@ function Login() {
     useEffect(() => {
         
         if (token) {
-            window.location.href = '/'; // 로그인 성공 시 메인 페이지로 이동
+            navigate('/'); // 로그인 성공 시 메인 페이지로 이동
         }
-    }, [token, navigate]); // isLoggedIn이 변경될 때마다 실행
+    }, [token, navigate]);
     
     return (
         <div className="login-wrap">

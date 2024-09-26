@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import LoginForm from "./pages/LoginForm";
 import Main from "./pages/Main";
 import Layout from "./layouts/Layout";
@@ -29,14 +29,32 @@ import AdminMain from "./pages/AdminMain";
 import HosLayout from "./layouts/HosLayout";
 import HosAdminMain from "./pages/HosAdminMain";
 import UserMain from "./pages/UserMain";
+import { useSelector, useDispatch } from "react-redux";
+import { jwtDecode } from 'jwt-decode';
+import { getUserInfo } from "./api/UserAPICalls";
 
 function App() {
 
-  const role = localStorage.getItem('role');
+  const dispatch = useDispatch();
+  const [role, setRole] = useState(null);
 
-  // if (!token) {
-  //   return <LoginForm />;
-  // }
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token); // 토큰 디코딩
+        setRole(decodedToken.userRole); // userRole 설정
+        const userId = decodedToken.sub;
+        console.log('userId : ', userId);
+        
+        dispatch(getUserInfo(userId));
+
+      } catch (error) {
+        console.error("Token decoding failed:", error);
+      }
+    }
+  }, [dispatch]);
+
   const [reviews, setReviews] = useState([
     { id: 3247, name: '동동구리', hospital: '강남 펫닥', type: '진료', date: '2024.06.23', status: '완료', reviewText: '진료가 매우 만족스러웠습니다.' },
     { id: 3128, name: '동동구리', hospital: '강남 펫닥', type: '미용(위생미용)', date: '2024.05.11', status: '완료', reviewText: '우리 강아지 미용이 정말 마음에 들어요.' },
