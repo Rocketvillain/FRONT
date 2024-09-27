@@ -42,24 +42,25 @@ import HosSchedul from "./pages/hosadmin/HosSchedul";
 function App() {
 
   const dispatch = useDispatch();
-  const [role, setRole] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const newToken = useSelector(state => state.user.token);
+  const [role, setRole] = useState(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      return decodedToken.userRole; // token이 있는 경우 role 설정
+    }
+    return null; // token이 없으면 null
+  });
 
   useEffect(() => {
-    const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token); // 토큰 디코딩
-        setRole(decodedToken.userRole); // userRole 설정
-        const userId = decodedToken.sub;
-        console.log('userId : ', userId);
-        
-        dispatch(getUserInfo(userId));
-
-      } catch (error) {
-        console.error("Token decoding failed:", error);
-      }
-    }
-  }, [dispatch]);
+      setToken(newToken)
+        if (newToken) {
+            const decodedToken = jwtDecode(newToken);
+            setRole(decodedToken.userRole);
+            const userId = decodedToken.sub;
+            dispatch(getUserInfo(userId));
+        }
+  }, [newToken, dispatch]);
 
   const [reviews, setReviews] = useState([
     { id: 3247, name: '동동구리', hospital: '강남 펫닥', type: '진료', date: '2024.06.23', status: '완료', reviewText: '진료가 매우 만족스러웠습니다.' },

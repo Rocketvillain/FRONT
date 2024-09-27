@@ -6,6 +6,7 @@ const navigate = useNavigate;
 /* 초기 state값 */
 const initialState = {
     userInfo: [],
+    token: null,
 };
 
 /* 액션 타입 설정 */
@@ -33,6 +34,7 @@ const userReducer = handleActions(
             return {
                 ...state,
                 userInfo: userInfo,
+                token: token,
             }
 
             

@@ -9,7 +9,6 @@ function Login() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [token, setToken] = useState(!!localStorage.getItem('token'));
 
     /* input 태그 입력 값 state 관리 */
     const [loginInfo, setLoginInfo] = useState(
@@ -50,20 +49,10 @@ function Login() {
         if (typeof result === 'string') {
             alert(result); // alert 메시지로 failType 표시
         } else {
-            // 로그인 성공 시 확인
-            setToken(!!localStorage.getItem('token'));
+            navigate('/'); // 기본적으로 메인 페이지로 이동
         }
-
     }
 
-    // useEffect를 사용하여 로그인 상태에 따라 네비게이션 처리
-    useEffect(() => {
-        
-        if (token) {
-            navigate('/'); // 로그인 성공 시 메인 페이지로 이동
-        }
-    }, [token, navigate]);
-    
     return (
         <div className="login-wrap">
             <span id='HealingPets'>Healing Pets🍃</span>
