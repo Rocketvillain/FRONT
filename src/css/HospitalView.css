@@ -1,0 +1,59 @@
+.hv-search-background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    height: 23vh;
+}
+
+.hv-reser-title {
+    
+    font-size: 30px;
+    font-weight: bold;
+    margin: 40px;
+    color: #28467a; /* 글자 색상 */
+}
+
+.hv-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* 이미지가 검색창 안에 위치하도록 설정 */
+}
+
+.hv-input {
+    
+    width: 630px; /* 검색창 넓이 */
+    padding: 20px; /* 검색창 높이 */
+    font-size: 18px;
+    border: none;
+    border-radius: 50px; /* 둥근 모서리 */
+    outline: none;
+    padding-right: 60px; /* 검색창 내부 여백 (이미지가 겹치지 않게) */
+    padding-left: 50px;
+}
+
+.hv-input::placeholder {
+    color: #8a8a8a; /* 플레이스홀더 색상 */
+    font-weight: lighter;
+}
+
+.hv-search-icon {
+    width: 50px; /* 이미지의 넓이 */
+    height: 50px; /* 이미지의 높이 */
+    position: absolute;
+    right: 20px; /* 검색창 안의 오른쪽 끝에 배치 */
+    top: 50%;
+    transform: translateY(-50%); /* 이미지 수직 중앙 정렬 */
+    cursor: pointer; /* 마우스를 올렸을 때 포인터 모양으로 변경 */
+    animation: pulse 1s infinite; 
+}
+
+.hv-search-icon:hover {
+    animation: none; /* 호버 시 애니메이션 멈춤 */
+    transform: translateY(-50%) scale(1.2); /* 호버 시 커진 상태 유지 */
+}
+
+.hv-search-icon:active {
+    transform: translateY(-50%) scale(1); /* 클릭 시 원래 크기로 돌아옴 */
+}
