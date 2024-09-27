@@ -29,8 +29,6 @@ const userReducer = handleActions(
 
             // localStorage에 로그인 상태 저장
             localStorage.setItem("token", token); // 토큰 저장
-            // localStorage.setItem("userInfo", JSON.stringify(userInfo)); // JSON 형식으로 저장
-            // localStorage.setItem("role", userInfo.userRole);
 
             return {
                 ...state,
