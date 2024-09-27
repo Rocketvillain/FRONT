@@ -1,0 +1,102 @@
+.hos-control-container {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.hos-control-title {
+    color: #333;
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.hos-control-search-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.hos-control-search-input {
+    width: 160px;
+    padding: 10px;
+    border: 1px solid #000000; 
+    border-radius: 0px;
+    font-size: 14px;
+    color: #7D7D7D;
+    font-weight: bold;
+}
+
+.hos-control-search-button {
+    padding: 10px 20px; 
+    background-color: white; 
+    color: black; 
+    border: 1px solid #000000; 
+    border-radius: 0px; 
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.hos-control-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.hos-control-table th, .hos-control-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.hos-control-table th {
+    background-color: #F0C60A;
+    color: black;
+}
+
+.hos-control-table td {
+    background-color: #f9f9f9;
+}
+
+.hos-control-edit-button, .hos-control-delete-button {
+    background-color: #FFA500;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid black;
+    margin: 2px;
+}
+
+.hos-control-edit-button:hover, .hos-control-delete-button:hover {
+    background-color: #ff6600;
+}
+
+.hos-control-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.hos-control-pagination button {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.hos-control-active {
+    color: black;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+}
+
+.hos-control-pagination button:hover {
+    background-color: #f0f0f0;
+}

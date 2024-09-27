@@ -19,19 +19,25 @@ import Signup from "./pages/user/Signup";
 import AdminLayout from "./layouts/AdminLayout";
 import UserControl from "./pages/admin/UserControl";
 import ReserControl from "./pages/admin/ReserControl";
-import HospitalView from "./pages/hospital/HospitalView";
-import ReserPage from "./pages/reservations/ReserPage";
-import BeautyReserPage from "./pages/reservations/BeautyReserPage";
-import HosDetails from "./pages/hospital/HosDetails";
-import HosReser from "./pages/hospital/HosReser";
 import UserLayout2 from "./layouts/UserLayout2";
 import AdminMain from "./pages/AdminMain";
-import HosLayout from "./layouts/HosLayout";
 import HosAdminMain from "./pages/HosAdminMain";
 import UserMain from "./pages/UserMain";
 import { useSelector, useDispatch } from "react-redux";
 import { jwtDecode } from 'jwt-decode';
 import { getUserInfo } from "./api/UserAPICalls";
+import FooterLayout from "./layouts/FooterLayout";
+import BeautyReserPage from "./pages/reservations/BeautyReserPage";
+import ReserPage from "./pages/reservations/ReserPage";
+import HospitalView from "./pages/hospital/HospitalView";
+import HosDetails from "./pages/hospital/HosDetails";
+import HosReser from "./pages/hospital/HosReser";
+import HosControl from "./pages/admin/HosControl";
+import ReviewControl from "./pages/admin/ReviewControl";
+import HosLayout from "./layouts/HosLayout";
+import HosInfo from "./pages/hosadmin/HosInfo";
+import HosReviewControl from "./pages/hosadmin/HosReviewControl";
+import HosSchedul from "./pages/hosadmin/HosSchedul";
 
 function App() {
 
@@ -75,75 +81,71 @@ function App() {
             <Route index element={<AdminMain />} />
             <Route path="/usercontrol" element={<UserControl />} />
             <Route path="/resercontrol" element={<ReserControl />} />
+            <Route path="/hoscontrol" element={<HosControl />} />
+            <Route path="/reviewcontrol" element={<ReviewControl />} />
+            {/* <Route path="/reportscontrol" element={<ReportsControl />} /> */}
           </Route>
         )}
-
+  
         {/* 병원 관리자 페이지 */}
-        {role === 'ROLE_HOSADMIN' && (
+        {role === 'ROLE_HOSPITAL' && (
           <Route path="/" element={<HosLayout />}>
             <Route index element={<HosAdminMain />} />
+            <Route  path="/hosinfo" element={<HosInfo />} />
+            <Route path="/hosreviewcontrol" element={<HosReviewControl/>}/>
+            <Route path="/hosschedul" element={<HosSchedul/>}/>
           </Route>
         )}
-
+  
         {/* 일반 회원 페이지 */}
         {role === 'ROLE_USER' && (
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<UserMain />} />
-            <Route path="/allreviews" element={<AllReviews />} />
-            <Route path="/beautyreserpage" element={<BeautyReserPage />} />
-            <Route path="/reserpage" element={<ReserPage />} />
-            <Route path="/expenses" element={<Expenses />} />
-            <Route path="/hospitalview" element={<HospitalView />} />
-            <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
-          </Route>
+          <>
+            <Route path="/" element={<UserLayout />}>
+              <Route index element={<UserMain />} />
+              <Route path="/allreviews" element={<AllReviews />} />
+              <Route path="/beautyreserpage" element={<BeautyReserPage />} />
+              <Route path="/reserpage" element={<ReserPage />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/hospitalview" element={<HospitalView />} />
+              <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}
+            </Route>
+  
+            <Route path="/myinfo" element={<MyPageLayout />}>
+              <Route index element={<MyInfo />} />
+              <Route path="/myinfo/myinfo" element={<MyInfo />} />
+              <Route path="/myinfo/reserstatus" element={<ReserStatus />} />
+              <Route path="/myinfo/clinichistory" element={<ClinicHistory addReview={addReview} reviews={reviews} />} />
+              <Route path="/myinfo/myreviews" element={<MyReviews reviews={reviews} />} />
+              <Route path="/myinfo/mypet" element={<MyPet />} />
+            </Route>
+
+            <Route path="/hosreser" element={<UserLayout2 />}>
+              <Route index element={<HosReser />} />
+            </Route>
+          </>
         )}
-        
+  
         {/* 기본 Main 페이지 (로그인 안했거나 역할 없음) */}
         {(!role || (role !== 'ROLE_ADMIN' && role !== 'ROLE_HOSADMIN' && role !== 'ROLE_USER')) && (
-          <Route path="/" element={<Layout />} >
-            <Route index element={<Main />} />
-            <Route path="/expenses" element={<Expenses />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/findID" element={<FindID />} />
-            <Route path="/changePWD" element={<ChangePWD />} />
-            <Route path="/signup" element={<Signup/>}/>
-          </Route>
+          <>
+            <Route path="/" element={<FooterLayout />}>
+              <Route index element={<Main />} />
+            </Route>
+  
+            <Route element={<Layout />} >
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/findID" element={<FindID />} />
+              <Route path="/changePWD" element={<ChangePWD />} />
+              <Route path="/signup" element={<Signup />} />
+            </Route>
+          </>
         )}
-        
-
-        <Route path="/myinfo" element={<MyPageLayout />}>
-          <Route index element={<MyInfo />} />
-          <Route path="/myinfo/myinfo" element={<MyInfo />} />
-          <Route path="/myinfo/reserstatus" element={<ReserStatus />} />
-          <Route path="/myinfo/clinichistory" element={<ClinicHistory addReview={addReview} reviews={reviews} />} />
-          <Route path="/myinfo/myreviews" element={<MyReviews reviews={reviews} />} />
-          <Route path="/myinfo/mypet" element={<MyPet />} />
-        </Route>
-
-        <Route path="/allreviews" element={<UserLayout />}>
-          <Route index element={<AllReviews />} />
-        </Route>
-        <Route path="/expenses" element={<UserLayout />}>
-          <Route index element={<Expenses />} />
-        </Route>
-        <Route path="/beautyreserpage" element={<UserLayout />}>
-          <Route index element={<BeautyReserPage />} />
-        </Route>
-        <Route path="/reserpage" element={<UserLayout />}>
-          <Route index element={<ReserPage />} />
-        </Route>
-        <Route path="/hosreser" element={<UserLayout2 />}>
-          <Route index element={<HosReser/>}/>
-        </Route>
-
-        {/* 지정되지 않은 경로는 메인페이지로 이동 */}
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      
     </BrowserRouter>
-
+  
   );
-}
+};
 
 export default App;
 

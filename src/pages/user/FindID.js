@@ -1,12 +1,10 @@
 import '../../css/user/FindID.css';
 import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
 import AlertMessage1 from '../../components/commons/AlertMessage1';
 import { useNavigate } from 'react-router-dom';
 
 function FindID() {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     /* input 태그 입력 값 state 관리 */
@@ -32,7 +30,7 @@ function FindID() {
     }
 
     /* 찾기 버튼 클릭 시 동작 */
-    const onClickHandler = () => {
+    const onClickHandler =  async () => {
         const { name, phone } = findIDInfo;
 
         // 입력값 유효성 검사
@@ -43,6 +41,32 @@ function FindID() {
 
         /* findIDInfo에 담긴 정보를 통해 userId 조회 */
         // dispatch(callLoginAPI(loginInfo));
+
+     
+        
+        const url = `http://localhost:8080/auth/find-id?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}`
+    
+        try{
+            const response = await fetch(url, {
+                method: 'GET',
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+               
+                if (data && data.results) {
+                    alert('사용자 ID: ' + data.results.userId); // 사용자 ID 표시
+                } else {
+                    alert('사용자 ID를 찾을 수 없습니다.');
+                }
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message); // 오류 메시지 표시
+            }
+        } catch (error) {
+            console.log('ID 찾기 실패: ' , error);
+            setShowAlert(true); // 경고 메시지
+        }
 
     }
 
