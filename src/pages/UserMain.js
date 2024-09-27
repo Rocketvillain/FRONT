@@ -31,7 +31,7 @@ function UserMain() {
                     </li>
                     <li className="user-main-nav-item">
                         <NavLink to="/expenses">
-                            <img src="/images/main2.png" alt="평균 진료비" />
+                            <img src="/images/main3.png" alt="평균 진료비" />
                             <span>진료비<br />
                                 확인하기</span>
                         </NavLink>

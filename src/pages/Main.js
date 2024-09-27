@@ -34,12 +34,6 @@ function Main() {
                                 확인하기</span>
                         </NavLink>
                     </li>
-                    <NavLink to="/beautyreserpage">
-                        <span>미용 예약</span>
-                    </NavLink>
-                    <NavLink to="/reserpage">
-                        <span>진료 및 수술 예약</span>
-                    </NavLink>
                 </ul>
             </div>
         </>
