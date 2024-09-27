@@ -32,6 +32,9 @@ import HosReser from "./pages/hospital/HosReser";
 import HosControl from "./pages/admin/HosControl";
 import ReviewControl from "./pages/admin/ReviewControl";
 import HosLayout from "./layouts/HosLayout";
+import HosInfo from "./pages/hosadmin/HosInfo";
+import HosReviewControl from "./pages/hosadmin/HosReviewControl";
+import HosSchedul from "./pages/hosadmin/HosSchedul";
 
 function App() {
 
@@ -70,6 +73,9 @@ function App() {
         {role === 'ROLE_HOSPITAL' && (
           <Route path="/" element={<HosLayout />}>
             <Route index element={<HosAdminMain />} />
+            <Route  path="/hosinfo" element={<HosInfo />} />
+            <Route path="/hosreviewcontrol" element={<HosReviewControl/>}/>
+            <Route path="/hosschedul" element={<HosSchedul/>}/>
           </Route>
         )}
   
