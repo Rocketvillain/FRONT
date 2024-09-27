@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import '../css/UserMain.css';
 
+import { useDispatch, useSelector } from "react-redux";
+
 function UserMain() {
     return (
         <>
