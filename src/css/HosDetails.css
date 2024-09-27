@@ -1,57 +1,94 @@
-/* HosDetails.css */
-.hos-detail {
+.hos-detail-container {
   background-color: #f5f5f5; /* 배경색 */
-  padding: 20px; /* 내부 여백 */
-  border-radius: 10px; /* 둥근 테두리 */
+  width: 80%; /* 가로 길이 */
+  max-width: 900px; /* 최대 너비를 설정 */
+  height: auto; /* 자동 높이 */
+  margin: 70px auto; /* 페이지 중앙 정렬 */
+  padding: 25px; /* 여백 추가 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
-  text-align: center; /* 가운데 정렬 */
+  display: flex; /* flex 속성 */
+  flex-direction: column; /* 세로 정렬 */
+  justify-content: flex-start; /* 수직 상단 정렬 */
+  align-items: center; /* 수평 중앙 정렬 */
+  overflow: hidden; /* 내부 요소가 벗어나지 않도록 설정 */
+  border: 3px solid #28467A;
 }
 
-.hospital-list-name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
+.hos-details-header {
+  margin-top: 50px;
+  display: flex; /* 병원장 이미지와 텍스트를 수평으로 배치 */
+  align-items: center; /* 이미지와 텍스트 수직 정렬 */
+  margin-bottom: 40px; /* 하단 여백 */
 }
 
-.hospital-list-address {
-  font-size: 16px;
-  color: #777;
-  margin-bottom: 20px;
+.hos-details-owner-image {
+  width: 200px; /* 이미지 크기 */
+  height: 200px; /* 이미지 크기 */
+  border-radius: 3%; /* 둥근 이미지 */
+  margin-right: 20px; /* 오른쪽 여백 */
+  border: 3px solid #576a8bb4;
 }
 
-.hospital-list-info {
-  font-size: 18px;
-  margin-bottom: 15px;
+.hos-details-text {
+  display: flex; /* 수직 정렬을 위해 flex 사용 */
+  flex-direction: column; /* 세로 정렬 */
+  align-items: flex-start; /* 왼쪽 정렬 */
+  margin-left: 30px;
 }
 
-.ownerImage-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
+.hos-details-hospital-name {
+  font-size: 24px; /* 병원 이름 크기 */
+  font-weight: bold; /* 병원 이름 굵게 */
+  margin-bottom: 5px; /* 아래 여백 */
 }
 
-.hospital-ownerName {
-  font-size: 20px;
-  font-weight: 500;
+.hos-details-owner-name {
+  font-size: 18px; /* 병원장 이름 크기 */
+}
+
+.hos-details-hospital-info {
+  font-size: 30px; /* 병원 정보 크기 */
+  text-align: center; /* 중앙 정렬 */
+  margin-top: 10px; /* 위쪽 여백 */
+  font-family: 'poor story', sans-serif;
+}
+
+.hos-details-hospital-address {
+  font-size: 18px; /* 주소 크기 */
+  color: #666; /* 글자 색상 */
+  text-align: center; /* 중앙 정렬 */
+  margin-top: -20px;
+  margin-bottom: 40px; /* 아래 여백 */
+  font-family: 'poor story', sans-serif;
 }
 
 .reservation-buttons {
-  margin-top: 20px;
+  margin-bottom: 40px; /* 위쪽 여백 */
 }
 
 .reservation-buttons button {
   background-color: #ffcc00; /* 버튼 배경색 */
   border: none;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   margin: 5px;
-  border-radius: 5px; /* 둥근 모서리 */
+  border-radius: 0px; /* 둥근 모서리 */
   transition: background-color 0.3s ease;
+  font-family: 'poor story', sans-serif;
+  border: 2px solid #28467A;
+  font-weight: 600; /* 매우 굵게 */
 }
 
 .reservation-buttons button:hover {
   background-color: #e6b800; /* 버튼 호버 색상 */
+}
+
+#hos-details-healingPets {
+  font-family: 'Single Day', sans-serif;
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  color: #000;
+  margin-left: -235%;
 }
