@@ -1,18 +1,17 @@
 import '../../css/user/ChangePWD.css';
 import { useState } from 'react';
-import { useDispatch } from "react-redux";
 import AlertMessage1 from '../../components/commons/AlertMessage1';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function ChangePWD() {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     /* input 태그 입력 값 state 관리 */
     const [changePWDInfo, setChangePWDInfo] = useState(
         {
-            id : '',
+            userId : '',
             name : '',
             email : ''
         }
@@ -22,7 +21,7 @@ function ChangePWD() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(''); // 경고 메시지 상태 추가
-
+    const [code, setCode] = useState(''); //경고 메세지 상태 추가
     /* 경고 메시지 표시 여부 관리 */
     const [showAlert, setShowAlert] = useState(false);
 
@@ -50,17 +49,31 @@ function ChangePWD() {
     };
 
     /* 찾기 버튼 클릭 시 동작 */
-    const onClickHandler = () => {
-        const { id, name, email } = changePWDInfo;
+    const onClickHandler = async() => {
+        const { userId, name, email } = changePWDInfo;
 
         // 입력값 유효성 검사
-        if (!id || !name || !email) {
+        if (!userId || !name || !email) {
+            alert('다시 입력해주세요.')
             setShowAlert(true); // 경고 메시지 표시
             return;
         }
 
-        // 임시: 모달을 항상 띄움 (서버 통신이 없으므로)
-        setShowModal(true);
+        try{
+            // 비밀번호 변경 요청을 위한 데이터
+            const payload = { userId : userId, name : name, email: email};
+
+            // 서버에 비밀번호 변경 요청
+            await axios.post('http://localhost:8080/auth/request-reset-password', payload);
+
+              alert('인증번호가 전송됬습니다.')
+              // 요청이 성공하면 모달을 표시
+              setShowModal(true);
+        } catch (error) {
+            //오류 처리
+            setErrorMessage(error.response?.data?.message || '비밀번호 변경 요청에 실패했습니다.');
+        }
+        
     };
 
     /* 모달창 닫기 */
@@ -76,7 +89,7 @@ function ChangePWD() {
     };
 
     /* 비밀번호 변경 버튼 클릭 시 동작 */
-    const handleChangePassword = () => {
+    const handleChangePassword = async () => {
         if (!validatePassword()) {
             setErrorMessage('비밀번호는 8자리 이상이며, 특수 문자를 포함해야 합니다.'); // 경고 메시지 설정
             return;
@@ -90,8 +103,22 @@ function ChangePWD() {
         // 실제 비밀번호 변경 로직
         // dispatch(callChangePasswordAPI({ newPassword }));
 
-        alert('비밀번호가 성공적으로 변경되었습니다.');
-        navigate('/login'); // 비밀번호 변경 후 로그인 페이지로 이동
+        const payload = {
+            userId: changePWDInfo.userId,
+            name: changePWDInfo.name,
+            email: changePWDInfo.email,
+            newPassword: newPassword,
+            code: code // 인증 코드 추가
+        };
+
+        try{
+
+            const response = await axios.put('http://localhost:8080/auth/reset-password',payload);
+            alert('비밀번호가 성공적으로 변경되었습니다.');
+            navigate('/login'); // 비밀번호 변경 후 로그인 페이지로 이동
+        } catch (error) {
+            setErrorMessage(error.response?.data.message || '비밀번호 변경에 실패했습니다.');
+        }
     };
 
     const handleBackClick = () => {
@@ -104,7 +131,7 @@ function ChangePWD() {
                 <span id='changePWD-title'>비밀번호 변경</span>
                 <span id='changePWD-subtitle'>Healing Pets🍃</span>
                 <div className='changePWD-form-group'>
-                    <input type="text" name="id" id='changePWD-id-input' value={ changePWDInfo.id } onChange={ onChangeHandler } placeholder="ID" /> &nbsp;&nbsp;&nbsp;
+                    <input type="text" name="userId" id='changePWD-id-input' value={ changePWDInfo.userId } onChange={ onChangeHandler } placeholder="ID" /> &nbsp;&nbsp;&nbsp;
                     <input type="text" name="name" id='changePWD-name-input' value={ changePWDInfo.name } onChange={ onChangeHandler } placeholder="NAME" /> &nbsp;&nbsp;&nbsp;
                     <input type="text" name="email" id='changePWD-email-input' value={ changePWDInfo.email } onChange={ onChangeHandler } placeholder="EMAIL" />
                     <button id='changePWD-submit-button' onClick={onClickHandler}>확인</button>
@@ -121,6 +148,13 @@ function ChangePWD() {
                         <h2>비밀번호 변경</h2>
                         <p>새로운 비밀번호를 입력해주세요.</p>
                         <input
+                            type="text"
+                            name="code"
+                            value={code}
+                            onChange= {(e) => setCode(e.target.value)}
+                            placeholder="인증 코드" 
+                        ></input>
+                        <input
                             type="password"
                             name="newPassword"
                             id="changePWD-new-password-input"
@@ -136,6 +170,7 @@ function ChangePWD() {
                             onChange={onPasswordChangeHandler}
                             placeholder="비밀번호 확인"
                         />
+        
 
                         {/* 경고 메시지 표시 */}
                         {errorMessage && <p className="changePWD-error-message">{errorMessage}</p>}
