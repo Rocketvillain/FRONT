@@ -92,3 +92,19 @@
   color: #000;
   margin-left: -235%;
 }
+
+.hospital-details-back-button {
+  margin-right: 90%;
+  margin-bottom: 10px;
+  background-color: white;
+  color: black;
+  font-size: 24px;
+  border: 3px solid #28467A;
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: 'Poor Story', sans-serif;
+}
+
+.hospital-details-back-button:hover {
+  background-color: #bac3d3;
+}

@@ -29,6 +29,10 @@ function HosDetails() {
     }
   };
 
+  const handleBackClick = () => {
+    navigate(-1); // 브라우저 히스토리에서 이전 페이지로 이동
+  };
+
   return (
     <div className="hos-detail-container">
       <div className='hos-details-logo'>
@@ -54,6 +58,8 @@ function HosDetails() {
         <button onClick={() => handleReservationClick('reserpage')}>진료 및 수술 예약</button>
         <button onClick={() => handleReservationClick('beautyreserpage')}>미용 예약</button>
       </div>
+
+      <button className="hospital-details-back-button" onClick={handleBackClick}>↩</button>
     </div>
   );
 }
