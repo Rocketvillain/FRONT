@@ -42,7 +42,7 @@ function FindID() {
         /* findIDInfo에 담긴 정보를 통해 userId 조회 */
         // dispatch(callLoginAPI(loginInfo));
 
-     
+    
         
         const url = `http://localhost:8080/auth/find-id?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}`
     
@@ -53,7 +53,7 @@ function FindID() {
 
             if (response.ok) {
                 const data = await response.json();
-               
+                
                 if (data && data.results) {
                     alert('사용자 ID: ' + data.results.userId); // 사용자 ID 표시
                 } else {
