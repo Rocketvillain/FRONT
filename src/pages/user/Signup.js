@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/Signup.css'; // 통합된 CSS 파일 연결
+import axios from 'axios';
 
 function Signup() {
     const [activeTab, setActiveTab] = useState('user');
-    const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 상태
-    const [verificationCode, setVerificationCode] = useState('');
-    const [inputVerificationCode, setInputVerificationCode] = useState('');
-    const [emailMessage, setEmailMessage] = useState('');
+    const [verificationCode, setVerificationCode] = useState(''); // 인증 코드 상태 추가
+    const [isCodeSent, setIsCodeSent] = useState(false); // 코드 전송 여부 상태
+    const [isVerified, setIsVerified] = useState(false); // 인증 상태 추가
     const [errorMessage, setErrorMessage] = useState(''); // 오류 메시지 상태 추가
+    const [isDuplicate, setIsDuplicate] = useState(true); // 아이디 중복 검사 
     const [passwordMessage, setPasswordMessage] = useState('');
     const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
     const [isPasswordValid, setIsPasswordValid] = useState(false);
@@ -17,8 +18,8 @@ function Signup() {
     };
 
     const [formData, setFormData] = useState({
-        id: '',
-        password: '',
+        userId: '',
+        userPwd: '',
         confirmPassword: '',
         name: '',
         phone: '',
@@ -60,16 +61,39 @@ function Signup() {
         }
     };
 
+    const handleCheckDuplicate = async () => {
+        if(!formData.userId) {
+            alert('ID를 입력하세요.');
+            return;
+        }
+
+        try {
+            const response = await axios.get('http://localhost:8080/auth/check-duplicate', {
+                params: { userId: formData.userId }
+            });
+            if (response.data) {
+                alert('이 ID는 이미 사용 중입니다.');
+                setIsDuplicate(true);
+            } else {
+                alert('사용 가능한 ID입니다.');
+                setIsDuplicate(false);
+            }
+        } catch (error) {
+            console.error('중복 확인 실패:', error);
+            alert('중복 확인 중 오류가 발생했습니다.');
+        }
+    };
+
     // 비밀번호 유효성 검사 함수
-    const validatePassword = (password) => {
+    const validatePassword = (userPwd) => {
         const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/; // 8자리 이상, 특수문자 포함
-        return passwordRegex.test(password);
+        return passwordRegex.test(userPwd);
     };
 
     // 비밀번호 유효성 및 확인 상태 업데이트
     useEffect(() => {
-        if (formData.password) {
-            if (validatePassword(formData.password)) {
+        if (formData.userPwd) {
+            if (validatePassword(formData.userPwd)) {
                 setPasswordMessage('✔ 비밀번호가 유효합니다.');
                 setIsPasswordValid(true);
             } else {
@@ -79,7 +103,7 @@ function Signup() {
         }
 
         if (formData.confirmPassword) {
-            if (formData.password === formData.confirmPassword) {
+            if (formData.userPwd === formData.confirmPassword) {
                 setConfirmPasswordMessage('✔ 비밀번호가 일치합니다.');
                 setIsPasswordMatched(true);
             } else {
@@ -87,51 +111,62 @@ function Signup() {
                 setIsPasswordMatched(false);
             }
         }
-    }, [formData.password, formData.confirmPassword]);
+    }, [formData.userPwd, formData.confirmPassword]);
 
     // 이메일 인증 코드 전송
-    const sendEmailVerification = async () => {
+    const handleSendVerificationCode = async () => {
         if (!formData.email) {
-            setEmailMessage('이메일을 입력하세요.');
+            alert('이메일 주소를 입력하세요.');
             return;
         }
-
-        const response = await fetch('/api/send-email-verification', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: formData.email }),
-        });
-
-        if (response.ok) {
-            setEmailMessage('인증 코드가 이메일로 발송되었습니다.');
-        } else {
-            setEmailMessage('인증 코드 발송에 실패했습니다.');
+    
+        try {
+            const response = await axios.post('http://localhost:8080/auth/send-code', {
+                email: formData.email // 보내는 데이터가 맞는지 확인
+            });
+            alert(response.data);
+            setIsCodeSent(true);
+        } catch (error) {
+            console.error('인증 코드 전송 실패:', error);
+            alert('인증 코드 전송 실패: ' + error.message);
         }
     };
 
     // 이메일 인증 코드 확인
-    const verifyEmailCode = async () => {
-        const response = await fetch('/api/verify-email-code', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: formData.email, code: inputVerificationCode }),
-        });
-
-        if (response.ok) {
-            setIsEmailVerified(true);
-            setEmailMessage('이메일 인증에 성공했습니다.');
-        } else {
-            setEmailMessage('인증 코드가 일치하지 않습니다.');
+    const handleVerifyCode = async () => {
+        try{
+            // 인증 코드 확인 요청
+            await axios.post('http://localhost:8080/auth/verify-code',{email:formData.email, code:verificationCode}); //수정
+            alert('인증에 성공했습니다'); //인증 결과 메시지 표시
+            setIsVerified(true); // 인증 성공 시 상태 업데이트
+        } catch (error){
+            console.error('인증 코드 확인 실패: ', error);
+            alert('인증에 실패했습니다');
+            setIsVerified(false); //인증 실패시 상태 업데이트
         }
     };
 
     // 폼 제출 시 유효성 검사
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
+        console.log("handleSubmit 동작함...");
+        
+
+        if(isDuplicate){
+            alert("아이디 중복확인을 해주세요");
+            return;
+        }
+
+        if(!formData.userId){
+            alert("ID를 반드시 입력해주세요")
+            return;
+        }
+
+
+        if(!formData.userPwd){
+            alert("비밀번호를 반드시 입력해주세요")
+            return;
+        }
 
         if (!isPasswordValid) {
             setErrorMessage("비밀번호는 특수 문자를 포함해 8자리 이상이어야 합니다.");
@@ -141,6 +176,34 @@ function Signup() {
         if (!isPasswordMatched) {
             setErrorMessage('비밀번호가 일치하지 않습니다.');
             return;
+        }
+
+        if(!formData.name){
+            alert("성함을 반드시 입력해주세요")
+            return;
+        }
+
+        if(!formData.phone){
+            alert("전화번호를 반드시 입력해주세요")
+            return;
+        }
+
+        if(!isVerified){
+            alert('인증이 완료되지 않았습니다. 인증 후 다시 진행해주세요.');
+            return;
+        }
+       
+        try {
+            const response = await axios.post('http://localhost:8080/auth/signup', formData);
+            alert('회원가입 성공: ' + response.data);
+            
+            //로그인 페이지로 이동
+            window.location.href = '/login';
+
+          
+        } catch (error) {
+            console.error('회원가입 실패:', error);
+            alert('회원가입 실패: ' + error.message);
         }
 
         setErrorMessage(''); // 오류 메시지 초기화
@@ -169,7 +232,7 @@ function Signup() {
                 {activeTab === 'user' && (
                     <div className="signup-form">
                         <h2> </h2>
-                        <form onSubmit={handleSubmit}>
+                       
                             <div className="user-info-container">
                                 <div className="user-info">
                                     <div className="form-input-box">
@@ -177,21 +240,21 @@ function Signup() {
                                         <div className="input-with-button">
                                             <input
                                                 type="text"
-                                                name="id"
-                                                value={formData.id}
+                                                name="userId"
+                                                value={formData.userId}
                                                 onChange={handleChange}
                                                 required
                                                 placeholder="아이디를 입력하세요"
                                             />
-                                            <button className="duplicate-check">중복확인</button>
+                                            <button className="duplicate-check"onClick={handleCheckDuplicate}>중복확인</button>
                                         </div>
                                     </div>
                                     <div className="form-input-box">
                                         <label>PASSWORD</label>
                                         <input
                                             type="password"
-                                            name="password"
-                                            value={formData.password}
+                                            name="userPwd"
+                                            value={formData.userPwd}
                                             onChange={handleChange}
                                             required
                                             placeholder="비밀번호를 입력하세요"
@@ -251,28 +314,27 @@ function Signup() {
                                                 required
                                                 placeholder="이메일을 입력하세요 '@'포함"
                                             />
-                                            <button type="button" className="duplicate-check" onClick={sendEmailVerification}>
+                                            <button type="button" className="duplicate-check" onClick={handleSendVerificationCode}>
                                                 인증
                                             </button>
                                         </div>
-                                        {emailMessage && <p>{emailMessage}</p>}
+                                      
                                     </div>
 
                                     {/* 인증 코드 입력 필드 */}
-                                    {verificationCode && (
+                                    {isCodeSent && (
                                         <div className="form-input-box">
                                             <label>인증 코드</label>
                                             <input
                                                 type="text"
-                                                value={inputVerificationCode}
-                                                onChange={(e) => setInputVerificationCode(e.target.value)}
+                                                value={verificationCode}
+                                                onChange={(e) => setVerificationCode(e.target.value)}
                                                 placeholder="인증 코드를 입력하세요"
                                             />
-                                            <button type="button" onClick={verifyEmailCode}>코드 확인</button>
+                                            <button type="button" onClick={handleVerifyCode}>코드 확인</button>
                                         </div>
                                     )}
 
-                                    {isEmailVerified && <p>이메일 인증이 완료되었습니다.</p>}
                                 </div>
                                 <div className="pet-info">
                                     <div className="form-input-box">
@@ -372,8 +434,7 @@ function Signup() {
                                     )}
                                 </div>
                             </div>
-                        </form>
-                        <button type="submit" className="signup-user-btn">
+                            <button type="submit" className="signup-user-btn" onClick={handleSubmit}>
                             회원가입
                         </button>
                     </div>
@@ -382,7 +443,6 @@ function Signup() {
                 {activeTab === 'hospital' && (
                     <div className="signup-form hospital-form">
                         <h2> </h2>
-                        <form onSubmit={handleSubmit}>
                             <div className="user-info-container">
                                 <div className="user-info">
                                     <div className="form-input-box">
@@ -390,20 +450,20 @@ function Signup() {
                                         <div className="input-with-button">
                                             <input
                                                 type="text"
-                                                name="id"
-                                                value={formData.id}
+                                                name="userId"
+                                                value={formData.userId}
                                                 onChange={handleChange}
                                                 required
                                                 placeholder="아이디를 입력하세요"
                                             />
-                                            <button className="duplicate-check">중복확인</button>
+                                            <button className="duplicate-check" onClick={handleCheckDuplicate}>중복확인</button>
                                         </div>
                                     </div>
                                     <div className="form-input-box">
                                         <label>PASSWORD</label>
                                         <input
                                             type="password"
-                                            name="password"
+                                            name="userPwd"
                                             value={formData.password}
                                             onChange={handleChange}
                                             required
@@ -464,11 +524,25 @@ function Signup() {
                                                 required
                                                 placeholder="이메일을 입력하세요 '@'포함"
                                             />
-                                            <button type="button" className="duplicate-check" onClick={sendEmailVerification}>
+                                            <button type="button" className="duplicate-check" onClick={handleSendVerificationCode}>
                                                 인증
                                             </button>
                                         </div>
-                                        {emailMessage && <p>{emailMessage}</p>}
+
+                                        {/* 인증 코드 입력 필드 */}
+                                        {isCodeSent && (
+                                            <div className="form-input-box">
+                                                <label>인증 코드</label>
+                                                <input
+                                                    type="text"
+                                                    value={verificationCode}
+                                                    onChange={(e) => setVerificationCode(e.target.value)}
+                                                    placeholder="인증 코드를 입력하세요"
+                                                />
+                                                <button type="button" onClick={handleVerifyCode}>코드 확인</button>
+                                            </div>
+                                        )}
+                                    
                                     </div>
                                 </div>
 
@@ -554,8 +628,7 @@ function Signup() {
                                     )}
                                 </div>
                             </div>
-                        </form>
-                        <button type="submit" className="signup-user-btn">
+                        <button type="submit" className="signup-user-btn" onClick={handleSubmit}>
                             병원 회원가입
                         </button>
                     </div>
