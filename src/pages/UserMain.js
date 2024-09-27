@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import '../css/UserMain.css';
 
+import { useDispatch, useSelector } from "react-redux";
+
 function UserMain() {
     return (
         <>
@@ -16,19 +18,22 @@ function UserMain() {
                     <li className="user-main-nav-item">
                         <NavLink to="/hospitalview">
                             <img src="/images/main1.png" alt="병원 검색" />
-                            <span>병원<br />검색</span>
+                            <span>병원<br />
+                                검색하기</span>
                         </NavLink>
                     </li>
                     <li className="user-main-nav-item">
                         <NavLink to="/hosreser">
                             <img src="/images/main2.png" alt="병원 예약" />
-                            <span>병원<br />예약</span>
+                            <span>병원<br />
+                                예약하기</span>
                         </NavLink>
                     </li>
                     <li className="user-main-nav-item">
                         <NavLink to="/expenses">
-                            <img src="/images/main2.png" alt="평균 진료비" />
-                            <span>평균<br />진료비</span>
+                            <img src="/images/main3.png" alt="평균 진료비" />
+                            <span>진료비<br />
+                                확인하기</span>
                         </NavLink>
                     </li>
                 </ul>

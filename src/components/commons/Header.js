@@ -19,12 +19,12 @@ function Header() {
             </div>
         <ul className="header-nav-list">
             <li className="header-nav-item">
-                <NavLink to="/hospitalview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <NavLink to="/login" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>병원검색</span>
                 </NavLink>
             </li>
             <li className="header-nav-item">
-                <NavLink to="/hosreser" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <NavLink to="/login" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>병원예약</span>
                 </NavLink>
             </li>
@@ -34,12 +34,12 @@ function Header() {
                 </NavLink>
             </li>
             <li className="header-nav-item">
-                <NavLink to="/allreviews" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <NavLink to="/login" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>후기보기</span>
                 </NavLink>
             </li>
             <li className="header-nav-item">
-                <NavLink to="/myinfo" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                <NavLink to="/login" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                     <span>마이페이지</span>
                 </NavLink>
             </li>

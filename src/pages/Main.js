@@ -14,15 +14,15 @@ function Main() {
                 </div>
                 <ul className="nav-list">
                     <li className="nav-item">
-                        <NavLink to="/hospitalview">
-                            <img src="/images/main1.png" alt="병원 검색하기" />
+                        <NavLink to="/login">
+                            <img src="/images/main1.png" alt="로그인" />
                             <span>병원<br />
                                 검색하기</span>
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/hosreser">
-                            <img src="/images/main2.png" alt="병원 예약하기" />
+                        <NavLink to="/login">
+                            <img src="/images/main2.png" alt="로그인" />
                             <span>병원<br />
                                 예약하기</span>
                         </NavLink>
@@ -34,12 +34,6 @@ function Main() {
                                 확인하기</span>
                         </NavLink>
                     </li>
-                    <NavLink to="/beautyreserpage">
-                        <span>미용 예약</span>
-                    </NavLink>
-                    <NavLink to="/reserpage">
-                        <span>진료 및 수술 예약</span>
-                    </NavLink>
                 </ul>
             </div>
         </>

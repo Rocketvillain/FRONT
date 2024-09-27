@@ -35,23 +35,23 @@ function HosHeader() {
             </div>
             <ul className="hos-header-nav-list">
                 <li className="hos-header-nav-item">
-                    <NavLink to="/hospitalview" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/hosresercontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>예약관리</span>
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/reserstatus" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        <span>후기조회</span>
+                    <NavLink to="/hosreviewcontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                        <span>후기관리</span>
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/expenses" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/hosschedul" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>일정관리</span>
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/review" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        <span>병원관리</span>
+                    <NavLink to="/hosinfo" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                        <span>마이페이지</span>
                     </NavLink>
                 </li>
             </ul>
