@@ -10,67 +10,61 @@ import "../../css/hosAdmin/HosSchedule.css"; // CSS 파일 연결
 
 function HosSchedule() {
     const dispatch = useDispatch();
-    const hospitalSchedules = useSelector(state => state.hospitalSchedule?.schedules || []);
-    const hosId = useSelector(state => state.user.userInfo.hosId);
+    const hospitalSchedules = useSelector(state => state.hospitalSchedule?.schedules || []);  // 병원 일정
+    const hosId = useSelector(state => state.user.userInfo.hosId);  // 병원 ID
     
-    const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
-    const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
-    const [isAllDay, setIsAllDay] = useState(false); // 종일 일정 여부
-    const [editingEventIndex, setEditingEventIndex] = useState(null); // 수정할 이벤트 인덱스
-    const [startTime, setStartTime] = useState(""); // 시작 시간
-    const [endTime, setEndTime] = useState(""); // 종료 시간
-    const [description, setDescription] = useState(""); // 일정 설명
-    
+    const [currentDate, setCurrentDate] = useState(new Date());  // 현재 날짜
+    const [selectedDate, setSelectedDate] = useState(null);  // 선택된 날짜
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
+    const [isAllDay, setIsAllDay] = useState(false);  // 종일 일정 여부
+    const [editingEventIndex, setEditingEventIndex] = useState(null);  // 수정할 이벤트 인덱스
+    const [startTime, setStartTime] = useState("");  // 시작 시간
+    const [endTime, setEndTime] = useState("");  // 종료 시간
+    const [description, setDescription] = useState("");  // 일정 설명
 
-    const colors = ['#F0C60A', '#dda4a1', '#a4e390', '#84a4cb', '#9880c6']; // 다양한 색상 배열
+    const colors = ['#F0C60A', '#dda4a1', '#a4e390', '#84a4cb', '#9880c6'];  // 다양한 색상 배열
 
     useEffect(() => {
         const fetchData = async () => {
-            await dispatch(fetchHospitalSchedules(hosId));
+            await dispatch(fetchHospitalSchedules(hosId));  // 병원 일정 불러오기
         };
         fetchData();
     }, [dispatch, hosId]);
 
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-    const today = new Date(); // 오늘 날짜
-
-    const daysInMonth = new Date(year, month + 1, 0).getDate(); // 해당 월의 일 수
-    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 해당 월의 첫 날 요일
+    const daysInMonth = new Date(year, month + 1, 0).getDate();  // 해당 월의 일 수
+    const firstDayOfMonth = new Date(year, month, 1).getDay();  // 해당 월의 첫 날 요일
 
     const prevMonth = () => {
-        setCurrentDate(new Date(year, month - 1, 1));
+        setCurrentDate(new Date(year, month - 1, 1));  // 이전 달 이동
     };
 
     const nextMonth = () => {
-        setCurrentDate(new Date(year, month + 1, 1));
+        setCurrentDate(new Date(year, month + 1, 1));  // 다음 달 이동
     };
 
     const openModal = (day, eventId = null) => {
-        // 선택한 연도, 월, 일로 정확한 날짜를 생성
-        const fullDate = new Date(year, month, day);  
-        setSelectedDate(fullDate);  // 정확한 날짜 설정
-        setIsModalOpen(true);
+        const fullDate = new Date(year, month, day);  // 선택한 날짜 설정
+        setSelectedDate(fullDate);  // 선택된 날짜 저장
+        setIsModalOpen(true);  // 모달 열기
     
         if (eventId !== null) {
             const event = hospitalSchedules.find((schedule) => schedule.scheduleId === eventId);
     
-            // event가 없을 때 기본 처리
             if (!event) {
                 console.error(`Event with ID ${eventId} not found`);
                 return;
             }
     
-            // startTime과 endTime이 정의되어 있지 않으면 기본값으로 설정
             const [startHour, startMinute] = event.startTime ? event.startTime : [0, 0];
             const [endHour, endMinute] = event.endTime ? event.endTime : [0, 0];
             setStartTime(`${startHour < 10 ? '0' : ''}${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}`);
             setEndTime(`${endHour < 10 ? '0' : ''}${endHour}:${endMinute < 10 ? '0' : ''}${endMinute}`);
             
-            setDescription(event.description || ""); 
+            setDescription(event.description || "");  // 설명 설정
             setIsAllDay(event.startTime === "종일");
-            setEditingEventIndex(eventId);
+            setEditingEventIndex(eventId);  // 수정할 이벤트 인덱스 설정
         } else {
             // 새 이벤트 추가 시 폼 초기화
             setStartTime("");
@@ -80,68 +74,65 @@ function HosSchedule() {
             setEditingEventIndex(null);
         }
     };
-    
-    
 
     const closeModal = () => {
-        setIsModalOpen(false);
-        setEditingEventIndex(null); // 모달 닫을 때 수정 상태 초기화
+        setIsModalOpen(false);  // 모달 닫기
+        setEditingEventIndex(null);  // 수정 상태 초기화
     };
 
-    const handleAddOrUpdateEvent = (e) => {
+    const handleAddOrUpdateEvent = async (e) => {
         e.preventDefault();
     
-        // 점심시간 자동 설정 로직 (모든 일정에 자동 추가)
-        const lunchEvent = {
-            date: selectedDate.toISOString().slice(0, 10),  // 'YYYY-MM-DD' 형식
-            startTime: "12:00",  // 점심시간 시작
-            endTime: "13:00",  // 점심시간 종료
-            description: "점심시간",
-            hosId,
-            isOkay: true
-        };
+        const isClosedDay = description === "휴진일";  // 휴진일 설정 여부
     
-        // 휴진일 설정 로직
-        const isClosedDay = description === "휴진일";
+        // 점심시간 자동 추가 (휴진일이 아닌 경우)
+        const lunchTimeEvent = hospitalSchedules.find(event => event.description === "점심시간");
+        if (!isClosedDay && lunchTimeEvent) {
+            const lunchEvent = {
+                date: selectedDate.toISOString().slice(0, 10),  // 'YYYY-MM-DD' 형식
+                startTime: lunchTimeEvent.startTime,  // 백엔드에서 가져온 점심시간 시작
+                endTime: lunchTimeEvent.endTime,  // 백엔드에서 가져온 점심시간 종료
+                description: "점심시간",
+                hosId,
+                isOkay: true
+            };
+            await dispatch(addHospitalSchedule(lunchEvent));  // 점심시간 자동 추가
+        }
+    
         const startTimeValue = isAllDay || isClosedDay ? "종일" : startTime;
         const endTimeValue = isAllDay || isClosedDay ? "종일" : endTime;
     
         const newEvent = {
-            date: selectedDate.toISOString().slice(0, 10),  // 'YYYY-MM-DD' 형식으로 변환하여 정확한 날짜 전달
+            date: selectedDate.toISOString().slice(0, 10),  // 'YYYY-MM-DD' 형식
             startTime: startTimeValue,
             endTime: endTimeValue,
-            description,
+            description: isClosedDay ? "휴진일" : description,  // 휴진일이면 '휴진일'로 설정
             hosId,
             isOkay: !isClosedDay  // 휴진일이면 false, 정상 운영일이면 true
         };
     
         if (editingEventIndex !== null) {
-            // 기존 이벤트 수정 시
-            dispatch(updateHospitalSchedule(editingEventIndex, newEvent));
+            await dispatch(updateHospitalSchedule(editingEventIndex, newEvent));  // 일정 수정
         } else {
-            // 새로운 일정 추가 시
-            dispatch(addHospitalSchedule(newEvent));
-            
-            // 자동으로 점심시간 일정도 추가
-            dispatch(addHospitalSchedule(lunchEvent));
+            await dispatch(addHospitalSchedule(newEvent));  // 새로운 일정 추가
         }
     
-        closeModal();  // 일정 추가 후 모달 닫기
+        await dispatch(fetchHospitalSchedules(hosId));  // 스케줄 목록 즉시 갱신
+        closeModal();  // 모달 닫기
     };
-    
-    
 
-    const handleDeleteEvent = (eventId) => {
-        dispatch(deleteHospitalSchedule(eventId));
-        closeModal(); // 삭제 후 모달 닫기
+    const handleDeleteEvent = async (eventId) => {
+        await dispatch(deleteHospitalSchedule(eventId));  // 일정 삭제
+        await dispatch(fetchHospitalSchedules(hosId));  // 스케줄 목록 즉시 갱신
+        closeModal();  // 모달 닫기
     };
 
     const renderDays = () => {
         const days = [];
-        const prevMonthDays = new Date(year, month, 0).getDate(); // 이전 달의 총 일 수
-        const nextMonthDays = 35 - (daysInMonth + firstDayOfMonth); // 남은 칸에 표시할 다음 달의 일 수
-    
-        const maxEventsToShow = 3;
+        const prevMonthDays = new Date(year, month, 0).getDate();  // 이전 달의 총 일 수
+        const nextMonthDays = 35 - (daysInMonth + firstDayOfMonth);  // 남은 칸에 표시할 다음 달의 일 수
+
+        const maxEventsToShow = 3;  // 표시할 최대 일정 수
     
         // 이전 달 날짜 추가
         for (let i = firstDayOfMonth - 1; i >= 0; i--) {
@@ -158,7 +149,6 @@ function HosSchedule() {
     
         // 현재 달 날짜 추가
         for (let day = 1; day <= daysInMonth; day++) {
-            const dateKey = `${year}-${month + 1}-${day}`;
             const eventList = hospitalSchedules.filter(schedule => {
                 const [scheduleYear, scheduleMonth, scheduleDay] = schedule.date;  // 배열 구조분해할당으로 date 필드를 변환
                 return scheduleYear === year && (scheduleMonth - 1) === month && scheduleDay === day;
@@ -174,21 +164,20 @@ function HosSchedule() {
     
                     {/* 일정 목록 표시 */}
                     {eventList.slice(0, maxEventsToShow).map((event, index) => {
-                        const [startHour, startMinute] = event.startTime;  // 시작 시간을 변환하는 부분
-                        const [endHour, endMinute] = event.endTime;  // 종료 시간을 변환하는 부분
-                        const startTimeString = `${startHour < 10 ? '0' : ''}${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}`;  // 시작 시간 형식 변환
-                        const endTimeString = `${endHour < 10 ? '0' : ''}${endHour}:${endMinute < 10 ? '0' : ''}${endMinute}`;  // 종료 시간 형식 변환
+                        const [startHour, startMinute] = event.startTime;
+                        const [endHour, endMinute] = event.endTime;
+                        const startTimeString = `${startHour < 10 ? '0' : ''}${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}`;
+                        const endTimeString = `${endHour < 10 ? '0' : ''}${endHour}:${endMinute < 10 ? '0' : ''}${endMinute}`;
                         
                         return (
                             <div
                                 key={index}
                                 className="hos-schedul-event"
-                                style={{ backgroundColor: event.color || '#84a4cb' }}  // 색상 필드가 없을 때 기본 색상 사용
-                                onClick={(e) => { e.stopPropagation(); openModal(day, event.scheduleId); }}  // 일정 클릭 시 모달 열기
+                                style={{ backgroundColor: event.color || '#84a4cb' }}
+                                onClick={(e) => { e.stopPropagation(); openModal(day, event.scheduleId); }}
                             >
                                 <div className="hos-schedul-event-strip">
-                                    {/* 시작 시간과 종료 시간만 표시 */}
-                                    <p>{`${startTimeString} - ${endTimeString}`}</p>  {/* 시간만 표시 */}
+                                    <p>{`${startTimeString} - ${endTimeString}`}</p>
                                 </div>
                             </div>
                         );
@@ -219,7 +208,6 @@ function HosSchedule() {
     
         return days;
     };
-    
 
     return (
         <div className="hos-schedul-calendar-container">
