@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../css/hosAdmin/HosSchedul.css"; // CSS 파일 연결
+import "../../css/hosAdmin/HosSchedule.css"; // CSS 파일 연결
 
 function HosSchedul() {
     const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
