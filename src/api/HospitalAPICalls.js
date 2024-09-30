@@ -1,5 +1,6 @@
-import { allHospital, hospitalDetail, fetchHospitalSchedules, addHospitalSchedule, updateHospitalSchedule, deleteHospitalSchedule } from "../modules/HospitalModule";
+import { allHospital, hospitalDetail} from "../modules/HospitalModule";
 import { request } from "./Apis";
+import { fetchHospitalSchedules, addHospitalSchedule, updateHospitalSchedule, deleteHospitalSchedule } from "../modules/HospitalScheduleModule";
 
 // 병원 전체 조회 API 호출
 export function allHospitalAPI() {
