@@ -38,6 +38,7 @@ import HosLayout from "./layouts/HosLayout";
 import HosInfo from "./pages/hosadmin/HosInfo";
 import HosReviewControl from "./pages/hosadmin/HosReviewControl";
 import HosSchedule from "./pages/hosadmin/HosSchedule";
+import HosReserControl from "./pages/hosadmin/HosReserControl";
 
 function App() {
 
@@ -95,6 +96,7 @@ function App() {
             <Route  path="/hosinfo" element={<HosInfo />} />
             <Route path="/hosreviewcontrol" element={<HosReviewControl/>}/>
             <Route path="/hosschedule" element={<HosSchedule/>}/>
+            <Route path="/hosresercontrol" element={<HosReserControl/>}/>
           </Route>
         )}
   
