@@ -1,6 +1,5 @@
 import { createActions, handleActions } from "redux-actions";
 
-
 /* 초기 state값 */
 const initialState = {
     schedules: [], // 병원 일정 초기 상태
@@ -16,13 +15,11 @@ export const DELETE_HOSPITAL_SCHEDULE = 'hospital/DELETE_HOSPITAL_SCHEDULE';
 
 
 /* 병원 관련 액션 함수 */
-export const {
-    hospitalSchedules: {
+export const { 
         fetchHospitalSchedules,
         addHospitalSchedule,
         updateHospitalSchedule,
         deleteHospitalSchedule
-    }
 } = createActions({
     /* 병원 일정 관련 액션 */
     [FETCH_HOSPITAL_SCHEDULES]: (data) => data,
@@ -33,7 +30,7 @@ export const {
 
 
 /* 리듀서 함수 */
-const hospitalReducer = handleActions(
+const hospitalScheduleReducer = handleActions(
     {
 
         /* 병원 일정 관련 리듀서 처리 */
@@ -41,7 +38,6 @@ const hospitalReducer = handleActions(
             return {
                 ...state,
                 schedules: payload,
-                loading: false,
             };
         },
 
@@ -71,6 +67,6 @@ const hospitalReducer = handleActions(
     initialState
 );
 
-export default hospitalReducer;
+export default hospitalScheduleReducer;
 
 

@@ -8,9 +8,12 @@ import {
 } from "../../api/HospitalAPICalls";  // API 호출 함수 가져오기
 import "../../css/hosAdmin/HosSchedule.css"; // CSS 파일 연결
 
-function HosSchedul({ hosId }) {
+function HosSchedul() {
     const dispatch = useDispatch();
-    const hospitalSchedules = useSelector(state => state.hospitalScheduleReducer.schedules);
+    const hospitalSchedules = useSelector(state => state.hospitalSchedule?.schedules || []);
+    const hosId = useSelector(state => state.user.userInfo.hosId);
+    console.log('hosId!!!!',hosId);
+    
 
     const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
     const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜

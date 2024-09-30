@@ -94,7 +94,7 @@ function App() {
             <Route index element={<HosAdminMain />} />
             <Route  path="/hosinfo" element={<HosInfo />} />
             <Route path="/hosreviewcontrol" element={<HosReviewControl/>}/>
-            <Route path="/hosschedul" element={<HosSchedule/>}/>
+            <Route path="/hosschedule" element={<HosSchedule/>}/>
           </Route>
         )}
   

@@ -40,6 +40,8 @@ export function fetchHospitalSchedulesAPI(hosId) {
     return async (dispatch) => {
         try {
             const result = await request('GET', `/api/v1/hospital/schedule/${hosId}`);
+            console.log('RESULT :', result);
+            
             dispatch(fetchHospitalSchedules(result.results.hospitalSchedule));
         } catch (error) {
             console.error('Error fetching hospital schedules:', error);
