@@ -7,15 +7,15 @@ const initialState = {
 
 
 /* 병원 일정 관련 액션 타입 설정 */
-export const FETCH_HOSPITAL_SCHEDULES = 'hospital/FETCH_HOSPITAL_SCHEDULES';
-export const ADD_HOSPITAL_SCHEDULE = 'hospital/ADD_HOSPITAL_SCHEDULE';
-export const UPDATE_HOSPITAL_SCHEDULE = 'hospital/UPDATE_HOSPITAL_SCHEDULE';
-export const DELETE_HOSPITAL_SCHEDULE = 'hospital/DELETE_HOSPITAL_SCHEDULE';
+export const FETCH_HOSPITAL_SCHEDULES = 'FETCH_HOSPITAL_SCHEDULES';
+export const ADD_HOSPITAL_SCHEDULE = 'ADD_HOSPITAL_SCHEDULE';
+export const UPDATE_HOSPITAL_SCHEDULE = 'UPDATE_HOSPITAL_SCHEDULE';
+export const DELETE_HOSPITAL_SCHEDULE = 'DELETE_HOSPITAL_SCHEDULE';
 
 
 
 /* 병원 관련 액션 함수 */
-export const { 
+export const {
         fetchHospitalSchedules,
         addHospitalSchedule,
         updateHospitalSchedule,

@@ -8,13 +8,11 @@ import {
 } from "../../api/HospitalAPICalls";  // API 호출 함수 가져오기
 import "../../css/hosAdmin/HosSchedule.css"; // CSS 파일 연결
 
-function HosSchedul() {
+function HosSchedule() {
     const dispatch = useDispatch();
     const hospitalSchedules = useSelector(state => state.hospitalSchedule?.schedules || []);
     const hosId = useSelector(state => state.user.userInfo.hosId);
-    console.log('hosId!!!!',hosId);
     
-
     const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
     const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
@@ -23,11 +21,11 @@ function HosSchedul() {
     const [startTime, setStartTime] = useState(""); // 시작 시간
     const [endTime, setEndTime] = useState(""); // 종료 시간
     const [description, setDescription] = useState(""); // 일정 설명
+    
 
     const colors = ['#F0C60A', '#dda4a1', '#a4e390', '#84a4cb', '#9880c6']; // 다양한 색상 배열
 
     useEffect(() => {
-        // 병원 일정을 API로부터 가져오기
         const fetchData = async () => {
             await dispatch(fetchHospitalSchedules(hosId));
         };
@@ -49,26 +47,41 @@ function HosSchedul() {
         setCurrentDate(new Date(year, month + 1, 1));
     };
 
-    const openModal = (date, eventId = null) => {
-        setSelectedDate(date);
+    const openModal = (day, eventId = null) => {
+        // 선택한 연도, 월, 일로 정확한 날짜를 생성
+        const fullDate = new Date(year, month, day);  
+        setSelectedDate(fullDate);  // 정확한 날짜 설정
         setIsModalOpen(true);
-
+    
         if (eventId !== null) {
-            const event = hospitalSchedules.find((schedule) => schedule.id === eventId);
-            setStartTime(event.startTime === "종일" ? "" : event.startTime);
-            setEndTime(event.endTime === "종일" ? "" : event.endTime);
-            setDescription(event.description);
+            const event = hospitalSchedules.find((schedule) => schedule.scheduleId === eventId);
+    
+            // event가 없을 때 기본 처리
+            if (!event) {
+                console.error(`Event with ID ${eventId} not found`);
+                return;
+            }
+    
+            // startTime과 endTime이 정의되어 있지 않으면 기본값으로 설정
+            const [startHour, startMinute] = event.startTime ? event.startTime : [0, 0];
+            const [endHour, endMinute] = event.endTime ? event.endTime : [0, 0];
+            setStartTime(`${startHour < 10 ? '0' : ''}${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}`);
+            setEndTime(`${endHour < 10 ? '0' : ''}${endHour}:${endMinute < 10 ? '0' : ''}${endMinute}`);
+            
+            setDescription(event.description || ""); 
             setIsAllDay(event.startTime === "종일");
-            setEditingEventIndex(eventId);  // 여기서 id를 설정
+            setEditingEventIndex(eventId);
         } else {
             // 새 이벤트 추가 시 폼 초기화
             setStartTime("");
             setEndTime("");
             setDescription("");
             setIsAllDay(false);
-            setEditingEventIndex(null);  // 새 이벤트일 때는 null로 설정
+            setEditingEventIndex(null);
         }
     };
+    
+    
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -77,25 +90,46 @@ function HosSchedul() {
 
     const handleAddOrUpdateEvent = (e) => {
         e.preventDefault();
-        const startTimeValue = isAllDay ? "종일" : startTime;
-        const endTimeValue = isAllDay ? "종일" : endTime;
+    
+        // 점심시간 자동 설정 로직 (모든 일정에 자동 추가)
+        const lunchEvent = {
+            date: selectedDate.toISOString().slice(0, 10),  // 'YYYY-MM-DD' 형식
+            startTime: "12:00",  // 점심시간 시작
+            endTime: "13:00",  // 점심시간 종료
+            description: "점심시간",
+            hosId,
+            isOkay: true
+        };
+    
+        // 휴진일 설정 로직
+        const isClosedDay = description === "휴진일";
+        const startTimeValue = isAllDay || isClosedDay ? "종일" : startTime;
+        const endTimeValue = isAllDay || isClosedDay ? "종일" : endTime;
+    
         const newEvent = {
+            date: selectedDate.toISOString().slice(0, 10),  // 'YYYY-MM-DD' 형식으로 변환하여 정확한 날짜 전달
             startTime: startTimeValue,
             endTime: endTimeValue,
             description,
-            hosId // 병원 ID를 포함하여 전송
+            hosId,
+            isOkay: !isClosedDay  // 휴진일이면 false, 정상 운영일이면 true
         };
-
+    
         if (editingEventIndex !== null) {
-            // 수정할 경우
+            // 기존 이벤트 수정 시
             dispatch(updateHospitalSchedule(editingEventIndex, newEvent));
         } else {
-            // 새 이벤트 추가할 경우
+            // 새로운 일정 추가 시
             dispatch(addHospitalSchedule(newEvent));
+            
+            // 자동으로 점심시간 일정도 추가
+            dispatch(addHospitalSchedule(lunchEvent));
         }
-
-        closeModal(); // 일정 추가 또는 수정 후 모달 닫기
+    
+        closeModal();  // 일정 추가 후 모달 닫기
     };
+    
+    
 
     const handleDeleteEvent = (eventId) => {
         dispatch(deleteHospitalSchedule(eventId));
@@ -106,9 +140,9 @@ function HosSchedul() {
         const days = [];
         const prevMonthDays = new Date(year, month, 0).getDate(); // 이전 달의 총 일 수
         const nextMonthDays = 35 - (daysInMonth + firstDayOfMonth); // 남은 칸에 표시할 다음 달의 일 수
-
+    
         const maxEventsToShow = 3;
-
+    
         // 이전 달 날짜 추가
         for (let i = firstDayOfMonth - 1; i >= 0; i--) {
             days.push(
@@ -121,15 +155,15 @@ function HosSchedul() {
                 </div>
             );
         }
-
+    
         // 현재 달 날짜 추가
         for (let day = 1; day <= daysInMonth; day++) {
             const dateKey = `${year}-${month + 1}-${day}`;
             const eventList = hospitalSchedules.filter(schedule => {
-                const scheduleDate = new Date(schedule.date);
-                return scheduleDate.getFullYear() === year && scheduleDate.getMonth() === month && scheduleDate.getDate() === day;
+                const [scheduleYear, scheduleMonth, scheduleDay] = schedule.date;  // 배열 구조분해할당으로 date 필드를 변환
+                return scheduleYear === year && (scheduleMonth - 1) === month && scheduleDay === day;
             });
-
+    
             days.push(
                 <div
                     key={day}
@@ -137,21 +171,29 @@ function HosSchedul() {
                     className={`hos-schedul-date-cell`}
                 >
                     <span>{day}</span>
-
+    
                     {/* 일정 목록 표시 */}
-                    {eventList.slice(0, maxEventsToShow).map((event, index) => (
-                        <div
-                            key={index}
-                            className="hos-schedul-event"
-                            style={{ backgroundColor: event.color }}
-                            onClick={(e) => { e.stopPropagation(); openModal(day, event.id); }} // 일정 클릭 시 모달 열기
-                        >
-                            <div className="hos-schedul-event-strip">
-                                <p>{event.description}</p>
+                    {eventList.slice(0, maxEventsToShow).map((event, index) => {
+                        const [startHour, startMinute] = event.startTime;  // 시작 시간을 변환하는 부분
+                        const [endHour, endMinute] = event.endTime;  // 종료 시간을 변환하는 부분
+                        const startTimeString = `${startHour < 10 ? '0' : ''}${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}`;  // 시작 시간 형식 변환
+                        const endTimeString = `${endHour < 10 ? '0' : ''}${endHour}:${endMinute < 10 ? '0' : ''}${endMinute}`;  // 종료 시간 형식 변환
+                        
+                        return (
+                            <div
+                                key={index}
+                                className="hos-schedul-event"
+                                style={{ backgroundColor: event.color || '#84a4cb' }}  // 색상 필드가 없을 때 기본 색상 사용
+                                onClick={(e) => { e.stopPropagation(); openModal(day, event.scheduleId); }}  // 일정 클릭 시 모달 열기
+                            >
+                                <div className="hos-schedul-event-strip">
+                                    {/* 시작 시간과 종료 시간만 표시 */}
+                                    <p>{`${startTimeString} - ${endTimeString}`}</p>  {/* 시간만 표시 */}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-
+                        );
+                    })}
+    
                     {/* 일정이 더 있을 때 +n 표시 */}
                     {eventList.length > maxEventsToShow && (
                         <div className="hos-schedul-more-events">
@@ -161,7 +203,7 @@ function HosSchedul() {
                 </div>
             );
         }
-
+    
         // 다음 달 날짜 추가
         for (let i = 1; i <= nextMonthDays; i++) {
             days.push(
@@ -174,9 +216,10 @@ function HosSchedul() {
                 </div>
             );
         }
-
+    
         return days;
     };
+    
 
     return (
         <div className="hos-schedul-calendar-container">
@@ -219,13 +262,13 @@ function HosSchedul() {
                                     <label>시작 시간</label>
                                     <select value={startTime} onChange={(e) => setStartTime(e.target.value)}>
                                         {[...Array(24)].map((_, i) => (
-                                            <option key={i}>{i}:00</option>
+                                            <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
                                         ))}
                                     </select>
                                     <label>종료 시간</label>
                                     <select value={endTime} onChange={(e) => setEndTime(e.target.value)}>
                                         {[...Array(24)].map((_, i) => (
-                                            <option key={i}>{i}:00</option>
+                                            <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
                                         ))}
                                     </select>
                                 </>
@@ -243,4 +286,4 @@ function HosSchedul() {
     );
 }
 
-export default HosSchedul;
+export default HosSchedule;
