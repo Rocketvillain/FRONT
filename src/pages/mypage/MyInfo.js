@@ -1,8 +1,9 @@
 import '../../css/component/MyPage.css';
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getUserInfo, getuserInfo, updateUserInfo } from '../../api/UserAPICalls';
+import { getUserInfo, updateUserInfo } from '../../api/UserAPICalls';
 import { loadUserInfo } from '../../modules/UserModule';
+import { jwtDecode } from 'jwt-decode';
 
 // 마이페이지 내 정보 조회
 
@@ -131,7 +132,9 @@ function MyInfo() {
     }, []);
 
     useEffect(() => {
-    if (userData) {
+        // dispatch(getUserInfo(jwtDecode(localStorage.getItem('token')).sub));
+
+        if (userData) {
         setUserInfo({
             id: userData.userId || '',
             name: userData.userName || '',
@@ -141,8 +144,8 @@ function MyInfo() {
             pwdCheck: '',
             profileImage: '' // 프로필 이미지 경로
         });
-    }
-}, [userData]);
+        } 
+    }, [userData]);
 
     return (
         <div className="page-content">
