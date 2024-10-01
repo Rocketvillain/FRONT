@@ -43,11 +43,16 @@ export function fetchHospitalSchedulesAPI(hosId) {
             console.log('RESULT :', result);
             
             dispatch(fetchHospitalSchedules(result.results.hospitalSchedule));
+
+            // 여기서 result.results.hospitalSchedule을 반환
+            return result.results.hospitalSchedule;
         } catch (error) {
             console.error('Error fetching hospital schedules:', error);
+            return null;  // 에러 발생 시 null 반환
         }
     };
 }
+
 
 // 병원 일정 등록 API 호출
 export function addHospitalScheduleAPI(hospitalScheduleDTO) {
