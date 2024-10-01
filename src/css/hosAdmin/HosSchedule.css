@@ -121,6 +121,23 @@
     cursor: pointer;
 }
 
+.form-label-time-name {
+    margin-right: 20px;
+}
+
+.form-select-time-choice {
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.form-select-time-choice2 {
+    margin-left: 10px;
+}
+
+.hos-schedule-save-button {
+    margin-right: 5px;
+}
+
 .hos-schedul-today {
     background-color: #d3f1d3; /* 오늘 날짜를 강조 */
     border: 2px solid #2e7d32;
@@ -133,6 +150,10 @@
     text-align: center;
     
 }
+
+/* .hos-schedul-event-strip :hover {
+    
+} */
 
 .hos-schedul-event-strip p {
     transform: translateY(-10px);

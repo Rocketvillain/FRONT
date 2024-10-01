@@ -8,6 +8,18 @@ import {
 } from "../../api/HospitalAPICalls";  // API 호출 함수 가져오기
 import "../../css/hosAdmin/HosSchedule.css"; // CSS 파일 연결
 
+function arrayToTimeString(timeArray) {
+    if (!Array.isArray(timeArray) || timeArray.length !== 2) return "00:00";
+    const [hour, minute] = timeArray;
+    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+function addOneHour(timeString) {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    const newHours = (hours + 1) % 24; // 24시간 형식을 유지하기 위해 모듈로 연산
+    return `${String(newHours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
+
 function HosSchedule() {
     const dispatch = useDispatch();
     const hospitalSchedules = useSelector(state => state.hospitalSchedule?.schedules || []);  // 병원 일정
@@ -22,7 +34,18 @@ function HosSchedule() {
     const [endTime, setEndTime] = useState("");  // 종료 시간
     const [description, setDescription] = useState("");  // 일정 설명
 
-    const colors = ['#F0C60A', '#dda4a1', '#a4e390', '#84a4cb', '#9880c6'];  // 다양한 색상 배열
+    const colors = ['#F0C60A', '#dda4a1', '#a4e390', '#b1f0db', '#9880c6'];  // 다양한 색상 배열
+    const endTimeColorMap = {};  // 종료 시간에 따른 색상 매핑 객체
+
+    const closeModal = () => {
+        setIsModalOpen(false);  // 모달을 닫기
+        setEditingEventIndex(null);  // 수정 상태 초기화
+        setStartTime("");  // 시작 시간 초기화
+        setEndTime("");  // 종료 시간 초기화
+        setDescription("");  // 설명 초기화
+        setLunchTime("12:00");  // 점심 시간 초기화
+        setIsAllDay(false);  // 종일 상태 초기화
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -57,33 +80,46 @@ function HosSchedule() {
                 return;
             }
 
-            const [startHour, startMinute] = event.startTime && typeof event.startTime === 'string'
-                ? event.startTime.split(":")
-                : ["09", "00"];
-            const [endHour, endMinute] = event.endTime && typeof event.endTime === 'string'
-                ? event.endTime.split(":")
-                : ["18", "00"];
-            setStartTime(`${startHour}:${startMinute}`);
-            setEndTime(`${endHour}:${endMinute}`);
+            console.log("Event Data: ", event);
 
-            setDescription(event.description || "");
-            setLunchTime(event.lunchTime || "12:00");  // 점심시간 설정
-            setIsAllDay(event.startTime === "종일");
+            // 점심 시간인 경우 처리
+            if (event.description === "점심시간" || event.lunchTime) {
+                const lunchStartTime = arrayToTimeString(event.lunchTime);  // 배열을 시간 문자열로 변환 (예: "12:00")
+                const lunchEndTime = addOneHour(lunchStartTime);  // 점심 종료 시간 계산 (예: "13:00")
+        
+                setDescription("점심시간");
+                setStartTime(lunchStartTime);  // 점심 시작 시간 설정
+                setEndTime(lunchEndTime);      // 점심 종료 시간 설정
+        
+                console.log("Lunch Start Time: ", lunchStartTime);
+                console.log("Lunch End Time: ", lunchEndTime);
+
+                return;
+            }
+    
+            // 일반 일정 처리: startTime과 endTime이 있는 경우
+            if (event.description !== "점심시간" && event.startTime && event.endTime) {
+                const eventStartTime = arrayToTimeString(event.startTime || [9, 0]);  // 배열을 시간 문자열로 변환
+                const eventEndTime = arrayToTimeString(event.endTime || [18, 0]);
+                setStartTime(eventStartTime);  // 변환된 문자열을 설정
+                setEndTime(eventEndTime);      // 변환된 문자열을 설정
+                setDescription(event.description || "");
+                setIsAllDay(event.startTime === "종일");
+    
+                console.log("Start Time: ", eventStartTime);
+                console.log("End Time: ", eventEndTime);
+            }
+
             setEditingEventIndex(eventId);  // 수정할 이벤트 인덱스 설정
         } else {
             // 새 이벤트 추가 시 폼 초기화
-            setStartTime("");
+            setStartTime("9:00");
             setEndTime("");
             setDescription("");
             setLunchTime("12:00");  // 점심시간 초기값 설정
             setIsAllDay(false);
             setEditingEventIndex(null);
         }
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);  // 모달 닫기
-        setEditingEventIndex(null);  // 수정 상태 초기화
     };
 
     const handleAddOrUpdateEvent = async (e) => {
@@ -94,7 +130,6 @@ function HosSchedule() {
         const startTimeValue = isAllDay || isClosedDay ? "종일" : startTime;
         const endTimeValue = isAllDay || isClosedDay ? "종일" : endTime;
 
-        // 날짜를 UTC로 처리하여 전날로 등록되는 문제를 해결
         const selectedDateUTC = new Date(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()));
 
         // 새로운 이벤트 생성
@@ -117,6 +152,8 @@ function HosSchedule() {
         await dispatch(fetchHospitalSchedules(hosId));  // 스케줄 목록 즉시 갱신
         closeModal();  // 모달 닫기
     };
+
+
 
     const handleDeleteEvent = async (eventId) => {
         await dispatch(deleteHospitalSchedule(eventId));  // 일정 삭제
@@ -183,12 +220,20 @@ function HosSchedule() {
                         const startTimeString = formatTime(schedule.startTime);  // startTime 배열을 변환
                         const endTimeString = formatTime(schedule.endTime);      // endTime 배열을 변환
 
+                        // 종료 시간에 따른 색상 매핑: endTimeColorMap에 없는 경우 색상을 할당
+                        if (!endTimeColorMap[endTimeString]) {
+                            const randomColor = colors[Object.keys(endTimeColorMap).length % colors.length];  // 고정된 순서로 색상 할당
+                            endTimeColorMap[endTimeString] = randomColor;
+                        }
+                        const eventColor = endTimeColorMap[endTimeString];
+
+
                         return (
                             <div key={index}>
                                 {/* 일반 일정 표시 */}
                                 <div
                                     className="hos-schedul-event"
-                                    style={{ backgroundColor: schedule.color || '#84a4cb' }}
+                                    style={{ backgroundColor: eventColor }}  // 종료 시간에 따른 색상 적용
                                     onClick={(e) => { e.stopPropagation(); openModal(day, schedule.scheduleId); }}
                                 >
                                     <div className="hos-schedul-event-strip">
@@ -200,10 +245,14 @@ function HosSchedule() {
                                 {schedule.lunchTime && (
                                     <div
                                         className="hos-schedul-event"
-                                        style={{ backgroundColor: '#f0ad4e' }}  // 점심시간 노란색 박스
+                                        style={{ backgroundColor: '#84a4cb' }}
+                                        onClick={(e) => { 
+                                            e.stopPropagation(); 
+                                            openModal(day, schedule.scheduleId);  // 클릭 시 모달을 열기
+                                        }}
                                     >
                                         <div className="hos-schedul-event-strip">
-                                            <p>{`점심시간: ${schedule.lunchTime} - 13:00`}</p>
+                                            <p>점심시간</p>
                                         </div>
                                     </div>
                                 )}
@@ -242,16 +291,18 @@ function HosSchedule() {
         <div className="hos-schedul-calendar-container">
             <h2>병원 일정 관리</h2>
             <div className="hos-schedul-select-container">
-                <select value={year} onChange={(e) => setCurrentDate(new Date(e.target.value, month, 1))}>
-                    {Array.from({ length: 10 }, (_, i) => year - 5 + i).map((y) => (
-                        <option key={y} value={y}>{y}</option>
+                <select value={startTime} className="form-select-time-choice" onChange={(e) => setStartTime(e.target.value)}>
+                    {[...Array(24)].map((_, i) => (
+                        <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
                     ))}
                 </select>
-                <select value={month + 1} onChange={(e) => setCurrentDate(new Date(year, e.target.value - 1, 1))}>
-                    {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                        <option key={m} value={m}>{m}월</option>
+                <select value={endTime} className="form-select-time-choice2" onChange={(e) => setEndTime(e.target.value)}>
+                    {[...Array(24)].map((_, i) => (
+                        <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
                     ))}
                 </select>
+
+
             </div>
             <div className="hos-schedul-calendar-grid">
                 <div className="hos-schedul-day-header">일</div>
@@ -270,20 +321,20 @@ function HosSchedule() {
                         <button className="hos-schedul-close-x" onClick={closeModal}>X</button>
                         <h3>{editingEventIndex !== null ? "일정 수정" : "일정 추가"}</h3>
                         <form onSubmit={handleAddOrUpdateEvent}>
-                            <label>
+                            <label className="form-label-time-name">
                                 <input type="checkbox" checked={isAllDay} onChange={() => setIsAllDay(!isAllDay)} />
                                 종일
                             </label>
                             {!isAllDay && (
                                 <>
                                     <label>시작 시간</label>
-                                    <select value={startTime} onChange={(e) => setStartTime(e.target.value)}>
+                                    <select value={startTime} className="form-select-time-choice" onChange={(e) => setStartTime(e.target.value)}>
                                         {[...Array(24)].map((_, i) => (
                                             <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
                                         ))}
                                     </select>
                                     <label>종료 시간</label>
-                                    <select value={endTime} onChange={(e) => setEndTime(e.target.value)}>
+                                    <select value={endTime} className="form-select-time-choice2" onChange={(e) => setEndTime(e.target.value)}>
                                         {[...Array(24)].map((_, i) => (
                                             <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
                                         ))}
@@ -291,11 +342,12 @@ function HosSchedule() {
                                 </>
                             )}
                             <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="4"></textarea>
-                            <button type="submit">저장</button>
+                            <button className="hos-schedule-save-button" type="submit">저장</button>
                             {editingEventIndex !== null && (
                                 <button type="button" onClick={() => handleDeleteEvent(editingEventIndex)}>삭제</button>
                             )}
                         </form>
+
                     </div>
                 </div>
             )}
