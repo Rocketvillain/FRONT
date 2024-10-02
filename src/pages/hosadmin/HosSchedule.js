@@ -67,10 +67,25 @@ function HosSchedule() {
         setCurrentDate(new Date(year, month + 1, 1));  // 다음 달 이동
     };
 
-    const openModal = (day, eventId = null) => {
+    const handleYearChange = (e) => {
+        const newYear = parseInt(e.target.value);
+        setCurrentDate(new Date(newYear, month, 1));  // 연도 변경 시 날짜 업데이트
+    };
+
+    const handleMonthChange = (e) => {
+        const newMonth = parseInt(e.target.value) - 1;
+        setCurrentDate(new Date(year, newMonth, 1));  // 월 변경 시 날짜 업데이트
+    };
+
+    const openModal = (day, eventId = null, isLunchTime = false) => {
         const fullDate = new Date(year, month, day);
         setSelectedDate(fullDate);  // 선택된 날짜 저장
         setIsModalOpen(true);  // 모달 열기
+
+        setDescription("");
+        setStartTime("");
+        setEndTime("");
+        setIsAllDay(false);
 
         if (eventId !== null) {
             const event = hospitalSchedules.find((schedule) => schedule.scheduleId === eventId);
@@ -82,31 +97,49 @@ function HosSchedule() {
 
             console.log("Event Data: ", event);
 
-            // 점심 시간인 경우 처리
-            if (event.lunchTime) {
-                console.log("점심시간일 때 : ");
-                const lunchStartTime = arrayToTimeString(event.lunchTime);  // 배열을 시간 문자열로 변환 (예: "12:00")
-                const lunchEndTime = addOneHour(lunchStartTime); 
-        
+            // 1. 휴진일
+            if (event.isOkay === false) {
+                console.log("휴진일 : ");
+                setIsAllDay(true);  // 종일 체크
+                setDescription("휴진일");
+                setStartTime("00:00");
+                setEndTime("00:00");
+
+                console.log("event.isOkay : " + event.isOkay);
+                console.log("event.isHoliday : " + event.isHoliday);
+            }
+
+            // 2. 점심 시간
+            else if (isLunchTime && event.lunchTime && event.isOkay === true) {
+                console.log("점심시간 : ");
+                const lunchStartTime = arrayToTimeString(event.lunchTime);
+                const lunchEndTime = addOneHour(lunchStartTime);
+
                 setDescription("점심시간");
-                setStartTime(lunchStartTime);  // 점심 시작 시간 설정
-                setEndTime(lunchEndTime);      // 점심 종료 시간 설정
-        
+                setStartTime(lunchStartTime);
+                setEndTime(lunchEndTime);
+                setIsAllDay(false)
+
                 console.log("Lunch Start Time: ", lunchStartTime);
                 console.log("Lunch End Time: ", lunchEndTime);
+            }
 
-            } else if(event.startTime && event.endTime) {
-                console.log("일반 일정일 때 : ");
+            // 3. 일반 일정
+            else if (!isLunchTime && event.startTime && event.endTime && event.isOkay === true) {
+                console.log("일반 일정 : ");
                 const eventStartTime = arrayToTimeString(event.startTime || [9, 0]);  // 배열을 시간 문자열로 변환
                 const eventEndTime = arrayToTimeString(event.endTime || [18, 0]);
-                setStartTime(eventStartTime);  
-                setEndTime(eventEndTime);      
 
+                setStartTime(eventStartTime);
+                setEndTime(eventEndTime);
                 setDescription("진료시간");
-                setIsAllDay(event.startTime === "종일");
+                setIsAllDay(false);  // 일반 일정은 종일이 아니므로 false로 설정
 
+                console.log("Start Time: ", eventStartTime);
+                console.log("End Time: ", eventEndTime);
             }
-            setEditingEventIndex(eventId);  // 수정할 이벤트 인덱스 설정
+
+            setEditingEventIndex(eventId); // 수정할 이벤트 인덱스 설정
         } else {
             // 새 이벤트 추가 시 폼 초기화
             setStartTime("9:00");
@@ -121,23 +154,25 @@ function HosSchedule() {
     const handleAddOrUpdateEvent = async (e) => {
         e.preventDefault();
 
-        const isClosedDay = description === "휴진일";  // 휴진일 여부 확인
+        const isClosedDay = isAllDay;
+        const startTimeValue = isClosedDay ? [0, 0] : startTime.split(':').map(Number);
+        const endTimeValue = isClosedDay ? [0, 0] : endTime.split(':').map(Number);
+        const lunchTimeValue = isClosedDay ? null : lunchTime.split(':').map(Number);
 
-        const startTimeValue = isAllDay || isClosedDay ? "종일" : startTime;
-        const endTimeValue = isAllDay || isClosedDay ? "종일" : endTime;
-
-        const selectedDateUTC = new Date(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()));
+        // const selectedDateUTC = new Date(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()));
 
         // 새로운 이벤트 생성
+        // 백으로 전송할 이벤트 데이터
         const newEvent = {
-            date: selectedDateUTC.toISOString().slice(0, 10),  // 날짜를 UTC로 저장
+            date: [selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate()],
             startTime: startTimeValue,
             endTime: endTimeValue,
-            description: isClosedDay ? "휴진일" : description,
             hosId,
             isOkay: !isClosedDay,
-            lunchTime: isClosedDay ? null : lunchTime  // 점심시간 필드 추가
+            lunchTime: lunchTimeValue
         };
+
+        console.log("Sending event data to backend:", newEvent);
 
         if (editingEventIndex !== null) {
             await dispatch(updateHospitalSchedule(editingEventIndex, newEvent));  // 일정 수정
@@ -148,8 +183,6 @@ function HosSchedule() {
         await dispatch(fetchHospitalSchedules(hosId));  // 스케줄 목록 즉시 갱신
         closeModal();  // 모달 닫기
     };
-
-
 
     const handleDeleteEvent = async (eventId) => {
         await dispatch(deleteHospitalSchedule(eventId));  // 일정 삭제
@@ -196,6 +229,13 @@ function HosSchedule() {
                 return scheduleDate.getFullYear() === year &&
                     scheduleDate.getMonth() === month &&
                     scheduleDate.getDate() === day;
+            }).map(schedule => {
+                const eventdescription = schedule.isOkay === false ? "휴진일" : description;
+
+                return {
+                    ...schedule,
+                    description: eventdescription,
+                };
             });
 
             const isToday =
@@ -223,34 +263,52 @@ function HosSchedule() {
                         }
                         const eventColor = endTimeColorMap[endTimeString];
 
-
                         return (
                             <div key={index}>
                                 {/* 일반 일정 표시 */}
-                                <div
-                                    className="hos-schedul-event"
-                                    style={{ backgroundColor: eventColor }}  // 종료 시간에 따른 색상 적용
-                                    onClick={(e) => { e.stopPropagation(); openModal(day, schedule.scheduleId); }}
-                                >
-                                    <div className="hos-schedul-event-strip">
-                                        <p>{`${startTimeString} - ${endTimeString}`}</p>
+                                {schedule.isOkay === true && (
+                                    <div
+                                        className="hos-schedul-event"
+                                        style={{ backgroundColor: eventColor }}  // 종료 시간에 따른 색상 적용
+                                        onClick={(e) => { e.stopPropagation(); openModal(day, schedule.scheduleId, false); }}
+                                    >
+                                        <div className="hos-schedul-event-strip">
+                                            <p>{`${startTimeString} - ${endTimeString}`}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 {/* 점심시간 표시 */}
-                                {schedule.lunchTime && (
+                                {schedule.lunchTime && schedule.isOkay === true && (
                                     <div
                                         className="hos-schedul-event"
                                         style={{ backgroundColor: '#84a4cb' }}
-                                        onClick={(e) => { 
-                                            e.stopPropagation(); 
-                                            openModal(day, schedule.scheduleId);  // 클릭 시 모달을 열기
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            openModal(day, schedule.scheduleId, true);  // 클릭 시 모달을 열기
                                         }}
                                     >
                                         <div className="hos-schedul-event-strip">
                                             <p>점심시간</p>
                                         </div>
                                     </div>
+                                )}
+
+                                {/* 휴진일 일정 표시 */}
+                                {schedule.isOkay === false && (
+                                    <div
+                                        className="hos-schedul-event"
+                                        style={{ backgroundColor: '#FFCCCB' }}  // 휴진일 색상
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            openModal(day, schedule.scheduleId, false);  // 휴진일 클릭
+                                        }}
+                                    >
+                                        <div className="hos-schedul-event-strip">
+                                            <p>{schedule.description}</p>
+                                        </div>
+                                    </div>
+
                                 )}
                             </div>
                         );
@@ -287,18 +345,18 @@ function HosSchedule() {
         <div className="hos-schedul-calendar-container">
             <h2>병원 일정 관리</h2>
             <div className="hos-schedul-select-container">
-                <select value={startTime} className="form-select-time-choice" onChange={(e) => setStartTime(e.target.value)}>
-                    {[...Array(24)].map((_, i) => (
-                        <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
-                    ))}
-                </select>
-                <select value={endTime} className="form-select-time-choice2" onChange={(e) => setEndTime(e.target.value)}>
-                    {[...Array(24)].map((_, i) => (
-                        <option key={i} value={`${i < 10 ? '0' : ''}${i}:00`}>{i}:00</option>
+                <select value={year} onChange={handleYearChange}>
+                    {/* 2020년부터 2030년까지 선택 가능하도록 예시 */}
+                    {[...Array(11)].map((_, i) => (
+                        <option key={i} value={2020 + i}>{2020 + i}년</option>
                     ))}
                 </select>
 
-
+                <select value={month + 1} onChange={handleMonthChange}>
+                    {[...Array(12)].map((_, i) => (
+                        <option key={i} value={i + 1}>{i + 1}월</option>
+                    ))}
+                </select>
             </div>
             <div className="hos-schedul-calendar-grid">
                 <div className="hos-schedul-day-header">일</div>
@@ -318,7 +376,10 @@ function HosSchedule() {
                         <h3>{editingEventIndex !== null ? "일정 수정" : "일정 추가"}</h3>
                         <form onSubmit={handleAddOrUpdateEvent}>
                             <label className="form-label-time-name">
-                                <input type="checkbox" checked={isAllDay} onChange={() => setIsAllDay(!isAllDay)} />
+                                <input type="checkbox" checked={isAllDay} onChange={() => {
+                                    setIsAllDay(!isAllDay);
+                                    console.log("종일 선택 여부 : ", !isAllDay);
+                                }} />
                                 종일
                             </label>
                             {!isAllDay && (
@@ -337,7 +398,12 @@ function HosSchedule() {
                                     </select>
                                 </>
                             )}
-                            <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="4"></textarea>
+                            <textarea
+                                value={isAllDay ? "휴진일" : description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                rows="4"
+                                disabled={isAllDay}
+                            />
                             <button className="hos-schedule-save-button" type="submit">저장</button>
                             {editingEventIndex !== null && (
                                 <button type="button" onClick={() => handleDeleteEvent(editingEventIndex)}>삭제</button>
