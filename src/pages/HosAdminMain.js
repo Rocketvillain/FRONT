@@ -26,7 +26,7 @@ function HosAdminMain() {
                         </NavLink>
                     </li>
                     <li className="hos-admin-main-nav-item">
-                        <NavLink to="/hosschedul">
+                        <NavLink to="/hosschedule">
                             <img src="/images/main1.png" alt="일정관리" />
                             <span>일정 관리</span>
                         </NavLink>

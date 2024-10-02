@@ -45,7 +45,7 @@ function HosHeader() {
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/hosschedul" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/hosschedule" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>일정관리</span>
                     </NavLink>
                 </li>

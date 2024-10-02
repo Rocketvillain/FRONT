@@ -10,7 +10,7 @@ import logger from 'redux-logger';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user', 'hospital', 'reservation']
+    whitelist: ['user', 'hospital', 'hospitalSchedule', 'reservation']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
