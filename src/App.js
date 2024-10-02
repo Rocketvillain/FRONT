@@ -107,7 +107,7 @@ function App() {
               <Route index element={<UserMain />} />
               <Route path="/allreviews" element={<AllReviews />} />
               <Route path="/beautyreserpage" element={<BeautyReserPage />} />
-              <Route path="/reserpage" element={<ReserPage />} />
+              <Route path="/reserpage/:hosId" element={<ReserPage />} />
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/hospitalview" element={<HospitalView />} />
               <Route path="/hosdetail/:hosId" element={<HosDetails />} /> {/* 병원 상세 페이지 라우트 */}

@@ -23,7 +23,7 @@ function HosDetails() {
 
   const handleReservationClick = (type) => {
     if (type === 'reserpage') {
-      navigate('/reserpage'); 
+      navigate(`/reserpage/${hosId}`); 
     } else if (type === 'beautyreserpage') {
       navigate('/beautyreserpage');
     }

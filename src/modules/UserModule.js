@@ -7,6 +7,7 @@ const navigate = useNavigate;
 const initialState = {
     userInfo: [],
     token: null,
+    pets: [],
 };
 
 /* 액션 타입 설정 */
@@ -14,13 +15,15 @@ export const LOGIN = 'user/LOGIN';
 export const RESET_LOGIN_USER = 'user/RESET_LOGIN_USER';
 export const LOAD_USER_INFO = 'user/LOAD_USER_INFO';
 export const UPDATE_USER = 'user/UPDATE_USER';
+export const LOAD_PET_INFO = 'user/LOAD_PET_INFO';
 
 /* 유저 관련 액션 함수 */
-export const { user : { login, resetLoginUser, loadUserInfo, updateUser }} = createActions({
+export const { user : { login, resetLoginUser, loadUserInfo, updateUser, loadPetInfo }} = createActions({
     [LOGIN]: ({ token, userInfo }) => ({ token, userInfo }),
     [RESET_LOGIN_USER]: (res = initialState) => ({ res }),
     [LOAD_USER_INFO]: (data) => (data),
-    [UPDATE_USER]: (modifyUserInfo) => ( modifyUserInfo ),
+    [UPDATE_USER]: (modifyUserInfo) => (modifyUserInfo),
+    [LOAD_PET_INFO]: (data) => (data),
 });
 
 /* 리듀서 함수 */
@@ -62,6 +65,15 @@ const userReducer = handleActions(
             return {
                 ...state,
                 userInfo: modifyUserInfo.payload, // 상태 업데이트
+            };
+        },
+        [LOAD_PET_INFO]: (state, data) => {
+
+            console.log('data : ', data);
+            
+            return {
+                ...state,
+                pets: data.payload, // 상태 업데이트
             };
         },
     },

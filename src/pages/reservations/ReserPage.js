@@ -1,10 +1,42 @@
 // 진료/수술 예약 페이지
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import "../../css/ReserPage.css";
+import { useParams, useNavigate } from 'react-router-dom';
+import { hospitalDetailAPI } from '../../api/HospitalAPICalls';
+import { getPetInfo } from '../../api/UserAPICalls';
+import { useDispatch, useSelector } from 'react-redux';
+import { LoadReservation } from '../../api/ReservationAPICalls';
 
 function ReserPage() {
+    const dispatch = useDispatch();
+    const { hosId } = useParams();
+
+    /* 사용자 & 펫 정보 */
+    const user = useSelector(state => state.user.userInfo); 
+    const pets = useSelector(state => state.user.pets); 
+    const [userInfo, setUserInfo] = useState(user);
+    const [selectedPet, setSelectedPet] = useState(pets[0] || {}); // 선택된 반려동물 상태
+    
+    /* 병원 정보 */
+    const hospital = useSelector(state => state.hospital.hospital); // 병원 정보 불러오기
+    const hospitalSchedules = useSelector(state => state.hospital.schedule) // 병원 일정 불러오기
+
+    /* 예약 정보 */
+    const reservations = useSelector(state => state.reservation.Reservations); // 예약 정보 불러오기
+    console.log('@@@@@@@@@@@@@',reservations);
+    
+    const [clinicType, setClinicType] = useState(''); // 선택된 진료 유형 상태
+
+
+    useEffect(() => {
+        dispatch(getPetInfo(user.userId)); // 펫 정보 업데이트
+        dispatch(hospitalDetailAPI(hosId)); // 병원 정보 업데이트
+        dispatch(LoadReservation(hosId)) // 예약 정보 업데이트
+        // 병원 일정 업데이트
+    }, [dispatch]); 
+    
     const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜 상태
     const [selectedTime, setSelectedTime] = useState(null); // 선택된 시간 상태
     const [availableTimes, setAvailableTimes] = useState([]); // 선택된 날짜에 예약 가능한 시간대
@@ -24,9 +56,43 @@ function ReserPage() {
         setTermsAccepted(e.target.checked);
     };
 
+    // 사용자 정보 입력 핸들러
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setSelectedPet((prevSelectedPet) => ({
+            ...prevSelectedPet,
+            [name]: value
+        }));
+    };
+
+    const handlePetChange = (e) => {
+        const selectedName = e.target.value;
+        const selectedPet = pets.find(pet => pet.name === selectedName);
+        setSelectedPet(selectedPet); // 선택된 반려동물 정보 업데이트
+        console.log(selectedPet);
+        
+    };
+
+    const handleClinicTypeChange = (e) => {
+        setClinicType(e.target.value); // 체크된 항목의 값으로 상태 업데이트
+    };
+
+    const submitReservation = () => {
+    
+        const reservationInfo = {
+            userId: user.userId,
+            hosId: hosId,
+            // typeId: typeId,
+            // reservationTime: selectedDate,
+            petId: selectedPet.petId,
+            // description: description,
+        }
+    };
+
     return (
         <div className="reser-container">
-            <h1 className="reser-page-title">🩺진료 및 수술 예약🩺</h1>
+            <h1>{ hospital.name }</h1>
+            <h1 className="reser-page-title">🩺 진료 및 수술 예약 🩺</h1>
 
             {/* 이용 약관 동의 섹션 (맨 위로 이동) */}
             <div className="reser-terms-section">
@@ -93,59 +159,73 @@ function ReserPage() {
                 <div className="reser-input-form">
                     <div className="reser-form-group">
                         <label>예약자 성함</label>
-                        <input className='reser-form' type="text" placeholder="예약자 성함을 입력하세요" disabled={!termsAccepted} />
-                    </div>
-                    <div className="reser-form-group">
-                        <label>반려동물 몸무게</label>
-                        <input className='reser-form' type="text" placeholder="몸무게를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" value={userInfo.userName} disabled />
                     </div>
                     <div className="reser-form-group">
                         <label>예약자 전화번호</label>
-                        <input className='reser-form' type="text" placeholder="전화번호를 입력하세요" disabled={!termsAccepted} />
-                    </div>
-                    <div className="reser-form-group">
-                        <label>반려동물 종류</label>
-                        <input className='reser-form' type="text" placeholder="종류를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text"  value={userInfo.phone} disabled />
                     </div>
                     <div className="reser-form-group">
                         <label>반려동물 이름</label>
-                        <input className='reser-form' type="text" placeholder="반려동물 이름을 입력하세요" disabled={!termsAccepted} />
-                    </div>
-                    <div className="reser-form-group">
-                        <label>반려동물 성별</label>
-                        <select disabled={!termsAccepted}>
-                            <option value="남">남</option>
-                            <option value="여">여</option>
+                        <select className='reser-form' name='petName' onChange={(e) => handlePetChange(e)}>
+                            {pets.map((pet, index) => (
+                                <option key={index} value={pet.name}>
+                                    {pet.name}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className="reser-form-group">
+                        <label>반려동물 종류</label>
+                        <input className='reser-form' type="text" value={selectedPet.kind || ''} disabled />
+                    </div>
+                    <div className="reser-form-group">
+                        <label>반려동물 몸무게</label>
+                        <input className='reser-form' type="text" placeholder="몸무게를 입력하세요" value={selectedPet.weight || ''} name='weight' onChange={handleInputChange}/>
+                    </div>
+                    <div className="reser-form-group">
+                        <label>반려동물 성별</label>
+                        <input className='reser-form' value={selectedPet.gender || ''} disabled />
+                    </div>
+                    <div className="reser-form-group">
                         <label>반려동물 나이</label>
-                        <input className='reser-form' type="text" placeholder="나이를 입력하세요" disabled={!termsAccepted} />
+                        <input className='reser-form' type="text" placeholder="나이를 입력하세요" value={selectedPet.age || ''} name='age' onChange={handleInputChange} />
                     </div>
 
                     <div className="form-group">
-                        {/* 체크박스 그룹 */}
+                        {/* 라디오 버튼 그룹 */}
                         <div className="reser-form-group-check">
                             <label>유형 선택</label>
                             <div className="reser-checkbox-group">
                                 <label>
-                                    <input type="checkbox" name="service" value="진료" disabled={!termsAccepted} /> 진료
+                                    <input 
+                                        type="radio" 
+                                        name="clinicType" 
+                                        value="진료" 
+                                        checked={clinicType === '진료'} 
+                                        onChange={handleClinicTypeChange} 
+                                    /> 진료
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="service" value="수술" disabled={!termsAccepted} /> 수술
+                                    <input 
+                                        type="radio" 
+                                        name="clinicType" 
+                                        value="수술" 
+                                        checked={clinicType === '수술'} 
+                                        onChange={handleClinicTypeChange} 
+                                    /> 수술
                                 </label>
                             </div>
                         </div>
-                        <br />
                     </div>
                     <div className="reser-form-group">
                     </div>
                     <div className="reser-form-group">
                         <label>상세 내용</label>
-                        <textarea placeholder="요청 사항을 입력하세요" disabled={!termsAccepted}></textarea>
+                        <textarea placeholder="요청 사항을 입력하세요"></textarea>
                     </div>
                 </div>
-                <button className="reser-submit-button" disabled={!termsAccepted}>예약</button>
+                <button className="reser-submit-button" onSubmit={submitReservation}>예약</button>
             </div>
         </div>
     );
