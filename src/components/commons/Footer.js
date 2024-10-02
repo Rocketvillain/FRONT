@@ -12,10 +12,10 @@ function Footer() {
                 <div className="footer-flex">
                     {/* 회사 정보 */}
                     <div className="footer-company-info">
-                        <p><strong>상호명:</strong> Healing Pets(힐링)</p>
-                        <p><strong>대표자:</strong> 꾸러기로켓단</p>
-                        <p><strong>사업자등록번호:</strong> 201-05-12345</p>
-                        <p><strong>주소:</strong> 서울특별시 강남구 서초동 1318-2 8층</p>
+                        <p><strong>상호명 :</strong> Healing Pets(힐링)</p>
+                        <p><strong>대표자 :</strong> 꾸러기로켓단</p>
+                        <p><strong>사업자등록번호 :</strong> 201-05-12345</p>
+                        <p><strong>주소 :</strong> 서울특별시 강남구 서초동 1318-2 8층</p>
                     </div>
 
                     {/* 소셜 미디어 아이콘 */}
