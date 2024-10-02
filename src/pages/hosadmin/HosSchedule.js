@@ -83,9 +83,10 @@ function HosSchedule() {
             console.log("Event Data: ", event);
 
             // 점심 시간인 경우 처리
-            if (event.description === "점심시간" || event.lunchTime) {
+            if (event.lunchTime) {
+                console.log("점심시간일 때 : ");
                 const lunchStartTime = arrayToTimeString(event.lunchTime);  // 배열을 시간 문자열로 변환 (예: "12:00")
-                const lunchEndTime = addOneHour(lunchStartTime);  // 점심 종료 시간 계산 (예: "13:00")
+                const lunchEndTime = addOneHour(lunchStartTime); 
         
                 setDescription("점심시간");
                 setStartTime(lunchStartTime);  // 점심 시작 시간 설정
@@ -94,22 +95,17 @@ function HosSchedule() {
                 console.log("Lunch Start Time: ", lunchStartTime);
                 console.log("Lunch End Time: ", lunchEndTime);
 
-                return;
-            }
-    
-            // 일반 일정 처리: startTime과 endTime이 있는 경우
-            if (event.description !== "점심시간" && event.startTime && event.endTime) {
+            } else if(event.startTime && event.endTime) {
+                console.log("일반 일정일 때 : ");
                 const eventStartTime = arrayToTimeString(event.startTime || [9, 0]);  // 배열을 시간 문자열로 변환
                 const eventEndTime = arrayToTimeString(event.endTime || [18, 0]);
-                setStartTime(eventStartTime);  // 변환된 문자열을 설정
-                setEndTime(eventEndTime);      // 변환된 문자열을 설정
-                setDescription(event.description || "");
-                setIsAllDay(event.startTime === "종일");
-    
-                console.log("Start Time: ", eventStartTime);
-                console.log("End Time: ", eventEndTime);
-            }
+                setStartTime(eventStartTime);  
+                setEndTime(eventEndTime);      
 
+                setDescription("진료시간");
+                setIsAllDay(event.startTime === "종일");
+
+            }
             setEditingEventIndex(eventId);  // 수정할 이벤트 인덱스 설정
         } else {
             // 새 이벤트 추가 시 폼 초기화

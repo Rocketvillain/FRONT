@@ -45,6 +45,7 @@ export function fetchHospitalSchedulesAPI(hosId) {
             dispatch(fetchHospitalSchedules(result.results.hospitalSchedule));
 
             // 여기서 result.results.hospitalSchedule을 반환
+            // 함수는 병원 일정 데이터를 반환하게 되며, useEffect에서 response로 받을 수 있다.
             return result.results.hospitalSchedule;
         } catch (error) {
             console.error('Error fetching hospital schedules:', error);
