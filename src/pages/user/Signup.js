@@ -33,21 +33,22 @@ function Signup() {
         hospitalName: '',
         address: '',
         businessNo: '',
-        owner: '',
-        category: [],
+        ownerName: '',
+        clinicType: [],
     });
 
     const [isHospitalNameEntered, setIsHospitalNameEntered] = useState(false);
 
     const handleChange = (e) => {
+
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
-            const newCategory = checked
-                ? [...formData.category, value]
-                : formData.category.filter((category) => category !== value);
+            const newClinicType = checked
+                ? [...formData.clinicType,{clinicName:value}]
+                : formData.clinicType.filter(clinic => clinic.clinicName !== value);
             setFormData({
                 ...formData,
-                category: newCategory,
+                clinicType: newClinicType,
             });
         } else {
             setFormData({
@@ -61,6 +62,7 @@ function Signup() {
         }
     };
 
+    // 아이디 중복 확인 검사
     const handleCheckDuplicate = async () => {
         if(!formData.userId) {
             alert('ID를 입력하세요.');
@@ -148,7 +150,7 @@ function Signup() {
 
     // 폼 제출 시 유효성 검사
     const handleSubmit = async(e) => {
-        e.preventDefault();
+        e.preventDefault(); // 기본 제출 동작 방지
         console.log("handleSubmit 동작함...");
         
 
@@ -192,10 +194,139 @@ function Signup() {
             alert('인증이 완료되지 않았습니다. 인증 후 다시 진행해주세요.');
             return;
         }
+
+        const formDataToSubmit= {
+            userId: formData.userId,
+            userPwd: formData.userPwd,
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            petInfo: formData ? {  // 펫 정보를 UserDTO에 포함, petName이 있으면
+                petName: formData.petName,
+                age: formData.age, 
+                weight: formData.weight, 
+                species: formData.species, 
+                kind: formData.kind, 
+                gender: formData.gender, 
+            } : null // petName이 없으면
+        };
+
+        try {
+            await axios.post('http://localhost:8080/auth/signup', formDataToSubmit);
+
+            alert('회원가입 성공');
+            
+            //로그인 페이지로 이동
+            window.location.href = '/login';
+
+          
+        } catch (error) {
+            console.error('회원가입 실패:', error);
+            alert('회원가입 실패: ' + error.message);
+        }
+
+        setErrorMessage(''); // 오류 메시지 초기화
+        console.log('Form Data:', formData);
+
+    };
+
+
+    const handleSubmit2 = async(e) => {
+        e.preventDefault(); // 기본 제출 동작 방지
+        console.log("handleSubmit 동작함...");
+        
+
+        if(isDuplicate){
+            alert("아이디 중복확인을 해주세요");
+            return;
+        }
+
+        if(!formData.userId){
+            alert("ID를 반드시 입력해주세요")
+            return;
+        }
+
+
+        if(!formData.userPwd){
+            alert("비밀번호를 반드시 입력해주세요")
+            return;
+        }
+
+        if (!isPasswordValid) {
+            setErrorMessage("비밀번호는 특수 문자를 포함해 8자리 이상이어야 합니다.");
+            return;
+        }
+
+        if (!isPasswordMatched) {
+            setErrorMessage('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
+        if(!formData.name){
+            alert("성함을 반드시 입력해주세요")
+            return;
+        }
+
+        if(!formData.phone){
+            alert("전화번호를 반드시 입력해주세요")
+            return;
+        }
+
+        if(!isVerified){
+            alert('인증이 완료되지 않았습니다. 인증 후 다시 진행해주세요.');
+            return;
+        }
+
+        if(!formData.hospitalName){
+            alert("병원이름을 반드시 입력해주세요")
+            return;
+        }
+
+        if(!formData.address){
+            alert("병원주소를 반드시 입력해주세요")
+            return;
+        }
+
+        if(!formData.businessNo){
+            alert("사업자 번호를 반드시 입력해주세요")
+            return;
+        }
+
+        if(!formData.ownerName){
+            alert("대표자 이름을 반드시 입력해주세요")
+            return;
+        }
+
+        console.log('Clinic Type:', formData.clinicType);
+
+        if (formData.clinicType.length === 0) { // 수정된 부분
+            alert("카테고리를 반드시 설정해주세요");
+            return;
+        }
+
+
+        const formDataToSubmit2 = {
+            userId: formData.userId,
+            userPwd: formData.userPwd,
+            name : formData.name,
+            phone : formData.phone,
+            email : formData.email,
+            hosInfo : { 
+                hospitalName: formData.hospitalName,
+                address : formData.address,
+                businessNo : formData.businessNo,
+                ownerName : formData.ownerName,
+                clinicType : formData.clinicType,
+            }  
+
+            
+        }
+        
        
         try {
-            const response = await axios.post('http://localhost:8080/auth/signup', formData);
-            alert('회원가입 성공: ' + response.data);
+            await axios.post('http://localhost:8080/auth/signup2', formDataToSubmit2);
+
+            alert('회원가입 성공');
             
             //로그인 페이지로 이동
             window.location.href = '/login';
@@ -336,6 +467,8 @@ function Signup() {
                                     )}
 
                                 </div>
+
+                                {/* 펫 정보 입력 */}
                                 <div className="pet-info">
                                     <div className="form-input-box">
                                         <label>MY PET</label>
@@ -380,7 +513,7 @@ function Signup() {
                                                         checked={formData.species === 'dog'}
                                                         onChange={handleChange}
                                                     />
-                                                    <label>DOG</label>
+                                                    <label>dog</label>
                                                     <input
                                                         type="radio"
                                                         name="species"
@@ -388,7 +521,7 @@ function Signup() {
                                                         checked={formData.species === 'cat'}
                                                         onChange={handleChange}
                                                     />
-                                                    <label>CAT</label>
+                                                    <label>cat</label>
                                                     <input
                                                         type="radio"
                                                         name="species"
@@ -396,7 +529,7 @@ function Signup() {
                                                         checked={formData.species === 'other'}
                                                         onChange={handleChange}
                                                     />
-                                                    <label>OTHER</label>
+                                                    <label>other</label>
                                                 </div>
                                             </div>
                                             <div className="form-input-box">
@@ -415,16 +548,16 @@ function Signup() {
                                                     <input
                                                         type="radio"
                                                         name="gender"
-                                                        value="male"
-                                                        checked={formData.gender === 'male'}
+                                                        value="남"
+                                                        checked={formData.gender === '남'}
                                                         onChange={handleChange}
                                                     />
                                                     <label>남</label>
                                                     <input
                                                         type="radio"
                                                         name="gender"
-                                                        value="female"
-                                                        checked={formData.gender === 'female'}
+                                                        value="여"
+                                                        checked={formData.gender === '여'}
                                                         onChange={handleChange}
                                                     />
                                                     <label>여</label>
@@ -585,8 +718,8 @@ function Signup() {
                                                 <label>OWNER</label>
                                                 <input
                                                     type="text"
-                                                    name="owner"
-                                                    value={formData.owner}
+                                                    name="ownerName"
+                                                    value={formData.ownerName}
                                                     onChange={handleChange}
                                                     placeholder="대표자 이름을 입력하세요"
                                                 />
@@ -597,9 +730,9 @@ function Signup() {
                                                     <label>진료</label>
                                                     <input
                                                         type="checkbox"
-                                                        name="category"
+                                                        name="clinicType"
                                                         value="진료"
-                                                        checked={formData.category.includes('진료')}
+                                                        checked={formData.clinicType.some(clinic => clinic.clinicName === '진료')}
                                                         onChange={handleChange}
                                                     />
                                                 </div>
@@ -607,9 +740,9 @@ function Signup() {
                                                     <label>수술</label>
                                                     <input
                                                         type="checkbox"
-                                                        name="category"
+                                                        name="clinicType"
                                                         value="수술"
-                                                        checked={formData.category.includes('수술')}
+                                                        checked={formData.clinicType.some(clinic => clinic.clinicName === '수술')}
                                                         onChange={handleChange}
                                                     />
                                                 </div>
@@ -617,9 +750,9 @@ function Signup() {
                                                     <label>미용</label>
                                                     <input
                                                         type="checkbox"
-                                                        name="category"
+                                                        name="clinicType"
                                                         value="미용"
-                                                        checked={formData.category.includes('미용')}
+                                                        checked={formData.clinicType.some(clinic => clinic.clinicName === '미용')}
                                                         onChange={handleChange}
                                                     />
                                                 </div>
@@ -628,7 +761,7 @@ function Signup() {
                                     )}
                                 </div>
                             </div>
-                        <button type="submit" className="signup-user-btn" onClick={handleSubmit}>
+                        <button type="submit" className="signup-user-btn" onClick={handleSubmit2}>
                             병원 회원가입
                         </button>
                     </div>
