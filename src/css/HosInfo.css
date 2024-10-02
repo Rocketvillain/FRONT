@@ -39,9 +39,16 @@
     border-collapse: collapse;
 }
 
+.hos-info-table textarea{
+    margin-left: 20px;
+    border-radius: 0px;
+    width: 587px;
+    font-family: 'Poor Story';
+}
+
 .hos-info-table th,
 .hos-info-table td {
-    padding: 20px;
+    padding: 16px;
     border-bottom: 1px solid #ccc;
     text-align: left;
 }
@@ -49,6 +56,16 @@
     width: 150px;
     background-color: #f1f1f1;
     font-weight: bold;
+}
+
+.hos-info-table input{
+    margin-left: 20px;
+    padding: 13px;
+    width: 560px;
+    border-radius: 0px;
+    border: 1px solid #ccc;
+    font-family: 'Poor Story';
+    font-size: 16px;
 }
 
 .image-upload-section {
@@ -69,8 +86,8 @@
     width: 150px;
     height: 150px;
     margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 15px;
+    border: 2px solid #ccc;
 }
 
 .image-upload-button {
@@ -78,7 +95,7 @@
     background-color: #28467A;
     color: #fff;
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     cursor: pointer;
     margin-bottom: 20px;
     transition: transform 0.3s ease-in-out;
@@ -94,17 +111,17 @@
 }
 
 .submit-button-container {
-    text-align: right;
+    text-align: center;
     padding-bottom: 20px;
     padding-right: 20px;
 }
 
 .submit-button {
-    padding: 15px 22px;
-    background-color: #28467A;
+    padding: 15px 30px;
+    background-color: #E3AB1B;
     color: #fff;
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
 }

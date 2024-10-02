@@ -1,53 +1,112 @@
 // 병원관리자 마이페이지(병원정보 조회, 수정)
 import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate  } from "react-router-dom";
+import { hospitalDetailAPI, updateHospitalAPI } from '../../api/HospitalAPICalls';
 import '../../css/HosInfo.css';
 
 function HosInfo() {
 
-    const [reserTerm, setReserTerm] = useState("");
-    const [hospitals, setHospitals] = useState([]);
-    const [filteredHospitals, setFilteredHospitals] = useState([]);
+    const [hospitalData, setHospitalData] = useState({
+        name: '',
+        address: '',
+        ownerName: '',
+        businessNo: '',
+        info: '',
+        ownerImage: '',
+        infoImage: ''
+    });
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const hospital = useSelector(state => state.hospital.hospital); 
-
-    // 병원 정보를 API에서 받아오기
-    useEffect(() => {
-        fetch("http://localhost:8080/api/v1/hospital") // 백엔드 API 엔드포인트
-        .then((response) => response.json())
-        .then((data) => {
-            if (Array.isArray(data)) {
-            setHospitals(data);
-            setFilteredHospitals(data);
-            } else {
-            console.error("Received data is not an array:", data);
-            setHospitals([]);
-            }
-        })
-        .catch((error) => console.error("Error fetching hospitals:", error));
-    }, []);
+    // 유저 아이디
+    const userHosId = useSelector(state => state.user.userInfo.hosId);
+    console.log(userHosId);
     
+    // 유저 데이터
+    const user = useSelector(state => state.user)    
+    console.log(user);
+    
+    // 병원 데이터
+    const hospital = useSelector(state => state.hospital.hospital);
+    console.log(hospital);
+    
+
+    useEffect(() => {
+        if (hospital) {
+            setHospitalData({
+                name: hospital.name,
+                address: hospital.address,
+                ownerName: hospital.ownerName,
+                businessNo: hospital.businessNo,
+                info: hospital.info,
+                ownerImage: hospital.ownerImage,
+                infoImage: hospital.infoImage
+            });
+        } else {
+            // 병원 정보를 처음 불러올 때 API 호출
+            dispatch(hospitalDetailAPI(userHosId));
+        }
+    }, [dispatch, hospital, userHosId]);
+
+     // 입력 필드 값 변경 시 상태 업데이트
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setHospitalData({
+            ...hospitalData,
+            [name]: value // 해당 입력 필드의 값 업데이트
+        });
+    };
+
+    // 이미지 파일 선택 핸들러 추가
+    const handleImageChange = (e) => {
+    const { name } = e.target;
+    const file = e.target.files[0];
+    
+    // 선택한 이미지를 상태에 저장
+    setHospitalData({
+        ...hospitalData,
+        [name]: file // 파일 객체 저장
+        });
+    };
+
+    // 저장 버튼 클릭 시 API 호출하여 병원 정보 수정
+    const handleSubmit = async () => {
+        
+        console.log("hosId : ", userHosId);
+        console.log("hospitalData : ", hospitalData);
+        
+        await dispatch(updateHospitalAPI(userHosId, hospitalData)); // 수정된 병원 정보를 서버로 전송
+        
+        alert('병원 정보가 수정되었습니다.');
+
+        navigate('/hosinfo');
+    };
+
+
     return (
         <div className="hos-info-container">
             <div className="hos-info-content">
                 <div className="hos-info-header">
                     <h2>병원 정보</h2>
-                    <img src={`/${hospital.ownerImage}`} alt="Healing Pets Logo" className="hos-logo" />
+                    <img src="/images/logo2.png" alt="Healing Pets Logo" className="hos-logo" />
                 </div>
+                
                 <table className="hos-info-table">
                     <tbody>
                         <tr>
                             <th>아이디</th>
-                            <td>{hospital.userId}</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{user.userInfo.userId}</td>                            
                         </tr>
                         <tr>
-                            <th>병원 이름</th>
+                        <th>병원 이름</th>
                             <td>
                                 <input
                                     type="text"
-                                    value={hospital.name}
+                                    name="name"
+                                    value={hospitalData.name}
+                                    onChange={handleChange}
                                 />
                             </td>
                         </tr>
@@ -56,7 +115,9 @@ function HosInfo() {
                             <td>
                                 <input
                                     type="text"
-                                    value={hospital.address}
+                                    name="address"
+                                    value={hospitalData.address}
+                                    onChange={handleChange}
                                 />
                             </td>
                         </tr>
@@ -65,7 +126,9 @@ function HosInfo() {
                             <td>
                                 <input
                                     type="text"
-                                    value={hospital.ownerName}
+                                    name="ownerName"
+                                    value={hospitalData.ownerName}
+                                    onChange={handleChange}
                                 />
                             </td>
                         </tr>
@@ -74,7 +137,9 @@ function HosInfo() {
                             <td>
                                 <input
                                     type="text"
-                                    value={hospital.businessNo}
+                                    name="businessNo"
+                                    value={hospitalData.businessNo}
+                                    onChange={handleChange}
                                 />
                             </td>
                         </tr>
@@ -82,16 +147,19 @@ function HosInfo() {
                             <th>병원소개</th>
                             <td>
                                 <textarea
-                                    value={hospital.info}
+                                    name="info"
+                                    value={hospitalData.info}
+                                    onChange={handleChange}
                                 ></textarea>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
                 <div className="image-upload-section">
                     <div className="image-upload">
                         <img
-                            src={`/${hospital.ownerImage}`}
+                            src={`/${hospitalData.ownerImage}`}
                             alt="대표자 이미지"
                             className="image-preview"
                         />
@@ -110,7 +178,7 @@ function HosInfo() {
                     </div>
                     <div className="image-upload">
                         <img
-                            src={`/${hospital.infoImage}`}
+                            src={`/${hospitalData.infoImage}`}
                             alt="병원 이미지"
                             className="image-preview"
                         />
@@ -128,9 +196,10 @@ function HosInfo() {
                         </button>
                     </div>
                 </div>
+
                 <div className="submit-button-container">
-                    <button type="button" className="submit-button">
-                        확인
+                    <button type="button" className="submit-button" onClick={handleSubmit}>
+                        저장
                     </button>
                 </div>
             </div>
