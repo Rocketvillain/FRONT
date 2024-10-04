@@ -28,7 +28,7 @@ const adminUserReducer = handleActions(
         [ADMIN_UPDATE_USER_STATE]: (state, { payload }) => ({
             ...state,
             users: state.users.map((user) =>
-                user.id === payload.id ? { ...user, user_state: payload.user_state } : user
+                user.id === payload.id ? { ...user, userState: payload.userState } : user
             ), // 상태가 변경된 사용자 업데이트
         }),
     },

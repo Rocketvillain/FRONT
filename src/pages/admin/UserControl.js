@@ -71,6 +71,8 @@ function UserControl() {
     const openConfirmModal = (member) => {
         setMemberToDelete(member); // 삭제할 멤버 설정
         setShowConfirmModal(true); // 삭제 확인 모달 열기
+        console.log("member : ", member);
+
     };
 
     // 멤버 삭제
@@ -80,7 +82,7 @@ function UserControl() {
         setShowCompleteModal(true); // 삭제 완료 모달 표시
 
         console.log("memberToDelete.userId", memberToDelete.userId);
-        
+
     };
 
 
@@ -129,18 +131,32 @@ function UserControl() {
                     {currentMembers.length > 0 ? (
                         currentMembers.map(member => (
                             <tr key={member.userId}>
-                                <td>{member.userId}</td>
-                                <td>{member.userRole}</td>
-                                <td>{member.name}</td>
-                                <td>{member.phone}</td>
-                                <td>{member.email}</td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.userId}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.userRole}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.name}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.phone}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.email}
+                                </td>
                                 <td>
-                                    <button
-                                        className="user-control-delete-button"
-                                        onClick={() => openConfirmModal(member)} // 삭제 모달 열기
-                                    >
-                                        삭제
-                                    </button>
+                                    {member.userState === 'secession' ? (
+                                        <span className='user-control-secession'>탈퇴</span> // user_state가 'secession'일 경우 '탈퇴' 표시
+                                    ) : (
+                                        <button
+                                            className="user-control-delete-button"
+                                            onClick={() => openConfirmModal(member)} // 삭제 모달 열기
+                                        >
+                                            탈퇴
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         ))
@@ -176,7 +192,7 @@ function UserControl() {
             {showConfirmModal && (
                 <div className="user-control-modal">
                     <div className="user-control-modal-content">
-                        <p>삭제하시겠습니까?</p>
+                        <p>탈퇴하시겠습니까?</p>
                         <div className="user-control-modal-buttons">
                             <button onClick={handleDelete}>확인</button>
                             <button onClick={() => setShowConfirmModal(false)}>취소</button>
@@ -189,7 +205,7 @@ function UserControl() {
             {showCompleteModal && (
                 <div className="user-control-modal">
                     <div className="user-control-modal-content">
-                        <p>삭제가 완료되었습니다.</p>
+                        <p>탈퇴가 완료되었습니다.</p>
                         <div className="user-control-modal-buttons">
                             <button onClick={closeCompleteModal}>확인</button>
                         </div>

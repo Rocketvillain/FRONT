@@ -26,6 +26,7 @@
     font-size: 14px;
     color: #7D7D7D;
     font-weight: bold;
+    border-right: 1px solid lightgray;
 }
 
 .user-control-search-button {
@@ -37,6 +38,7 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
+    
 }
 
 .user-control-table {
@@ -73,6 +75,10 @@
 
 .user-control-delete-button:hover {
     background-color: #ff6600;
+}
+
+.user-control-secession {
+    color: #fa6161;
 }
 
 /* 페이징 스타일 */
@@ -143,5 +149,10 @@
 
 .user-control-modal-buttons button:hover {
     background-color: #F0C60A;
+}
+
+.user-control-dark {
+    background-color: #7D7D7D;
+    opacity: 0.3; /* 투명도를 적용하여 어둡게 */
 }
 
