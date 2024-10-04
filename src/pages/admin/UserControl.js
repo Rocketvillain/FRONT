@@ -1,27 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminGetAllUsersAPI, adminDeactivateUserAPI } from '../../api/AdminAPICalls';
 import '../../css/admin/UserControl.css'; // CSS 파일을 추가합니다.
 
 function UserControl() {
+    const dispatch = useDispatch();
+    const members = useSelector((state) => state.adminUsers.users)
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [isSearching, setIsSearching] = useState(false); // 검색이 진행 중인지 여부를 관리
     const [showConfirmModal, setShowConfirmModal] = useState(false); // 삭제 확인 모달 상태
     const [showCompleteModal, setShowCompleteModal] = useState(false); // 삭제 완료 모달 상태
     const [memberToDelete, setMemberToDelete] = useState(null); // 삭제할 멤버 상태
-    const membersPerPage = 5; // 한 페이지에 보여줄 멤버 수
-    const [members, setMembers] = useState([
-        { id: '001', role: '관리자', userId: 'ohgiraffers', name: '권순혁', phone: '070-1234-5678', email: 'ohgi@gmail.com', businessNo: null },
-        { id: '002', role: '병원 관리자', userId: 'hospital', name: '박호찬', phone: '02-2345-6789', email: 'hos@gmail.com', businessNo: '124-45-10901' },
-        { id: '003', role: '병원 관리자', userId: 'hospizza', name: '박동운', phone: '02-9876-5432', email: 'hos@gmail.com', businessNo: '124-45-10902' },
-        { id: '004', role: '회원', userId: 'user123', name: '지동혁', phone: '010-9753-2546', email: 'user@gmail.com', businessNo: null },
-        { id: '005', role: '회원', userId: 'kingwe', name: '위쌈바', phone: '010-8754-2365', email: 'king@gmail.com', businessNo: null },
-        { id: '006', role: '회원', userId: 'queenkim', name: '김강효', phone: '010-4657-7890', email: 'queen@gmail.com', businessNo: null },
-        { id: '007', role: '회원', userId: 'jackyang', name: '양하윤', phone: '010-1542-2674', email: 'jack@gmail.com', businessNo: null }
-        // 추가 멤버 데이터
-    ]);
-
+    const membersPerPage = 10; // 한 페이지에 보여줄 멤버 수
     const [filteredMembers, setFilteredMembers] = useState(members); // 처음에는 전체 회원 목록을 표시
     const totalPages = Math.ceil(filteredMembers.length / membersPerPage);
+
+    // 한 번에 보여줄 페이지 버튼의 개수
+    const paginationGroupSize = 7;
+
+    // 현재 페이지 그룹의 시작과 끝 계산
+    const startPage = Math.floor((currentPage - 1) / paginationGroupSize) * paginationGroupSize + 1;
+    const endPage = Math.min(startPage + paginationGroupSize - 1, totalPages);
+
+    useEffect(() => {
+        // 컴포넌트가 마운트될 때 API 호출
+        dispatch(adminGetAllUsersAPI());
+    }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredMembers(members); // 검색되지 않은 상태에서는 전체 멤버 표시
+    }, [members]);
 
     // 검색 실행 처리
     const handleSearch = () => {
@@ -62,16 +71,20 @@ function UserControl() {
     const openConfirmModal = (member) => {
         setMemberToDelete(member); // 삭제할 멤버 설정
         setShowConfirmModal(true); // 삭제 확인 모달 열기
+        console.log("member : ", member);
+
     };
 
     // 멤버 삭제
-    const handleDelete = () => {
-        const updatedMembers = members.filter(member => member.id !== memberToDelete.id);
-        setMembers(updatedMembers);
-        setFilteredMembers(updatedMembers); // 삭제 후에도 검색된 목록을 갱신
-        setShowConfirmModal(false); // 삭제 확인 모달 닫기
-        setShowCompleteModal(true); // 삭제 완료 모달 열기
+    const handleDelete = async () => {
+        dispatch(adminDeactivateUserAPI(memberToDelete.userId)); // Redux를 통해 상태를 secession으로 변경
+        setShowConfirmModal(false);
+        setShowCompleteModal(true); // 삭제 완료 모달 표시
+
+        console.log("memberToDelete.userId", memberToDelete.userId);
+
     };
+
 
     // 삭제 완료 모달 닫기
     const closeCompleteModal = () => {
@@ -106,34 +119,44 @@ function UserControl() {
             <table className="user-control-table">
                 <thead>
                     <tr>
-                        <th>회원번호</th>
-                        <th>역할</th>
                         <th>아이디</th>
+                        <th>역할</th>
                         <th>이름</th>
                         <th>전화번호</th>
                         <th>이메일</th>
-                        <th>사업자 번호</th>
                         <th>관리</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentMembers.length > 0 ? (
                         currentMembers.map(member => (
-                            <tr key={member.id}>
-                                <td>{member.id}</td>
-                                <td>{member.role}</td>
-                                <td>{member.userId}</td>
-                                <td>{member.name}</td>
-                                <td>{member.phone}</td>
-                                <td>{member.email}</td>
-                                <td>{member.businessNo ? member.businessNo : 'N/A'}</td>
+                            <tr key={member.userId}>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.userId}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.userRole}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.name}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.phone}
+                                </td>
+                                <td className={member.userState === 'secession' ? 'user-control-dark' : ''}>
+                                    {member.email}
+                                </td>
                                 <td>
-                                    <button
-                                        className="user-control-delete-button"
-                                        onClick={() => openConfirmModal(member)} // 삭제 모달 열기
-                                    >
-                                        삭제
-                                    </button>
+                                    {member.userState === 'secession' ? (
+                                        <span className='user-control-secession'>탈퇴</span> // user_state가 'secession'일 경우 '탈퇴' 표시
+                                    ) : (
+                                        <button
+                                            className="user-control-delete-button"
+                                            onClick={() => openConfirmModal(member)} // 삭제 모달 열기
+                                        >
+                                            탈퇴
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         ))
@@ -148,19 +171,19 @@ function UserControl() {
             </table>
 
             <div className="user-control-pagination">
-                <button onClick={handleFirstPage} disabled={currentPage === 1}>
+                <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredMembers.length === 0} >
                     ◀
                 </button>
-                {[...Array(totalPages)].map((_, index) => (
+                {[...Array(endPage - startPage + 1)].map((_, index) => (
                     <button
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        className={index + 1 === currentPage ? "user-control-active" : ""}
+                        key={startPage + index}
+                        onClick={() => handlePageChange(startPage + index)}
+                        className={startPage + index === currentPage ? "user-control-active" : ""}
                     >
-                        {index + 1}
+                        {startPage + index}
                     </button>
                 ))}
-                <button onClick={handleLastPage} disabled={currentPage === totalPages}>
+                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredMembers.length === 0}>
                     ▶
                 </button>
             </div>
@@ -169,7 +192,7 @@ function UserControl() {
             {showConfirmModal && (
                 <div className="user-control-modal">
                     <div className="user-control-modal-content">
-                        <p>삭제하시겠습니까?</p>
+                        <p>탈퇴하시겠습니까?</p>
                         <div className="user-control-modal-buttons">
                             <button onClick={handleDelete}>확인</button>
                             <button onClick={() => setShowConfirmModal(false)}>취소</button>
@@ -182,7 +205,7 @@ function UserControl() {
             {showCompleteModal && (
                 <div className="user-control-modal">
                     <div className="user-control-modal-content">
-                        <p>삭제가 완료되었습니다.</p>
+                        <p>탈퇴가 완료되었습니다.</p>
                         <div className="user-control-modal-buttons">
                             <button onClick={closeCompleteModal}>확인</button>
                         </div>
