@@ -58,9 +58,9 @@ function ReviewControl() {
         setCurrentPage(totalPages);
     };
 
-    const handleReportClick = () => {
-        navigate('/reportscontrol');
-    };
+    // const handleReportClick = () => {
+    //     navigate('/reportscontrol');
+    // };
 
     // 페이징 처리
     const indexOfLastReview = currentPage * reviewsPerPage;
@@ -72,7 +72,7 @@ function ReviewControl() {
         <div className="review-control-container">
             <h2 className="review-control-title">일반 후기</h2>
 
-            <button className="review-control-report-button" onClick={handleReportClick}>신고 요청된 후기</button>
+            {/* <button className="review-control-report-button" onClick={handleReportClick}>신고 요청된 후기</button> */}
 
             <div className="review-control-search-bar">
                 <input

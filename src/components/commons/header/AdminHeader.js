@@ -62,11 +62,11 @@ function AdminHeader() {
                         <span>회원관리</span>
                     </NavLink>
                 </li>
-                <li className="adminnav-item">
+                {/* <li className="adminnav-item">
                     <NavLink to="/reportscontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>문의/신고 관리</span>
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
             {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
             <div className="logout-admincontainer" onClick={handleLogout}>

@@ -91,11 +91,15 @@
     background-color: #f9f9f9;
 }
 
-.reser-control-status.canceled {
+.reser-control-state.canceled {
     color: red;
 }
 
-.reser-control-status.approved {
+.reser-control-state.request {
+    color: red;
+}
+
+.reser-control-state.activated {
     color: green;
     text-decoration: line-through;
 }

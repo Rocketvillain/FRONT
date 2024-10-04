@@ -1,6 +1,7 @@
 import { adminGetAllUsers } from "../modules/AdminUserModule";
 import { request } from "./Apis";
 import { adminUpdateHospital, adminDeleteHospital } from '../modules/AdminHosModule';
+import { adminGetAllReservations } from '../modules/AdminReserModule';
 
 // 관리자용 전체 유저 조회 API 호출
 export function adminGetAllUsersAPI() {
@@ -59,5 +60,19 @@ export function adminDeleteHospitalAPI(hospitalId) {
         }
     };
 }
+
+// 관리자용 예약 전체 조회 API 호출
+export function adminGetAllReservationsAPI() {
+    return async (dispatch) => {
+        try {
+            const result = await request('GET', '/api/v1/reservation'); // API 호출
+            console.log('result:', result); // 결과 로그
+            dispatch(adminGetAllReservations(result.results.reservations)); // 가져온 예약 데이터를 Redux에 저장
+        } catch (error) {
+            console.error('API error:', error);
+        }
+    };
+}
+
 
 
