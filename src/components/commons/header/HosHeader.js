@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import '../../../css/component/HosHeader.css';
 import { useDispatch } from 'react-redux';
-import { resetLoginUser } from '../../../modules/UserModule';  // 로그아웃 처리 리덕스 액션 가져오기
+import { logOut as userLogOut } from "../../../modules/UserModule";
+import { reset as resetHospital } from "../../../modules/HospitalModule";
+import { reset as resetHospitalSchedule } from "../../../modules/HospitalScheduleModule";
+import { reset as resetReservation } from "../../../modules/ReservationModule";
 
 function HosHeader() {
     const dispatch = useDispatch();
@@ -19,7 +22,10 @@ function HosHeader() {
     // 로그아웃 핸들러
     const handleLogout = () => {
         // 로그인 상태를 리셋하는 액션을 디스패치
-        dispatch(resetLoginUser());
+        dispatch(userLogOut());
+        dispatch(resetHospital());
+        dispatch(resetHospitalSchedule());
+        dispatch(resetReservation());
 
         // 로그아웃 후 메인 페이지로 리다이렉트
         window.location.href = '/';
