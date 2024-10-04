@@ -11,6 +11,7 @@ export const FETCH_HOSPITAL_SCHEDULES = 'FETCH_HOSPITAL_SCHEDULES';
 export const ADD_HOSPITAL_SCHEDULE = 'ADD_HOSPITAL_SCHEDULE';
 export const UPDATE_HOSPITAL_SCHEDULE = 'UPDATE_HOSPITAL_SCHEDULE';
 export const DELETE_HOSPITAL_SCHEDULE = 'DELETE_HOSPITAL_SCHEDULE';
+export const RESET = 'RESET';
 
 
 
@@ -19,13 +20,15 @@ export const {
         fetchHospitalSchedules,
         addHospitalSchedule,
         updateHospitalSchedule,
-        deleteHospitalSchedule
+        deleteHospitalSchedule,
+        reset
 } = createActions({
     /* 병원 일정 관련 액션 */
     [FETCH_HOSPITAL_SCHEDULES]: (data) => data,
     [ADD_HOSPITAL_SCHEDULE]: (data) => data,
     [UPDATE_HOSPITAL_SCHEDULE]: (data) => data,
-    [DELETE_HOSPITAL_SCHEDULE]: (scheduleId) => scheduleId
+    [DELETE_HOSPITAL_SCHEDULE]: (scheduleId) => scheduleId,
+    [RESET]: () => ({}),
 });
 
 
@@ -62,6 +65,10 @@ const hospitalScheduleReducer = handleActions(
                 ...state,
                 schedules: state.schedules.filter(schedule => schedule.id !== payload),
             };
+        },
+
+        [RESET]: (state) => {
+            return initialState;
         },
     },
     initialState

@@ -25,7 +25,7 @@ function HosDetails() {
     if (type === 'reserpage') {
       navigate(`/reserpage/${hosId}`); 
     } else if (type === 'beautyreserpage') {
-      navigate('/beautyreserpage');
+      navigate(`/beautyreserpage/${hosId}`);
     }
   };
 

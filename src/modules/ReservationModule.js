@@ -7,10 +7,12 @@ const initialState = {
 
 /* 액션 타입 설정 */
 export const GET_RESERVATION = 'reservation/GET_RESERVATION';
+export const RESET = 'reservation/RESET';
 
 /* 유저 관련 액션 함수 */
-export const { reservation : { getReservation }} = createActions({
+export const { reservation : { getReservation, reset }} = createActions({
     [GET_RESERVATION]: (data) => (data),
+    [RESET]: () => ({}),
 });
 
 /* 리듀서 함수 */
@@ -24,6 +26,9 @@ const reservationReducer = handleActions(
                 ...state,
                 Reservations: data.payload, // 상태 업데이트
             };
+        },
+        [RESET]: (state) => {
+            return initialState;
         },
         
     },

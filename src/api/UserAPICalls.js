@@ -104,6 +104,28 @@ export function getPetInfo(userId) {
     }
 }
 
+// 유저의 펫 정보 수정오기
+export function updatePetInfo(petId, modifyPetInfo) {
+
+    console.log('유저 펫 정보 수정하기...');
+
+    return async (dispatch) => {
+
+        try {
+            const result = await request('PUT', `/api/v1/pets/${petId}`, modifyPetInfo);
+            console.log('result : ', result); // 서버에서 받아온 data 정보
+
+            // const data = result.results.pets;
+            // console.log('data :', data);
+            
+            return result; // 포장한 데이터를 반환해주기.
+
+        } catch (error) {
+            console.error('API error:', error);
+        }
+    }
+}
+
 // ✨함수 정의 예시✨
 export function allHospitalAPI() {
 

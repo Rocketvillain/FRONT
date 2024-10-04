@@ -31,62 +31,94 @@
 /* 달력 섹션 */
 .reser-calendar-section {
     width: 100%;
-    max-width: 1000px; /* 달력 크기를 최대 1000px로 제한 */
-    margin: 0 auto; /* 중앙 정렬 */
-    padding: 10px; /* 약간의 패딩 추가 */
-    box-sizing: border-box; /* 패딩 포함한 크기 계산 */
+    max-width: 1000px;
+    /* 달력 크기를 최대 1000px로 제한 */
+    margin: 0 auto;
+    /* 중앙 정렬 */
+    padding: 10px;
+    /* 약간의 패딩 추가 */
+    box-sizing: border-box;
+    /* 패딩 포함한 크기 계산 */
 }
 
 /* 달력 크기 조정 */
 .react-datepicker {
     width: 100%;
     max-width: 100%;
-    font-size: 1rem; /* 달력 내부 텍스트 크기 조정 */
+    font-size: 1rem;
+    /* 달력 내부 텍스트 크기 조정 */
 }
 
 .react-datepicker__month-container {
-    width: 100%; /* 달력 전체 컨테이너 크기 */
+    width: 100%;
+    /* 달력 전체 컨테이너 크기 */
 }
 
 /* 달력 상단의 월, 연도 표시 부분 크기 조정 */
-.react-datepicker__current-month {
-    font-size: 1.5rem; /* 폰트 크기를 키움 */
-    font-weight: bold; /* 굵은 글씨로 표시 */
-    text-align: center; /* 가운데 정렬 */
-    margin-bottom: 20px;
+h2.react-datepicker__current-month {
+    font-size: 1.5rem;
+    /* 폰트 크기를 키움 */
+    font-weight: bold;
+    /* 굵은 글씨로 표시 */
+    text-align: center;
+    /* 가운데 정렬 */
+    margin-top: 20px;
 }
 
 
 /* 달력 상단 네비게이션(월/년 선택) 크기 조정 */
 .react-datepicker__header {
-    font-size: 1.5rem; /* 월, 년 선택 텍스트 크기 증가 */
+    font-size: 1.5rem;
+    /* 월, 년 선택 텍스트 크기 증가 */
 
 }
 
 /* 월 선택 셀렉트 박스 */
 .react-datepicker__month-select {
     margin-top: 30px;
-    font-size: 20px; /* 글자 크기를 키움 */
-    width: 150px; /* 셀렉트 박스의 너비 설정 */
+    font-size: 20px;
+    /* 글자 크기를 키움 */
+    width: 150px;
+    /* 셀렉트 박스의 너비 설정 */
     height: 30px;
 }
 
 /* 연도 선택 셀렉트 박스 */
 .react-datepicker__year-select {
-    font-size: 20px; /* 글자 크기를 키움 */
-    width: auto; /* 셀렉트 박스의 너비 설정 */
+    font-size: 20px;
+    /* 글자 크기를 키움 */
+    width: auto;
+    /* 셀렉트 박스의 너비 설정 */
     height: 30px;
 }
 
 
 /* 달력의 각 날짜 셀 크기 조정 */
 .react-datepicker__day {
-    width: 138px; /* 날짜 셀의 너비를 요일 셀에 맞춤 */
-    height: 70px; /* 날짜 셀의 높이를 요일 셀에 맞춤 */
-    line-height: 50px;
-    margin: 0; /* 날짜 셀의 마진 제거 */
+    width: 138px;
+    /* 날짜 셀의 너비를 요일 셀에 맞춤 */
+    height: 70px;
+    /* 날짜 셀의 높이를 요일 셀에 맞춤 */
+    margin: 0;
+    /* 날짜 셀의 마진 제거 */
     text-align: center;
-    font-size: 1rem;
+    /* 텍스트 중앙 정렬 */
+    position: relative;
+    /* 자식 요소의 절대 위치 지정 가능 */
+}
+
+/* 날짜 셀 스타일 */
+.reser-calendar-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 138px;
+    height: 70px;
+    border-radius: 5px;
+    margin: 0;
+    box-sizing: border-box;
+    padding-top: 10px
 }
 
 /* 선택된 날짜의 크기 조정 */
@@ -95,21 +127,35 @@
     color: white;
     width: 138px;
     height: 70px;
-    line-height: 50px;
     font-size: 1rem;
 }
 
+.reser-calendar-days {
+    height: 40%;
+}
+
+/* 휴진일 메시지 스타일 */
+.reser-holiday {
+    color: red;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+    height: 20%;
+}
 
 /* 요일 부분 텍스트 크기 조정 */
 .react-datepicker__day-names {
     display: flex;
-    justify-content: space-between; /* 요일을 균등하게 배치 */
-    padding: 60px 60px; /* 좌우 여백 제거 */
+    justify-content: space-between;
+    /* 요일을 균등하게 배치 */
+    padding: 20px 50px;
+    /* 좌우 여백 제거 */
 }
 
 .react-datepicker__day-name {
     font-size: 1rem;
-    width: 50px; /* 요일 셀 너비 */
+    width: 50px;
+    /* 요일 셀 너비 */
     text-align: center;
 }
 
@@ -122,21 +168,27 @@
 /* 시간 선택 섹션 */
 .reser-time-selection {
     text-align: center;
-    max-width: 800px; /* 부모 컨테이너의 최대 너비 설정 */
-    margin: 0 auto; /* 가운데 정렬 */
+    max-width: 800px;
+    /* 부모 컨테이너의 최대 너비 설정 */
+    margin: 0 auto;
+    /* 가운데 정렬 */
     font-family: 'Do Hyeon'
 }
 
 .reser-time-buttons {
     display: flex;
-    justify-content: center; /* 버튼을 중앙으로 정렬 */
-    flex-wrap: wrap; /* 버튼들이 화면에 맞게 줄바꿈 */
-    gap: 10px; /* 버튼들 간의 간격을 줄이기 위한 속성 */
+    justify-content: center;
+    /* 버튼을 중앙으로 정렬 */
+    flex-wrap: wrap;
+    /* 버튼들이 화면에 맞게 줄바꿈 */
+    gap: 10px;
+    /* 버튼들 간의 간격을 줄이기 위한 속성 */
 }
 
 .reser-time-button {
     padding: 10px 20px;
-    margin: 0; /* 기존 margin을 없애기 */
+    margin: 0;
+    /* 기존 margin을 없애기 */
     border: 2px solid #888;
     background-color: white;
     cursor: pointer;
@@ -154,19 +206,27 @@
 /* 입력 폼 */
 .reser-input-form {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 두 열을 균등하게 분할 */
-    gap: 40px; /* 열 사이의 간격을 적절히 조정 */
-    width: 100%; /* 전체 너비를 사용 */
-    max-width: 1200px; /* 폼의 최대 너비를 제한 */
-    margin: 0 auto; /* 중앙 정렬 */
-    box-sizing: border-box; /* 패딩과 보더를 포함하여 전체 크기 계산 */
+    grid-template-columns: 1fr 1fr;
+    /* 두 열을 균등하게 분할 */
+    gap: 40px;
+    /* 열 사이의 간격을 적절히 조정 */
+    width: 100%;
+    /* 전체 너비를 사용 */
+    max-width: 1200px;
+    /* 폼의 최대 너비를 제한 */
+    margin: 0 auto;
+    /* 중앙 정렬 */
+    box-sizing: border-box;
+    /* 패딩과 보더를 포함하여 전체 크기 계산 */
 }
 
 .reser-form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px; /* 필드 간격을 일정하게 유지 */
-    width: 100%; /* 모든 필드가 열에 맞게 크기를 차지하도록 설정 */
+    margin-bottom: 20px;
+    /* 필드 간격을 일정하게 유지 */
+    width: 100%;
+    /* 모든 필드가 열에 맞게 크기를 차지하도록 설정 */
     font-family: 'Poor Story';
 }
 
@@ -175,20 +235,26 @@
     font-weight: bold;
 }
 
-.reser-form-group input, .reser-form-group select, .reser-form-group textarea {
+.reser-form-group input,
+.reser-form-group select,
+.reser-form-group textarea {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* 패딩을 포함한 전체 크기 계산 */
+    box-sizing: border-box;
+    /* 패딩을 포함한 전체 크기 계산 */
     font-family: 'Poor Story';
 }
 
 
 .reser-form-group textarea {
-    width: 100%; /* 텍스트박스의 너비를 전체로 설정 */
-    max-width: 500px; /* 텍스트박스의 최대 너비를 설정 */
-    height: 150px; /* 적당한 높이 설정 */
+    width: 100%;
+    /* 텍스트박스의 너비를 전체로 설정 */
+    max-width: 500px;
+    /* 텍스트박스의 최대 너비를 설정 */
+    height: 150px;
+    /* 적당한 높이 설정 */
     margin-bottom: 50px;
 }
 
@@ -197,7 +263,8 @@
     margin-top: 20px;
     padding: 15px;
     width: 100%;
-    max-width: 1000px; /* 버튼의 최대 너비를 제한 */
+    max-width: 1000px;
+    /* 버튼의 최대 너비를 제한 */
     background-color: #ffc107;
     border: none;
     border-radius: 8px;
@@ -205,8 +272,10 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: block;
-    margin-left: auto; /* 버튼을 오른쪽에 배치 */
-    margin-right: auto; /* 버튼을 중앙에 배치 */
+    margin-left: auto;
+    /* 버튼을 오른쪽에 배치 */
+    margin-right: auto;
+    /* 버튼을 중앙에 배치 */
     font-family: 'Do Hyeon'
 }
 
@@ -220,38 +289,44 @@
 
 .reser-checkbox-group {
     display: flex;
-    flex-wrap: wrap; /* 체크박스와 라벨을 수평으로 배치 */
-    gap: 20px; /* 체크박스 사이에 간격 추가 */
+    flex-wrap: wrap;
+    /* 체크박스와 라벨을 수평으로 배치 */
+    gap: 20px;
+    /* 체크박스 사이에 간격 추가 */
     margin-top: 20px;
     font-family: 'Poor Story';
 }
 
 .reser-checkbox-group label {
     display: flex;
-    align-items: center; /* 체크박스와 텍스트를 수평으로 정렬 */
-    gap: 5px; /* 체크박스와 라벨 사이의 간격을 설정 */
+    align-items: center;
+    /* 체크박스와 텍스트를 수평으로 정렬 */
+    gap: 5px;
+    /* 체크박스와 라벨 사이의 간격을 설정 */
     white-space: nowrap;
 }
 
 /* 약관에 동의하지 않으면 폼을 어둡게 처리 */
 .disabled-form {
-    opacity: 0.5; /* 폼을 어둡게 처리 */
-    pointer-events: none; /* 클릭 이벤트 비활성화 */
+    opacity: 0.5;
+    /* 폼을 어둡게 처리 */
+    pointer-events: none;
+    /* 클릭 이벤트 비활성화 */
 }
 
 .reser-terms-section {
     border: 5px solid #28467A;
     padding: 20px;
-    max-width: 100%;  /* 약관 섹션의 최대 너비를 화면 너비에 맞춤 */
-    box-sizing: border-box; /* 패딩과 보더 포함하여 전체 크기 계산 */
-    text-align: left; /* 텍스트는 왼쪽 정렬 유지 */
-    
+    max-width: 100%;
+    /* 약관 섹션의 최대 너비를 화면 너비에 맞춤 */
+    box-sizing: border-box;
+    /* 패딩과 보더 포함하여 전체 크기 계산 */
+    text-align: left;
+    /* 텍스트는 왼쪽 정렬 유지 */
+
 }
 
 .reser-term-section-check {
     margin-right: 10px;
     text-align: left;
 }
-
-
-

@@ -20,7 +20,7 @@ export function allHospitalAPI() {
 
 // 병원 상세 조회 API 호출
 export function hospitalDetailAPI(hosId) {
-    console.log('api 사용 예시 호출...');
+    console.log('병원 정보 불러오기...');
 
     return async (dispatch) => {
         try {

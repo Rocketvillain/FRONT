@@ -12,15 +12,15 @@ const initialState = {
 
 /* 액션 타입 설정 */
 export const LOGIN = 'user/LOGIN';
-export const RESET_LOGIN_USER = 'user/RESET_LOGIN_USER';
+export const LOG_OUT = 'user/LOG_OUT';
 export const LOAD_USER_INFO = 'user/LOAD_USER_INFO';
 export const UPDATE_USER = 'user/UPDATE_USER';
 export const LOAD_PET_INFO = 'user/LOAD_PET_INFO';
 
 /* 유저 관련 액션 함수 */
-export const { user : { login, resetLoginUser, loadUserInfo, updateUser, loadPetInfo }} = createActions({
+export const { user : { login, logOut, loadUserInfo, updateUser, loadPetInfo }} = createActions({
     [LOGIN]: ({ token, userInfo }) => ({ token, userInfo }),
-    [RESET_LOGIN_USER]: (res = initialState) => ({ res }),
+    [LOG_OUT]: (res = initialState) => ({ res }),
     [LOAD_USER_INFO]: (data) => (data),
     [UPDATE_USER]: (modifyUserInfo) => (modifyUserInfo),
     [LOAD_PET_INFO]: (data) => (data),
@@ -42,10 +42,8 @@ const userReducer = handleActions(
 
             
         },
-        [RESET_LOGIN_USER]: (state) => {
+        [LOG_OUT]: (state) => {
             localStorage.removeItem('token');  // 로그인 토큰 삭제
-            localStorage.removeItem("role");
-
             return initialState;
         },
         [LOAD_USER_INFO]: (state, data) => {

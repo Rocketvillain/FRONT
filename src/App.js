@@ -106,7 +106,7 @@ function App() {
             <Route path="/" element={<UserLayout />}>
               <Route index element={<UserMain />} />
               <Route path="/allreviews" element={<AllReviews />} />
-              <Route path="/beautyreserpage" element={<BeautyReserPage />} />
+              <Route path="/beautyreserpage/:hosId" element={<BeautyReserPage />} />
               <Route path="/reserpage/:hosId" element={<ReserPage />} />
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/hospitalview" element={<HospitalView />} />
