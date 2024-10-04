@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 const DOMAIN = 'http://localhost:8080';
 
 export const request = async (method, url, data) => {
+    console.log(localStorage.getItem('token')); // 토큰 출력
+
     return await axios({
         method,
         url: `${DOMAIN}${url}`,
@@ -11,7 +13,9 @@ export const request = async (method, url, data) => {
         headers: {
             'Content-Type': 'application/json', // JSON으로 요청한다는 것을 명시
             'Authorization': localStorage.getItem('token'), // 토큰 request header에 담아주기
+            
         },
+        
     })
     .then(res => res.data)
     .catch(error => {

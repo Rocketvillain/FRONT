@@ -1,44 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import '../../css/admin/HosControl.css'; // CSS 파일을 추가합니다.
+import { useDispatch, useSelector } from 'react-redux';
+import { allHospitalAPI } from '../../api/HospitalAPICalls'; // 병원 조회 API
+import { adminUpdateHospitalAPI, adminDeleteHospitalAPI } from '../../api/AdminAPICalls'; // 병원 수정 및 삭제 API
+import '../../css/admin/HosControl.css';
 
 function HosControl() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const hospitalsPerPage = 5; // 한 페이지에 보여줄 병원 수
-    const [isSearching, setIsSearching] = useState(false);
-    
-    // 로컬 스토리지에서 병원 데이터를 불러옵니다.
-    const loadHospitals = () => {
-        const storedHospitals = localStorage.getItem('hospitals');
-        return storedHospitals ? JSON.parse(storedHospitals) : [
-            { id: 1, userId: 'ohgiraffers', hospitalName: '청담동물병원', address: '서울특별시 강남구 논현동 95-16번지 논현빌딩', owner: '김정혁', businessNo: '124-45-10901' },
-            { id: 2, userId: 'hospital', hospitalName: '자연동물병원', address: '서울특별시 강남구 개포동 1211번지', owner: '박호찬', businessNo: '124-45-10902' },
-            { id: 3, userId: 'hospizza', hospitalName: '강남25동물병원', address: '서울특별시 강남구 논현동 90-6 로이빌딩', owner: '지동혁', businessNo: '124-45-10903' },
-            { id: 4, userId: 'user123', hospitalName: '주주동물종합병원', address: '서울특별시 강남구 대치동 898-8 1층', owner: '양재민', businessNo: '124-45-10904' },
-            { id: 5, userId: 'kingwe', hospitalName: '서경석동물병원', address: '서울특별시 강남구 일원동 684 남경빌딩 1층', owner: '송삼동', businessNo: '124-45-10905' },
-            { id: 6, userId: 'queenkim', hospitalName: '우리집동물병원', address: '서울특별시 강남구 도곡동 180-31번지 1층', owner: '오문섭', businessNo: '124-45-10906' }
-        ];
-    };
+    const dispatch = useDispatch();
+    const hospitals = useSelector((state) => state.hospital.hospitals); // 병원 목록을 Redux에서 가져옴
+    const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+    const hospitalsPerPage = 10; // 한 페이지에 보여줄 병원 수
+    const [filteredHospitals, setFilteredHospitals] = useState(hospitals); // 필터링된 병원 목록
+    const [editingId, setEditingId] = useState(null); // 수정 중인 병원의 ID
+    const [updatedHospitalName, setUpdatedHospitalName] = useState(''); // 병원 이름 수정 상태
+    const [updatedHospitalAddress, setUpdatedHospitalAddress] = useState(''); // 병원 주소 수정 상태
+    const [updatedOwnerName, setUpdatedOwnerName] = useState(''); // 병원장 수정 상태
+    const totalPages = Math.ceil(filteredHospitals.length / hospitalsPerPage); // 총 페이지 수 계산
 
-    const [hospitals, setHospitals] = useState(loadHospitals);
-
-    const [filteredHospitals, setFilteredHospitals] = useState(hospitals);
-    const [editingId, setEditingId] = useState(null); // 현재 수정 중인 병원의 ID
-    const totalPages = Math.ceil(filteredHospitals.length / hospitalsPerPage);
-
-    // 병원 데이터가 변경될 때마다 로컬 스토리지에 저장합니다.
     useEffect(() => {
-        localStorage.setItem('hospitals', JSON.stringify(hospitals));
-        setFilteredHospitals(hospitals);
+        dispatch(allHospitalAPI());
+    }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredHospitals(hospitals); // 검색되지 않은 상태에서는 전체 병원 표시
     }, [hospitals]);
 
-    // 검색 실행 처리
+    // 검색 처리
     const handleSearch = () => {
         const filtered = hospitals.filter(hospital =>
-            hospital.userId.toLowerCase().includes(searchTerm.toLowerCase())
+            hospital.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        setFilteredHospitals(filtered);
-        setIsSearching(true); // 검색이 진행되었음을 표시
+        setFilteredHospitals(filtered); // 검색어에 맞는 병원 필터링
         setCurrentPage(1); // 검색 시 첫 페이지로 이동
     };
 
@@ -54,6 +46,7 @@ function HosControl() {
         setSearchTerm(e.target.value);
     };
 
+    // 페이지 변경 처리
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -67,21 +60,50 @@ function HosControl() {
     };
 
     // 수정 버튼 클릭 시
-    const handleEditClick = (id) => {
-        setEditingId(id);
+    const handleEditClick = (hosId, name, address, ownerName) => {
+        setEditingId(hosId); // 수정 모드로 전환
+        setUpdatedHospitalName(name); // 수정할 병원 이름 설정
+        setUpdatedHospitalAddress(address); // 수정할 병원 주소 설정
+        setUpdatedOwnerName(ownerName); // 수정할 병원장 이름 설정
     };
 
-    // 수정 완료 버튼 클릭 시
-    const handleSaveClick = (id, updatedHospital) => {
-        setHospitals(hospitals.map(hospital => 
-            hospital.id === id ? { ...hospital, ...updatedHospital } : hospital
-        ));
-        setEditingId(null); // 수정 완료 후, 수정 모드 해제
+    // 수정 완료 시 병원 정보를 백엔드에 업데이트하는 함수 (PUT API 사용)
+    const handleSaveClick = (hosId) => {
+        const selectedHospital = hospitals.find(hospital => hospital.hosId === hosId);
+
+        const updatedHospital = {
+            name: updatedHospitalName || selectedHospital.name,
+            address: updatedHospitalAddress || selectedHospital.address, 
+            ownerName: updatedOwnerName || selectedHospital.ownerName, 
+            clinicType: selectedHospital.clinicType, 
+            businessNo: selectedHospital.businessNo,
+            info: selectedHospital.info,
+            infoImage: selectedHospital.infoImage,
+            ownerImage: selectedHospital.ownerImage,
+            createdDate: selectedHospital.createdDate,
+            lastModifiedDate: new Date().toISOString(), // 현재 시간을 ISO 형식으로 저장
+        };
+
+        dispatch(adminUpdateHospitalAPI(hosId, updatedHospital)) // Redux 액션 디스패치
+            .then(() => {
+                setEditingId(null); // 수정 모드 해제
+                dispatch(allHospitalAPI()); // 병원 목록 갱신
+            })
+            .catch((error) => {
+                console.error('병원 정보를 수정하는 중 에러 발생:', error);
+            });
     };
 
-    // 삭제 버튼 클릭 시
-    const handleDeleteClick = (id) => {
-        setHospitals(hospitals.filter(hospital => hospital.id !== id));
+    // 삭제 버튼 클릭 시 병원을 백엔드에서 삭제하는 함수 (DELETE API 사용)
+    const handleDeleteClick = (hosId) => {
+        dispatch(adminDeleteHospitalAPI(hosId)) // hosId로 Redux 액션 디스패치
+            .then(() => {
+                console.log('병원 삭제 완료');
+                dispatch(allHospitalAPI()); // 삭제 후 병원 목록 갱신
+            })
+            .catch((error) => {
+                console.error('병원을 삭제하는 중 에러 발생:', error);
+            });
     };
 
     // 페이징 처리
@@ -97,7 +119,7 @@ function HosControl() {
                 <input
                     type="text"
                     className="hos-control-search-input"
-                    placeholder="아이디로 검색"
+                    placeholder="병원명으로 검색"
                     value={searchTerm}
                     onChange={handleSearchChange}
                     onKeyPress={handleKeyPress} // Enter 키 처리
@@ -114,8 +136,8 @@ function HosControl() {
                 <thead>
                     <tr>
                         <th>번호</th>
-                        <th>아이디</th>
                         <th>병원</th>
+                        <th>진료 유형</th>
                         <th>주소</th>
                         <th>병원장</th>
                         <th>사업자번호</th>
@@ -124,81 +146,85 @@ function HosControl() {
                 </thead>
                 <tbody>
                     {currentHospitals.length > 0 ? (
-                        currentHospitals.map((hospital, index) => (
-                            <tr key={hospital.id}>
-                                <td>{hospital.id}</td>
-                                <td>{hospital.userId}</td>
-                                <td>
-                                    {editingId === hospital.id ? (
+                        currentHospitals.map((hospital) => (
+                            editingId === hospital.hosId ? (
+                                <tr key={hospital.hosId}>
+                                    <td>{hospital.hosId}</td> {/* 병원 번호 */}
+                                    <td>
                                         <input
                                             type="text"
-                                            defaultValue={hospital.hospitalName}
-                                            onChange={(e) => hospital.hospitalName = e.target.value}
-                                        />
-                                    ) : (
-                                        hospital.hospitalName
-                                    )}
-                                </td>
-                                <td>
-                                    {editingId === hospital.id ? (
+                                            value={updatedHospitalName}
+                                            onChange={(e) => setUpdatedHospitalName(e.target.value)}
+                                            style={{ width: '100%', boxSizing: 'border-box' }} // 고정된 너비 적용
+                                        /> {/* 병원 이름을 수정 가능하게 변경 */}
+                                    </td>
+                                    <td>
+                                        {hospital.clinicType && hospital.clinicType.length > 0 ? (
+                                            hospital.clinicType.map((clinic, idx) => (
+                                                <div key={idx}>{clinic.clinicName}</div> // clinicName만 표시
+                                            ))
+                                        ) : (
+                                            <div>진료 항목 없음</div>
+                                        )}
+                                    </td>
+                                    <td>
                                         <input
                                             type="text"
-                                            defaultValue={hospital.address}
-                                            onChange={(e) => hospital.address = e.target.value}
-                                        />
-                                    ) : (
-                                        hospital.address
-                                    )}
-                                </td>
-                                <td>
-                                    {editingId === hospital.id ? (
+                                            value={updatedHospitalAddress}
+                                            onChange={(e) => setUpdatedHospitalAddress(e.target.value)}
+                                            style={{ width: '100%', boxSizing: 'border-box' }} // 고정된 너비 적용
+                                        /> {/* 병원 주소를 수정 가능하게 변경 */}
+                                    </td>
+                                    <td>
                                         <input
                                             type="text"
-                                            defaultValue={hospital.owner}
-                                            onChange={(e) => hospital.owner = e.target.value}
-                                        />
-                                    ) : (
-                                        hospital.owner
-                                    )}
-                                </td>
-                                <td>{hospital.businessNo}</td>
-                                <td>
-                                    {editingId === hospital.id ? (
-                                        <button 
-                                            className="hos-control-save-button" 
-                                            onClick={() => handleSaveClick(hospital.id, hospital)}
-                                        >
+                                            value={updatedOwnerName}
+                                            onChange={(e) => setUpdatedOwnerName(e.target.value)}
+                                            style={{ width: '100%', boxSizing: 'border-box' }} // 고정된 너비 적용
+                                        /> {/* 병원장을 수정 가능하게 변경 */}
+                                    </td>
+                                    <td>{hospital.businessNo}</td> {/* 사업자번호 */}
+                                    <td>
+                                        <button
+                                            className='hos-control-save-button'
+                                            onClick={() => handleSaveClick(hospital.hosId)}>
                                             저장
-                                        </button>
-                                    ) : (
-                                        <>
-                                            <button 
-                                                className="hos-control-edit-button" 
-                                                onClick={() => handleEditClick(hospital.id)}
-                                            >
-                                                수정
-                                            </button>
-                                            <button 
-                                                className="hos-control-delete-button" 
-                                                onClick={() => handleDeleteClick(hospital.id)}
-                                            >
-                                                삭제
-                                            </button>
-                                        </>
-                                    )}
-                                </td>
-                            </tr>
+                                        </button> {/* 저장 버튼 */}
+                                        <button className='hos-control-close-button' onClick={() => setEditingId(null)}>취소</button> {/* 취소 버튼 */}
+                                    </td>
+                                </tr>
+                            ) :
+                                <tr key={hospital.hosId}>
+                                    <td>{hospital.hosId}</td> {/* 번호 */}
+                                    <td>{hospital.name}</td> {/* 병원 이름 */}
+                                    <td>
+                                        {hospital.clinicType && hospital.clinicType.length > 0 ? (
+                                            hospital.clinicType.map((clinic, idx) => (
+                                                <div key={idx}>{clinic.clinicName}</div> // clinicName만 표시
+                                            ))
+                                        ) : (
+                                            <div>진료 항목 없음</div>
+                                        )}
+                                    </td>
+                                    <td>{hospital.address}</td> {/* 병원 주소 */}
+                                    <td>{hospital.ownerName}</td> {/* 병원장 */}
+                                    <td>{hospital.businessNo}</td> {/* 사업자번호 */}
+                                    <td>
+                                        <button className='hos-control-edit-button' onClick={() => handleEditClick(hospital.hosId, hospital.name, hospital.address, hospital.ownerName)}>수정</button>
+                                        <button className='hos-control-delete-button' onClick={() => handleDeleteClick(hospital.hosId)}>삭제</button>
+                                    </td>
+                                </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="7">병원이 없습니다.</td>
+                            <td colSpan="7">병원이 없습니다.</td> {/* 데이터가 없을 때 메시지 */}
                         </tr>
                     )}
                 </tbody>
             </table>
 
             <div className="hos-control-pagination">
-                <button onClick={handleFirstPage} disabled={currentPage === 1}>
+                <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredHospitals.length === 0}>
                     ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
@@ -210,7 +236,7 @@ function HosControl() {
                         {index + 1}
                     </button>
                 ))}
-                <button onClick={handleLastPage} disabled={currentPage === totalPages}>
+                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredHospitals.length === 0}>
                     ▶
                 </button>
             </div>

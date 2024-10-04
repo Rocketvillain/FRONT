@@ -26,6 +26,7 @@
     font-size: 14px;
     color: #7D7D7D;
     font-weight: bold;
+    border-right: 1px solid lightgray
 }
 
 .review-control-search-button {
