@@ -5,6 +5,7 @@ import hospitalScheduleReducer from "./HospitalScheduleModule";
 import reservationReducer from "./ReservationModule";
 import adminUserReducer from "./AdminUserModule";
 import adminReserReducer from "./AdminReserModule";
+import reviewReducer from "./ReviewModule";
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     reservation: reservationReducer,
     adminUsers: adminUserReducer,
     adminReser: adminReserReducer,
+    review: reviewReducer,
 });
 
 export default rootReducer;
