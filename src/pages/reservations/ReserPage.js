@@ -153,7 +153,7 @@ function ReserPage() {
 
     const handlePetChange = (e) => {
         const selectedName = e.target.value;
-        const selectedPet = pets.find(pet => pet.name === selectedName);
+        const selectedPet = pets.find(pet => pet.petName === selectedName);
         setSelectedPet(selectedPet); // 선택된 반려동물 정보 업데이트
         console.log(selectedPet);
         
@@ -217,7 +217,7 @@ function ReserPage() {
             typeId: typeId,
             reservationTime: reservationDateTime.toISOString(),
             petId: selectedPet.petId,
-            description: description,
+            specificDescription: description,
         }
 
         dispatch(CreateReservation(reservationInfo));

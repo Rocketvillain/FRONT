@@ -19,6 +19,8 @@ function BeautyReserPage() {
     const pets = useSelector(state => state.user.pets); 
     const [userInfo, setUserInfo] = useState(user);
     const [selectedPet, setSelectedPet] = useState(pets[0] || {}); // 선택된 반려동물 상태
+    console.log('selectedPet',selectedPet);
+    
     
     /* 병원 및 병원 일정정보 */
     const hospital = useSelector(state => state.hospital.hospital); // 병원 정보 불러오기
@@ -151,7 +153,7 @@ function BeautyReserPage() {
 
     const handlePetChange = (e) => {
         const selectedName = e.target.value;
-        const selectedPet = pets.find(pet => pet.name === selectedName);
+        const selectedPet = pets.find(pet => pet.petName === selectedName);
         setSelectedPet(selectedPet); // 선택된 반려동물 정보 업데이트
         console.log(selectedPet);
         
@@ -188,11 +190,11 @@ function BeautyReserPage() {
         }
 
         if(!clinicType){
-            alert("유형을 선택해주세요!");
+            alert("어떤 미용 서비스를 받으실지 선택해주세요!");
             return;
         }
 
-        const typeId = hospital.clinicType.find(clinic => { return clinic.clinicName === clinicType }).typeId;
+        const typeId = hospital.clinicType.find(clinic => { return clinic.clinicName === '미용' }).typeId;
 
         const [hour, minute] = selectedTime.split(':').map(Number);
 
@@ -215,12 +217,13 @@ function BeautyReserPage() {
             typeId: typeId,
             reservationTime: reservationDateTime.toISOString(),
             petId: selectedPet.petId,
-            description: description,
+            description: clinicType,
+            specificDescription: description,
         }
 
         dispatch(CreateReservation(reservationInfo));
 
-        alert(`${hospital.name} ${hour}시에 ${clinicType} 예약하셨습니다!`);
+        alert(`${hospital.name} ${hour}시에 미용 예약하셨습니다!`);
 
         navigate('/');
 
@@ -345,7 +348,7 @@ function BeautyReserPage() {
 
 
                     <div className="reser-form-group">
-                        {/* 체크박스 그룹 */}
+                        {/*라디오 그룹 */}
                         <div className="reser-form-group-check">
                             <label>미용 서비스 선택</label>
                             <div className="reser-checkbox-group">
@@ -353,7 +356,7 @@ function BeautyReserPage() {
                                     <input 
                                         type="radio" 
                                         name="service" 
-                                        value="진료" 
+                                        value="목욕" 
                                         checked={clinicType === '목욕'} 
                                         onChange={handleClinicTypeChange} 
                                     /> 목욕
@@ -362,7 +365,7 @@ function BeautyReserPage() {
                                     <input 
                                         type="radio" 
                                         name="service" 
-                                        value="수술" 
+                                        value="염색" 
                                         checked={clinicType === '염색'} 
                                         onChange={handleClinicTypeChange} 
                                     /> 염색
@@ -371,7 +374,7 @@ function BeautyReserPage() {
                                     <input 
                                         type="radio" 
                                         name="service" 
-                                        value="수술" 
+                                        value="전체미용(+목욕)" 
                                         checked={clinicType === '전체미용(+목욕)'} 
                                         onChange={handleClinicTypeChange} 
                                     /> 전체미용(+목욕)
@@ -380,7 +383,7 @@ function BeautyReserPage() {
                                     <input 
                                         type="radio" 
                                         name="service" 
-                                        value="수술" 
+                                        value="부분미용" 
                                         checked={clinicType === '부분미용'} 
                                         onChange={handleClinicTypeChange} 
                                     /> 부분미용
@@ -389,7 +392,7 @@ function BeautyReserPage() {
                                     <input 
                                         type="radio" 
                                         name="service" 
-                                        value="수술" 
+                                        value="위생미용" 
                                         checked={clinicType === '위생미용'} 
                                         onChange={handleClinicTypeChange} 
                                     /> 위생미용
