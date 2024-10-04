@@ -1,21 +1,75 @@
 .footer-container {
-    background-color: #28467A; /* 헤더와 동일한 색상 */
+    background-color: #28467A; /* 기존 스타일 유지 */
     color: white;
     text-align: center;
     font-size: 14px;
     width: 100%;
     z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
     box-sizing: border-box; /* 전체 요소의 크기 계산에 padding과 border 포함 */
-    padding: 20px 0; /* 위아래 패딩 추가 */
-    height: 60px;
-    position: fixed; /* 화면에 고정 */
+    padding: 5px 0;
+    position: fixed;
+    height: 100px;
     bottom: 0; /* 페이지 하단에 위치 */
     left: 0; /* 페이지 왼쪽 끝에 위치 */
+}
+
+.footer-content {
+    padding: 5px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex; /* flexbox 사용 */
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.footer-main-message {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between; /* 공간을 균등하게 배치 */
+    align-items: center;
+    flex-wrap: wrap; 
+}
+
+.footer-company-info {
+    text-align: center;
+}
+
+.footer-company-info p {
+    margin: 0 5px; /* 각 항목 간의 여백 */
+    display: inline-block; /* p 태그가 가로로 나오도록 설정 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    font-size: 11px;
+    
+}
+
+.footer-social-icons {
+    margin-left: 20px;
+    display: flex; /* 아이콘을 가로로 배치 */
+    justify-content: center;
 
 }
 
-.footer-container a{
-    display: inline-block; /* a 태그를 블록 요소로 변경 */
-    text-decoration: none; /* 링크 밑줄 제거 (선택 사항) */
+.footer-social-icons a {
+    margin: 0 5px;
+    text-decoration: none;
 }
 
+.footer-social-icons a img {
+    width: 18px;
+    height: 18px;
+}
+
+.footer-bottom {
+    margin-top: 10px;
+    font-size: 10px;
+    color: #ddd;
+}
+
+.footer-bottom p {
+    margin: 0;
+}

@@ -86,7 +86,7 @@ function ReserControl() {
                     <input
                         type="text"
                         className="reser-control-search-input"
-                        placeholder="검색어 입력"
+                        placeholder="아이디로 검색"
                         value={searchTerm}
                         onChange={handleSearchChange}
                         onKeyPress={handleKeyPress}
