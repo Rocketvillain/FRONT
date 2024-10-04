@@ -53,12 +53,19 @@ function Login() {
         }
     }
 
+        /* 키보드 엔터 키 눌렀을 때 동작 */
+        const onKeyDownHandler = (e) => {
+            if (e.key === 'Enter') {
+                onClickHandler();
+            }
+        }
+
     return (
         <div className="login-wrap">
             <span id='HealingPets'>Healing Pets🍃</span>
 
             {/* 입력 필드와 로그인 버튼을 감싸는 form-group */}
-            <div className="form-group">
+            <div className="form-group" onKeyDown={onKeyDownHandler}>
                 <input
                     type="text"
                     name="userId"
