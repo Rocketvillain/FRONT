@@ -12,7 +12,7 @@ function Header() {
     return (
         <div className="header-container">
             <div className="logo-h-container">
-                <NavLink to="/" exact className="logo-h-link">
+                <NavLink to="/" className="logo-h-link">
                     <img className="mainImage" src="/images/logo.png" alt="메인 이미지" />
                     <span>Healing Pets</span>
                 </NavLink>

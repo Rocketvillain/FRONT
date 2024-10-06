@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 const DOMAIN = 'http://localhost:8080';
 
 export const request = async (method, url, data) => {
-    console.log(localStorage.getItem('token')); // 토큰 출력
 
     return await axios({
         method,

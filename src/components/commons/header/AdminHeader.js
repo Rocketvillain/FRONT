@@ -36,7 +36,7 @@ function AdminHeader() {
     return(
         <div className="admin-header-container">
             <div className="logo-admincontainer">
-                <NavLink to="/" exact className="logo-adminlink">
+                <NavLink to="/" className="logo-adminlink">
                     <img className="mainImage" src="/images/logo2.png" alt="메인 이미지" />
                     <span>Healing Pets</span>
                 </NavLink>
