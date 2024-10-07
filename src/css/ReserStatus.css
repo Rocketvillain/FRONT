@@ -1,38 +1,58 @@
 /* ReserStatus.css */
 
 .reservation-status {
-    width: 80%;
+    width: 95%;
+    height: 100%;
     margin: 0 auto;
-    padding: 20px;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .reservation-status h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.5em;
+    position: relative;
+    text-align: left;
+    width: 200px;
+    height: 30px;
+    left: 3%;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 1.3em;
     color: #333;
 }
 
+#reservation-logo {
+    position: relative;
+    width: 90px;
+}
+
+#reservation-line {
+    border: 1px solid #000000;
+    transform: translateY(-20px);
+}
+
 .reservation-table {
-    width: 100%;
+    position: relative;
+    left: 3%;
+    width: 94%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-top: 0px;
+}
+
+.reservation-table tr {
+    height: 60px;
 }
 
 .reservation-table th,
 .reservation-table td {
-    padding: 12px 20px;
-    text-align: left;
+    padding: 12px 10px;
+    text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
 .reservation-table th {
-    background-color: #f2f2f2;
+    background-color: #E3AB1B;
     font-weight: bold;
-    color: #333;
+    color: white;
 }
 
 .reservation-table td {
@@ -40,7 +60,7 @@
 }
 
 .reservation-table .cancel-btn {
-    background-color: #ff4d4d;
+    background-color: #D7467F;
     border: none;
     color: white;
     padding: 6px 12px;
@@ -53,8 +73,10 @@
 }
 
 .pagination {
+    position: absolute;
+    left: 53%;
+    bottom: 215px;
     text-align: center;
-    margin-top: 20px;
 }
 
 .pagination button {
@@ -75,4 +97,63 @@
     background-color: #333;
     color: white;
     border: none;
+}
+
+.cancel-confirm-modal {
+    position: absolute;
+    width: 450px;
+    height: 190px;
+    left: 45%;
+    top: 40%;
+    background: #E3AB1B;
+}
+
+.cancel-confirm-modal-header {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cancel-confirm-modal-header img {
+    width: 80px;
+    margin-left: 40px;
+    margin-right: 30px;
+}
+
+.cancel-confirm-modal-header span {
+    font-size: 1.2em;
+    color: #333;
+    font-weight: bold;
+}
+
+.cancel-confirm-modal-button {
+    display: flex;
+    width: 240px;
+    margin-left: 110px;
+    justify-content: space-between;
+}
+
+.cancel-confirm-modal-button button {
+    background-color: #D7467F;
+    color: white;
+    text-align: center;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cancel-confirm-modal-button button:hover {
+    background-color: #ff3333;
+    /* 호버 시 배경색 변경 */
+}
+
+#cancel-confirm-modal-button-yes {
+    width: 60px;
+}
+
+#cancel-confirm-modal-button-no {
+    width: 80px;
 }
