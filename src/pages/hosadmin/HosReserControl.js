@@ -20,6 +20,7 @@ function HosReserControl() {
   const [cancelInfo, setCancelInfo] = useState({
     reservationId: null,
     description: null,
+    state: 'canceled' 
   });
 
   useEffect(() => {
@@ -27,9 +28,9 @@ function HosReserControl() {
   }, [dispatch]);
 
   // 실시간 검색을 위한 필터링
-  const filteredReservations = reservations.filter((reservation) =>
-    reservation.userId.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+    const filteredReservations = reservations && reservations.length > 0 ? reservations.filter((reservation) =>
+        reservation.userId.toLowerCase().includes(searchTerm.toLowerCase())
+    ) : [];
 
   // 검색 버튼을 눌렀을 때 확정된 검색어로 필터링된 예약을 가져옴
   const confirmedFilteredReservations = reservations.filter((reservation) =>
@@ -84,8 +85,6 @@ function HosReserControl() {
     /* eslint-disable no-restricted-globals */
     const userCheck = confirm('예약을 취소하시겠습니까?');
     /* eslint-disable no-restricted-globals */
-
-    console.log('취소를 하였습니까?', userCheck);
 
     if (userCheck) {
       const result = await dispatch(RemoveReservation(id));
@@ -181,7 +180,7 @@ function HosReserControl() {
                 </td>
                 <td>{reservation.petName}</td>
                 <td>{reservation.clinicName}</td>
-                <td>
+                <td style={{ color: reservation.state === 'request' ? 'red' : 'inherit', fontWeight: reservation.state === 'request' ? 'bold' : 'normal' }}>
                   {reservation.state === 'activated'
                     ? '승인'
                     : reservation.state === 'request'
