@@ -135,7 +135,7 @@ function ReserControl() {
                             return (
                                 <tr key={reservation.reservationId}>
                                     <td>{reservation.reservationId}</td>
-                                    <td>{reservation.userid}</td>
+                                    <td>{reservation.userId}</td>
                                     <td>{reservation.hosName}</td>
                                     <td>{reservation.userName}</td>
                                     <td>{formattedDate}</td>  {/* 포맷된 날짜 표시 */}
