@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../css/hosAdmin/HosReserControl.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { LoadReservation } from '../../api/ReservationAPICalls';
 
 function HosReserControl() {
+
+    const dispatch = useDispatch();
+
+    const hosId = useSelector(state => state.user.userInfo.hosId)
+
     const [currentPage, setCurrentPage] = useState(1);
     const [reservationsPerPage] = useState(5); // 한 페이지에 표시할 예약 수
     const [searchTerm, setSearchTerm] = useState('');
@@ -35,6 +42,10 @@ function HosReserControl() {
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
     const handleFirstPage = () => setCurrentPage(1);
     const handleLastPage = () => setCurrentPage(totalPages);
+
+    useEffect(() => {
+        dispatch(LoadReservation(hosId)) // 예약 정보 업데이트
+    }, [dispatch]); 
 
     // 실시간으로 검색어가 변경될 때 필터링
     const handleSearchChange = (e) => {
