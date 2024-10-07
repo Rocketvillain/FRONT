@@ -6,6 +6,7 @@ import reservationReducer from "./ReservationModule";
 import adminUserReducer from "./AdminUserModule";
 import adminReserReducer from "./AdminReserModule";
 import reviewReducer from "./ReviewModule";
+import adminReviewReducer from "./AdminReviewModule";
 
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     adminUsers: adminUserReducer,
     adminReser: adminReserReducer,
     review: reviewReducer,
+    adminReviews: adminReviewReducer,
 });
 
 export default rootReducer;
