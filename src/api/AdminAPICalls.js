@@ -1,6 +1,6 @@
-import { adminGetAllUsers } from "../modules/AdminUserModule";
+import { adminGetAllUsers } from "../modules/UserModule";
 import { request } from "./Apis";
-import { adminUpdateHospital, adminDeleteHospital } from '../modules/AdminHosModule';
+import { adminUpdateHospital, adminDeleteHospital } from '../modules/HospitalModule';
 import { adminGetAllReservations } from '../modules/AdminReserModule';
 import { adminGetAllReviews } from "../modules/AdminReviewModule";
 

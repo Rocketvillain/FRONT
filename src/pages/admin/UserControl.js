@@ -5,7 +5,7 @@ import '../../css/admin/UserControl.css'; // CSS 파일을 추가합니다.
 
 function UserControl() {
     const dispatch = useDispatch();
-    const members = useSelector((state) => state.adminUsers.users)
+    const members = useSelector((state) => state.user.users)
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [isSearching, setIsSearching] = useState(false); // 검색이 진행 중인지 여부를 관리
@@ -37,6 +37,8 @@ function UserControl() {
         const filtered = members.filter(member =>
             member.userId.toLowerCase().includes(searchTerm.toLowerCase())
         );
+        console.log('filtered', filtered);
+
         setFilteredMembers(filtered);
         setIsSearching(true); // 검색이 진행되었음을 표시
         setCurrentPage(1); // 검색 시 첫 페이지로 이동
@@ -65,6 +67,20 @@ function UserControl() {
 
     const handleLastPage = () => {
         setCurrentPage(totalPages);
+    };
+
+    // ◀ 버튼: 이전 페이지로 이동
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // ▶ 버튼: 다음 페이지로 이동
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     // 삭제 모달 열기
@@ -171,7 +187,10 @@ function UserControl() {
             </table>
 
             <div className="user-control-pagination">
-                <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredMembers.length === 0} >
+                <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredMembers.length === 0}>
+                    ◁◁
+                </button>
+                <button onClick={handlePrevPage} disabled={currentPage === 1 || filteredMembers.length === 0}>
                     ◀
                 </button>
                 {[...Array(endPage - startPage + 1)].map((_, index) => (
@@ -183,8 +202,11 @@ function UserControl() {
                         {startPage + index}
                     </button>
                 ))}
-                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredMembers.length === 0}>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages || filteredMembers.length === 0}>
                     ▶
+                </button>
+                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredMembers.length === 0}>
+                    ▷▷
                 </button>
             </div>
 

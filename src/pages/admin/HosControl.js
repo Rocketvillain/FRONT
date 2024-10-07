@@ -59,6 +59,20 @@ function HosControl() {
         setCurrentPage(totalPages);
     };
 
+    // ◀ 버튼: 이전 페이지로 이동
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // ▶ 버튼: 다음 페이지로 이동
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
     // 수정 버튼 클릭 시
     const handleEditClick = (hosId, name, address, ownerName) => {
         setEditingId(hosId); // 수정 모드로 전환
@@ -73,9 +87,9 @@ function HosControl() {
 
         const updatedHospital = {
             name: updatedHospitalName || selectedHospital.name,
-            address: updatedHospitalAddress || selectedHospital.address, 
-            ownerName: updatedOwnerName || selectedHospital.ownerName, 
-            clinicType: selectedHospital.clinicType, 
+            address: updatedHospitalAddress || selectedHospital.address,
+            ownerName: updatedOwnerName || selectedHospital.ownerName,
+            clinicType: selectedHospital.clinicType,
             businessNo: selectedHospital.businessNo,
             info: selectedHospital.info,
             infoImage: selectedHospital.infoImage,
@@ -225,6 +239,9 @@ function HosControl() {
 
             <div className="hos-control-pagination">
                 <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredHospitals.length === 0}>
+                    ◁◁
+                </button>
+                <button onClick={handlePrevPage} disabled={currentPage === 1 || filteredHospitals.length === 0}>
                     ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
@@ -236,9 +253,13 @@ function HosControl() {
                         {index + 1}
                     </button>
                 ))}
-                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredHospitals.length === 0}>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages || filteredHospitals.length === 0}>
                     ▶
                 </button>
+                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredHospitals.length === 0}>
+                    ▷▷
+                </button>
+
             </div>
         </div>
     );

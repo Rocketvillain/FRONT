@@ -8,6 +8,7 @@ const initialState = {
     userInfo: [],
     token: null,
     pets: [],
+    users: [],
 };
 
 /* 액션 타입 설정 */
@@ -16,14 +17,18 @@ export const LOG_OUT = 'user/LOG_OUT';
 export const LOAD_USER_INFO = 'user/LOAD_USER_INFO';
 export const UPDATE_USER = 'user/UPDATE_USER';
 export const LOAD_PET_INFO = 'user/LOAD_PET_INFO';
+export const ADMIN_GET_ALL_USERS = 'user/ADMIN_GET_ALL_USERS'; 
+export const ADMIN_UPDATE_USER_STATE = 'user/ADMIN_UPDATE_USER_STATE';
 
 /* 유저 관련 액션 함수 */
-export const { user : { login, logOut, loadUserInfo, updateUser, loadPetInfo }} = createActions({
+export const { user : { login, logOut, loadUserInfo, updateUser, loadPetInfo, adminGetAllUsers, adminUpdateUserState }} = createActions({
     [LOGIN]: ({ token, userInfo }) => ({ token, userInfo }),
     [LOG_OUT]: (res = initialState) => ({ res }),
     [LOAD_USER_INFO]: (data) => (data),
     [UPDATE_USER]: (modifyUserInfo) => (modifyUserInfo),
     [LOAD_PET_INFO]: (data) => (data),
+    [ADMIN_GET_ALL_USERS]: (users) => users, // 전체 사용자 목록 받음
+    [ADMIN_UPDATE_USER_STATE]: (updatedUser) => updatedUser, // 상태가 변경된 사용자 정보 받음
 });
 
 /* 리듀서 함수 */
@@ -38,9 +43,7 @@ const userReducer = handleActions(
                 ...state,
                 userInfo: userInfo,
                 token: token,
-            }
-
-            
+            } 
         },
         [LOG_OUT]: (state) => {
             localStorage.removeItem('token');  // 로그인 토큰 삭제
@@ -74,6 +77,16 @@ const userReducer = handleActions(
                 pets: data.payload, // 상태 업데이트
             };
         },
+        [ADMIN_GET_ALL_USERS]: (state, { payload }) => ({
+            ...state,
+            users: payload,
+        }),
+        [ADMIN_UPDATE_USER_STATE]: (state, { payload }) => ({
+            ...state,
+            users: state.users.map((user) =>
+                user.id === payload.id ? { ...user, userState: payload.userState } : user
+            ), // 상태가 변경된 사용자 업데이트
+        }),
     },
     initialState
 );
