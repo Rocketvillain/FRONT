@@ -11,47 +11,46 @@
 /* 병원 섹션 */
 .hospital-group {
     background: #f9f9f9;
-    padding: 15px;
+    padding: 20px;
     border-radius: 12px;
-    text-align: left;
-    transition: transform 0.3s ease;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     box-sizing: border-box;
+    transition: transform 0.3s ease;
     font-family: 'Poor Story', cursive;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 한 줄에 두 개의 카드 */
+    gap: 20px;
 }
 
-.hospital-group h3 {
-    text-align: center;
+.hospital-group h2 {
+    grid-column: 1 / -1; /* 병원 이름을 그리드의 전체 폭으로 설정 */
+    padding-left: 10px;
     font-family: 'Do Hyeon', sans-serif;
-    font-size: 25px;
+    font-size: 30px;
     margin-bottom: 16px;
 }
 
-/* 리뷰 카드들을 그리드로 배치하는 컨테이너 */
-.reviews-container {
+.hospital-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 한 줄에 2개의 리뷰 */
-    gap: 16px;
-    margin-top: 16px;
+    grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개의 카드 */
+    gap: 20px;
     width: 100%;
     box-sizing: border-box;
+    font-family: 'Do Hyeon', sans-serif;
 }
 
 /* 개별 리뷰 카드의 스타일 */
 .review-card {
     background: #f4fce3;
     border-radius: 12px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     color: black;
-    width: 100%;
+    width: 100%; /* 100%로 설정하여 그리드 셀에 맞게 확장 */
     box-sizing: border-box;
-    border: 5px solid #E3AB1B;
     font-family: 'Poor Story', cursive;
 }
 
