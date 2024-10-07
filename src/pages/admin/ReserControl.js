@@ -1,32 +1,41 @@
-import React, { useState } from 'react';
-import '../../css/admin/ReserControl.css'; // CSS 파일을 추가합니다.
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import '../../css/admin/ReserControl.css';
+import { adminGetAllReservationsAPI } from '../../api/AdminAPICalls';
 
 function ReserControl() {
+    const dispatch = useDispatch();
+    const reservations = useSelector(state => state.adminReser.reservations);
+    console.log('reservations', reservations);
+
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedType, setSelectedType] = useState(''); // 선택한 진료 유형
     const [currentPage, setCurrentPage] = useState(1);
     const [searchClicked, setSearchClicked] = useState(false); // 검색 버튼을 클릭했는지 여부
-    const itemsPerPage = 5; // 한 페이지에 보여줄 항목 수
+    const itemsPerPage = 10; // 한 페이지에 보여줄 항목 수
 
-    // 더미 데이터 (예약 정보)
-    const reservations = [
-        { id: '001', userId: 'ohgiraffers', hospital: 'Bear동물병원', name: '권순혁', date: '2024/09/28', petName: '아리', type: '진료', status: '승인' },
-        { id: '002', userId: 'hospital', hospital: '강아지 동물병원', name: '박호찬', date: '2024/10/20', petName: '오리', type: '수술', status: '취소' },
-        { id: '003', userId: 'hospizza', hospital: '야옹이 동물병원', name: '지동혁', date: '2024/09/13', petName: '우리', type: '진료', status: '취소요청' },
-        { id: '004', userId: 'user123', hospital: '맞아용 동물병원', name: '박말숙', date: '2024/09/10', petName: '나리', type: '진료', status: '승인' },
-        { id: '005', userId: 'kingwe', hospital: '몰라용 동물병원', name: '박사장', date: '2024/10/01', petName: '가린이', type: '미용', status: '취소' },
-        { id: '006', userId: 'queenkim', hospital: '로켓단 동물병원', name: '오목곰', date: '2024/10/22', petName: '가람이', type: '진료', status: '승인' },
-        { id: '007', userId: 'jackyang', hospital: '악동 동물병원', name: '양하윤', date: '2024/09/17', petName: '종이', type: '수술', status: '승인' },
-    ];
+    useEffect(() => {
+        dispatch(adminGetAllReservationsAPI());
+    }, [dispatch]);
+
 
     // 진료 유형 목록
     const types = ['모든 유형', '진료', '수술', '미용'];
 
     // 검색 및 필터 처리 (검색 버튼을 눌렀을 때만 필터 적용)
+    // 검색 및 필터 처리
     const filteredReservations = searchClicked
         ? reservations.filter(reservation => {
-            const matchesSearchTerm = reservation.userId.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesType = selectedType === '' || selectedType === '모든 유형' || reservation.type === selectedType;
+            // 아이디가 입력된 경우
+            const matchesSearchTerm = searchTerm
+                ? reservation.userid && reservation.userid.toLowerCase().includes(searchTerm.toLowerCase())
+                : true; // 검색어가 없으면 모두 포함
+
+            // 선택된 진료 유형이 있을 경우
+            const matchesType = selectedType && selectedType !== '모든 유형'
+                ? reservation.clinicName === selectedType
+                : true; // 진료 유형이 선택되지 않으면 모두 포함
+
             return matchesSearchTerm && matchesType;
         })
         : reservations; // 검색 버튼을 누르기 전에는 전체 목록을 보여줌
@@ -86,7 +95,7 @@ function ReserControl() {
                     <input
                         type="text"
                         className="reser-control-search-input"
-                        placeholder="검색어 입력"
+                        placeholder="아이디로 검색"
                         value={searchTerm}
                         onChange={handleSearchChange}
                         onKeyPress={handleKeyPress}
@@ -110,30 +119,50 @@ function ReserControl() {
                 </thead>
                 <tbody>
                     {currentReservations.length > 0 ? (
-                        currentReservations.map((reservation, index) => (
-                            <tr key={reservation.id}>
-                                <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                <td>{reservation.userId}</td>
-                                <td>{reservation.hospital}</td>
-                                <td>{reservation.name}</td>
-                                <td>{reservation.date}</td>
-                                <td>{reservation.petName}</td>
-                                <td>{reservation.type}</td>
-                                <td className={`reser-control-status ${reservation.status === '취소요청' || reservation.status === '취소' ? 'canceled' : reservation.status === '승인' ? 'approved' : ''}`}>
-                                    {reservation.status}
-                                </td>
-                            </tr>
-                        ))
+                        currentReservations.map((reservation) => {
+                            // reservationTime 배열을 이용해 Date 객체 생성
+                            const reservationDate = new Date(
+                                reservation.reservationTime[0],  // year
+                                reservation.reservationTime[1] - 1,  // month (0-based in JS)
+                                reservation.reservationTime[2],  // day
+                                reservation.reservationTime[3],  // hour
+                                reservation.reservationTime[4]   // minute
+                            );
+
+                            // 원하는 포맷으로 변환 ('YYYY-MM-DD HH:MM')
+                            const formattedDate = `${reservationDate.getFullYear()}-${String(reservationDate.getMonth() + 1).padStart(2, '0')}-${String(reservationDate.getDate()).padStart(2, '0')} ${String(reservationDate.getHours()).padStart(2, '0')}:${String(reservationDate.getMinutes()).padStart(2, '0')}`;
+
+                            return (
+                                <tr key={reservation.reservationId}>
+                                    <td>{reservation.reservationId}</td>
+                                    <td>{reservation.userid}</td>
+                                    <td>{reservation.hosName}</td>
+                                    <td>{reservation.userName}</td>
+                                    <td>{formattedDate}</td>  {/* 포맷된 날짜 표시 */}
+                                    <td>{reservation.petName}</td>
+                                    <td>{reservation.clinicName}</td>
+                                    <td className={`reser-control-state ${reservation.state === 'request' ? 'request' : reservation.state === 'canceled' ? 'canceled' : reservation.state === 'activated' ? 'activated' : ''}`}>
+                                        {/* 상태에 따라 출력되는 한글로 변환 */}
+                                        {reservation.state === 'request' ? '취소요청'
+                                            : reservation.state === 'canceled' ? '취소'
+                                                : reservation.state === 'activated' ? '승인'
+                                                    : ''}
+                                    </td>
+
+                                </tr>
+                            );
+                        })
                     ) : (
                         <tr>
                             <td colSpan="8">예약 정보가 없습니다.</td>
                         </tr>
                     )}
                 </tbody>
+
             </table>
 
             <div className="reser-control-pagination">
-                <button onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+                <button onClick={() => handlePageChange(1)} disabled={currentPage === 1 || filteredReservations.length === 0}>
                     ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
@@ -145,7 +174,7 @@ function ReserControl() {
                         {index + 1}
                     </button>
                 ))}
-                <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
+                <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages || filteredReservations.length === 0}>
                     ▶
                 </button>
             </div>

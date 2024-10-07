@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { createActions, handleActions } from "redux-actions";
 
-const navigate = useNavigate
+const navigate = useNavigate;
 
 /* 초기 state값 */
 const initialState = {
