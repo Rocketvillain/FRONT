@@ -6,7 +6,7 @@ const navigate = useNavigate;
 /* 초기 state값 */
 const initialState = {
     hospitals: [], // 병원 리스트 초기 상태
-    hospital: {} // 병원 단일 정보 초기 상태 
+    hospital: [], // 병원 단일 정보 초기 상태 
 };
 
 /* 액션 타입 설정 */

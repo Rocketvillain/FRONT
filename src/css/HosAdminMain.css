@@ -1,6 +1,7 @@
 .hos-admin-main-container {
     padding: 20px;
     text-align: center; /* 전체 텍스트 가운데 정렬 */
+    font-family: 'Poor Story';
 }
 
 .hos-admin-main-brand-container {
@@ -25,6 +26,7 @@
     font-size: 40px; /* 타이틀 텍스트 크기 */
     font-weight: bold; /* 텍스트 굵게 */
     color: #28467A; /* 텍스트 색상 */
+    font-family: 'Single Day';
 }
 
 .hos-admin-main-logo {
