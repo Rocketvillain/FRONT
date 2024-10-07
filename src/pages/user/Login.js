@@ -1,8 +1,8 @@
 import '../../css/user/Login.css';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
 import { callLoginAPI } from '../../api/UserAPICalls';
-import { NavLink, Navigate, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import AlertMessage1 from '../../components/commons/AlertMessage1';
 
 function Login() {
@@ -13,12 +13,14 @@ function Login() {
     /* input 태그 입력 값 state 관리 */
     const [loginInfo, setLoginInfo] = useState(
         {
-            userId : '',
-            userPwd : ''
+            userId: '',
+            userPwd: ''
         }
     );
 
     /* 경고 메시지 표시 여부 관리 */
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
     const [showAlert, setShowAlert] = useState(false);
 
     /* 입력 값 변경 시 이벤트 핸들러 */
@@ -45,20 +47,30 @@ function Login() {
         // 로그인 요청을 디스패치()
         const result = await dispatch(callLoginAPI(loginInfo));
 
-        // 로그인 실패 시 처리
-        if (typeof result === 'string') {
-            alert(result); // alert 메시지로 failType 표시
+        console.log("result 회원 상태 : ", result);
+
+        // 로그인 실패 또는 탈퇴된 사용자일 때 처리
+        if (result === 'secession') {
+            setModalMessage('탈퇴 처리된 회원입니다.');
+            setShowModal(true); // 경고 메시지 표시
+        } else if (result === false || typeof result === 'string') {
+            alert(result); // 로그인 실패 메시지 표시
         } else {
-            navigate('/'); // 기본적으로 메인 페이지로 이동
+            // 로그인 성공 시 메인 페이지로 이동
+            navigate('/');
+        }
+    };
+
+    /* 키보드 엔터 키 눌렀을 때 동작 */
+    const onKeyDownHandler = (e) => {
+        if (e.key === 'Enter') {
+            onClickHandler();
         }
     }
 
-        /* 키보드 엔터 키 눌렀을 때 동작 */
-        const onKeyDownHandler = (e) => {
-            if (e.key === 'Enter') {
-                onClickHandler();
-            }
-        }
+    const closeModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div className="login-wrap">
@@ -82,21 +94,32 @@ function Login() {
                     onChange={onChangeHandler}
                     placeholder="PWD"
                 />
-            <button id='login-button' onClick={onClickHandler}>로그인</button>
+                <button id='login-button' onClick={onClickHandler}>로그인</button>
             </div>
 
             {/* 링크를 감싸는 link-group */}
             <div className="link-group">
-                <NavLink style={{ textDecoration: 'none'}} to="/findID">
+                <NavLink style={{ textDecoration: 'none' }} to="/findID">
                     <span id='find-ID'>ID 찾기</span>
                 </NavLink>
-                <NavLink style={{textDecoration: 'none'}} to="/changePWD">
+                <NavLink style={{ textDecoration: 'none' }} to="/changePWD">
                     <span id='change-PWD'>비밀번호 변경</span>
                 </NavLink>
             </div>
 
+            {/* 작성하지 않은 칸에 대한 경고 메시지 */}
             {showAlert && (
-                <AlertMessage1/>
+                <AlertMessage1 />  // 이 컴포넌트는 기본적으로 '작성하지 않은 칸이 있습니다.' 문구를 표시함
+            )}
+
+            {/* 탈퇴 회원 모달 창 표시 */}
+            {showModal && (
+                <div className="login-modal-overlay">
+                    <div className="login-modal-content">
+                        <span className="login-modal-message">{modalMessage}</span>
+                        <button className="login-modal-close-button" onClick={closeModal}>닫기</button>
+                    </div>
+                </div>
             )}
         </div>
     );

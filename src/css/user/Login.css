@@ -106,3 +106,47 @@
 #change-PWD:hover {
     text-decoration: underline;
 }
+
+.login-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-modal-content {
+    background-color: white;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transform: translate(10px,-20px);
+    position: relative;
+    border: 3px solid #28467A;
+}
+
+.login-modal-message {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.login-modal-close-button {
+    background-color: #f0c60a;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.login-modal-close-button:hover {
+    background-color: #d9981a;
+}

@@ -2,6 +2,7 @@ import { adminGetAllUsers } from "../modules/AdminUserModule";
 import { request } from "./Apis";
 import { adminUpdateHospital, adminDeleteHospital } from '../modules/AdminHosModule';
 import { adminGetAllReservations } from '../modules/AdminReserModule';
+import { adminGetAllReviews } from "../modules/AdminReviewModule";
 
 // 관리자용 전체 유저 조회 API 호출
 export function adminGetAllUsersAPI() {
@@ -68,6 +69,21 @@ export function adminGetAllReservationsAPI() {
             const result = await request('GET', '/api/v1/reservation'); // API 호출
             console.log('result:', result); // 결과 로그
             dispatch(adminGetAllReservations(result.results.reservations)); // 가져온 예약 데이터를 Redux에 저장
+        } catch (error) {
+            console.error('API error:', error);
+        }
+    };
+}
+
+// 관리자용 전체 리뷰 조회 API 호출
+export function adminGetAllReviewsAPI() {
+    return async (dispatch) => {
+        try {
+            const result = await request('GET', '/api/v1/review'); // 백엔드에서 리뷰 데이터를 가져옴
+            console.log('API response:', result);
+            console.log('adminGetAllReviews :', adminGetAllReviews);
+
+            dispatch(adminGetAllReviews(result.results.review)); // 가져온 리뷰 데이터를 Redux 상태에 저장
         } catch (error) {
             console.error('API error:', error);
         }
