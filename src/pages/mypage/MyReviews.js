@@ -1,7 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { reviewDetailByUserIdAPI } from '../../api/ReviewAPICalls'; 
 import '../../css/MyReviews.css';
 
 function MyReviews({ reviews }) {
+
+    const dispatch = useDispatch();
+    const review = useSelector(state => state.review.reviews);
+    console.log("사용자 id를 통해 가지고 온 리뷰 : ", review);
+    
+    const userId = useSelector(state => state.user.userInfo.userId);
+    console.log("사용자 아이디 : ", userId);
+    
+
+    useEffect(() => {
+        // API 호출 후 정보를 받아 redux로 state 변경
+        dispatch(reviewDetailByUserIdAPI(userId));
+    }, [dispatch]);
+
     const [deletedReviews, setDeletedReviews] = useState([]); // 삭제된 후기 ID 목록
     const [selectedReview, setSelectedReview] = useState(null); // 선택된 후기 상태
     const [isModalOpen, setModalOpen] = useState(false); // 후기 수정 모달 상태
@@ -84,8 +100,8 @@ function MyReviews({ reviews }) {
                 </thead>
                 <tbody>
                     {currentRecords.map((review) => (
-                        <tr key={review.id}>
-                            <td>{review.id}</td>
+                        <tr key={review.userId}>
+                            <td>{review.userId}</td>
                             <td>{review.name}</td>
                             <td>{review.hospital}</td>
                             <td>{review.type}</td>

@@ -1,4 +1,4 @@
-import { allReview, reviewDetail, reviewDetailByUserId } from "../modules/ReviewModule";
+import { allReview, reviewDetail, reviewDetailByUser } from "../modules/ReviewModule";
 import { request } from "./Apis";
 
 
@@ -42,16 +42,15 @@ export function reviewDetailAPI(hosId) {
 }
 
 // 사용자 아이디로 리뷰 API 호출
-// 단일 리뷰 API 호출
 export function reviewDetailByUserIdAPI(userId) {
-    console.log('단일 리뷰 정보 호출...');
+    console.log('사용자 아이디로 단일 리뷰 정보 호출...');
 
     return async (dispatch) => {
         try{
             const result = await request('GET', `/api/v1/review/user/${userId}`);
-            console.log('단일 리뷰 정보 호출 result : ', result);
+            console.log('사용자로 리뷰 정보 호출 result : ', result);
 
-            dispatch(reviewDetailByUserId(result.results.review));
+            dispatch(reviewDetailByUser(result.results.review));
 
             return result;
             
