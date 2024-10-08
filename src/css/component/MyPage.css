@@ -314,3 +314,89 @@ body {
 .add-pet-btn:hover {
     background-color: #35898a;
 }
+
+
+/* 추가 부분 */
+
+.add-pet-form {
+    display: flex;
+    justify-content: space-between; /* 이미지와 정보를 양쪽에 배치 */
+    align-items: flex-start;
+    gap: 3px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: white; /* 카드 배경을 흰색으로 설정 */
+    width: calc(100% - 40px); /* 카드 너비 설정, 스크롤 바 때문에 여유를 둠 */
+    max-width: 900px; /* 카드의 최대 너비를 설정 */
+    height: 250px; /* 카드의 높이를 고정 */
+    box-sizing: border-box; /* padding과 border를 width에 포함시킴 */
+}
+
+/* 추가 반려동물 정보 섹션 */
+.add-pet-info{
+    width: 300px;
+    height: 180px;
+    margin-top: 5px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 7px;
+    width: 100%;
+}
+
+/* 추가 반려동물 정보 텍스트 스타일 */
+.add-pet-info > p {
+    
+    margin: 5px 0; /* 각 정보 항목 간의 간격 */
+    font-size: 16px; /* 텍스트 크기 조정 */
+}
+
+/* 추가 이미지 스타일 */
+.create-pet-image {
+    margin-top: 5px;
+    width: 250px;
+    height: 200px;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 가운데 정렬 */
+
+}
+
+.buttond-group{
+    margin-top: 5px;
+}
+
+/* 추가, 삭제 버튼 스타일 */
+.create-btn, .cancle-btn{
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+    min-width: 100px; /* 최소 너비 설정 */
+    height: 40px; /* 높이를 고정 */
+    line-height: 20px; /* 텍스트의 세로 정렬 */
+}
+
+/* 추가 버튼의 색상 */
+.create-btn {
+    background-color: #43ABAE;
+    color: white;
+    margin-right: 5px;
+}
+
+/* 취소 버튼의 색상 */
+.cancle-btn{
+    background-color: #f15f5f;
+    color: white;
+ 
+}
+
+/* 버튼 호버 시 색상 변경 */
+.create-btn:hover, .cancle-btn:hover{
+    background-color: #35898a;
+}

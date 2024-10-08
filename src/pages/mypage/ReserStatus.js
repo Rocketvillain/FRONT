@@ -7,7 +7,7 @@ import { CancelReservation, LoadReservationByUserId } from "../../api/Reservatio
 const ReserStatus = () => {
 
     const dispatch = useDispatch();
-    const reservations = useSelector(state => state.reservation.Reservations);
+    const reservations = useSelector(state => state.reservation.reservations);
     console.log('유저 예약 현황', reservations);
 
     // 예약 취소 처리 
