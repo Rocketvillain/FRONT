@@ -13,7 +13,7 @@ export const ADMIN_GET_ALL_REVIEWS = 'review/ADMIN_GET_ALL_REVIEWS'; // 관리�
 export const REVIEW_DETAIL_BY_USER = 'review/REVIEW_DETAIL_BY_USER';
 
 /* 리뷰 관련 액션 함수 */
-export const { review : { allReview, reviewDetail, adminGetAllReviews, reviewDetailByUserId }} = createActions({
+export const { review : { allReview, reviewDetail, adminGetAllReviews, reviewDetailByUser }} = createActions({
     [ALL_REVIEW]: (data) => (data),
     [REVIEW_DETAIL] : (data) => (data),
     [ADMIN_GET_ALL_REVIEWS]: (reviews) => reviews, // 관리자 리뷰 액션 생성 함수

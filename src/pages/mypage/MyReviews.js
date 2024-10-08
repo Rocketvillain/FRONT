@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import '../../css/MyReviews.css';
+import { reviewDetailByUserIdAPI } from '../../api/ReviewAPICalls';
+import { useDispatch, useSelector } from 'react-redux';
 
-function MyReviews({ reviews }) {
+function MyReviews() {
+    const dispatch = useDispatch();
+
     const [deletedReviews, setDeletedReviews] = useState([]); // 삭제된 후기 ID 목록
     const [selectedReview, setSelectedReview] = useState(null); // 선택된 후기 상태
     const [isModalOpen, setModalOpen] = useState(false); // 후기 수정 모달 상태
@@ -10,7 +14,17 @@ function MyReviews({ reviews }) {
     const [reviewContent, setReviewContent] = useState(''); // 후기 내용 상태
 
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 6;
+    const recordsPerPage = 5;
+
+    // 사용자 정보
+    const userId = useSelector(state => state.user.userInfo.userId);
+
+    // 리뷰 정보
+    const reviews = useSelector(state => state.review.userReview);
+
+    useEffect(() => {
+        dispatch(reviewDetailByUserIdAPI(userId));
+    }, [dispatch]);
 
     const handleViewReview = (review) => {
         setSelectedReview(review);
@@ -84,12 +98,12 @@ function MyReviews({ reviews }) {
                 </thead>
                 <tbody>
                     {currentRecords.map((review) => (
-                        <tr key={review.id}>
-                            <td>{review.id}</td>
-                            <td>{review.name}</td>
-                            <td>{review.hospital}</td>
-                            <td>{review.type}</td>
-                            <td>{review.date}</td>
+                        <tr key={review.reservationId}>
+                            <td>{review.reservationId}</td>
+                            <td>{review.userName}</td>
+                            <td>{review.hosName}</td>
+                            <td>{review.clinicName}</td>
+                            <td>{`${review.reservationTime[0]}-${review.reservationTime[1]}-${review.reservationTime[2]} ${review.reservationTime[3].toString().padStart(2, '0')}:${review.reservationTime[4].toString().padStart(2, '0')}`}</td>
                             <td>
                                 <button className="view-btn" onClick={() => handleViewReview(review)}>조회</button>
                                 <button className="review-delete-btn" onClick={() => handleDeleteReview(review.id)}>삭제</button>
