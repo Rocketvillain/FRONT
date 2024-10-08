@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function HosReserControl() {
   const dispatch = useDispatch();
   const hosId = useSelector((state) => state.user.userInfo.hosId);
-  const reservations = useSelector((state) => state.reservation.Reservations);
+  const reservations = useSelector((state) => state.reservation.reservations);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [reservationsPerPage] = useState(5); // 한 페이지에 표시할 예약 수
@@ -28,16 +28,17 @@ function HosReserControl() {
   }, [dispatch]);
 
   // 실시간 검색을 위한 필터링
-    const filteredReservations = reservations && reservations.length > 0 ? reservations.filter((reservation) =>
-        reservation.userId.toLowerCase().includes(searchTerm.toLowerCase())
-    ) : [];
+  const filteredReservations = reservations && reservations.length > 0 ? 
+  reservations.filter((reservation) =>
+    reservation.userId.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : [];
 
   // 검색 버튼을 눌렀을 때 확정된 검색어로 필터링된 예약을 가져옴
-  const confirmedFilteredReservations = reservations.filter((reservation) =>
-    reservation.userId
-      .toLowerCase()
-      .includes(confirmedSearchTerm.toLowerCase()),
-  );
+  const confirmedFilteredReservations = reservations && reservations.length > 0 ?
+  reservations.filter((reservation) =>
+    reservation.userId.toLowerCase().includes(confirmedSearchTerm.toLowerCase())
+  ) : [];
+
 
   // 페이지 수 계산
   const totalPages = Math.ceil(
