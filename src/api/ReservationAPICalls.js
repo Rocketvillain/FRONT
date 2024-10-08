@@ -20,6 +20,24 @@ export function LoadReservation(hosId) {
     }
 }
 
+export function LoadReservationByUserId(userId) {
+
+    console.log('사용자에 대한 예약정보 불러오기...');
+
+    return async (dispatch) => {
+        try {
+            // 서버에 API 요청
+            const result = await request('GET', `/api/v1/reservation/user/${userId}`);
+            console.log('Reservations : ', result); // 서버에서 받아온 data 정보 
+
+            dispatch(getReservation(result.results.reservations));
+            return result; // 포장한 데이터를 반환해주기.
+        } catch (error) {
+            console.error('API error:', error);
+        }
+    }
+}
+
 export function CreateReservation(reservationInfo) {
 
     console.log('예약 등록하기...');
@@ -60,15 +78,10 @@ export function CancelReservation(data) {
 
     console.log('예약 취소하기...');
 
-    const cancelInfo = {
-        description: data.description,
-        state: "canceled"
-    }
-
     return async (dispatch) => {
         try {
             // 서버에 API 요청
-            const result = await request('PUT', `/api/v1/reservation/${data.reservationId}`, cancelInfo);
+            const result = await request('PUT', `/api/v1/reservation/${data.reservationId}`, data);
             console.log('result',result);
 
             return result; // 포장한 데이터를 반환해주기.

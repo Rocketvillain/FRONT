@@ -1,6 +1,7 @@
 .user-main-container {
     padding: 20px;
     text-align: center; /* 전체 텍스트 가운데 정렬 */
+    font-family: 'Poor Story';
 }
 
 .user-main-brand-container {
@@ -9,6 +10,7 @@
     justify-content: center; /* 로고와 텍스트를 가운데 정렬 */
     margin-bottom: 40px; /* 타이틀과 메뉴 간의 간격 */
     margin-top: 30px; /* 네비게이션바와의 간격 추가 */
+    font-family: 'Single Day';
 }
 
 .user-main-brand-background {

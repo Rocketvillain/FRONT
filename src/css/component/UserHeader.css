@@ -19,6 +19,7 @@
     /* 다른 요소 위에 표시되도록 z-index 설정 */
     box-sizing: border-box;
     /* 전체 요소의 크기 계산에 padding과 border 포함 */
+    font-family: 'Poor Story';
 }
 
 /* 사용자 로고와 텍스트 */
@@ -29,6 +30,7 @@
     align-items: center;
     flex-shrink: 0;
     /* 로고가 줄어들지 않도록 설정 */
+    font-family: 'Poor Story';
 }
 
 .userlogo-link {

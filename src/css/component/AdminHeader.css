@@ -12,6 +12,7 @@
     left: 0;
     z-index: 1000; /* 다른 요소보다 위에 표시되도록 설정 */
     box-sizing: border-box; /* 패딩과 테두리를 크기 계산에 포함 */
+    font-family: 'Poor Story';
 }
 
 .logo-admincontainer {
@@ -46,6 +47,7 @@
     flex-direction: row; /* 가로 정렬 */
     gap: 50px; /* 항목 간 간격 */
     text-decoration: none;
+    font-family: 'Poor Story';
 }
 
 .adminnav-item {
@@ -53,12 +55,14 @@
     align-items: center; /* 항목과 텍스트를 수직 가운데 정렬 */
     text-align: center;
     padding: 15px;
+    font-family: 'Poor Story';
 }
 
 .adminnav-item span {
     color: #28467A;
     font-size: 14px; /* 텍스트 크기 */
     text-decoration: none;
+    font-family: 'Poor Story';
 }
 
 .adminnav-item a {

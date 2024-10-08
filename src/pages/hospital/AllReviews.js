@@ -7,8 +7,6 @@ function AllReviews() {
 
     const dispatch = useDispatch();
     const reviews = useSelector(state => state.review.reviews);
-    console.log("reviews@@@@@@@ : ", reviews);
-    
 
     // 랜덤 색상 생성 함수
     const getRandomColor = () => {
@@ -27,7 +25,7 @@ function AllReviews() {
         const day = dateString[2];
         return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
     };
-    
+
     useEffect(() => {
         // API 호출 후 정보를 받아 redux로 state 변경
         dispatch(allReviewAPI());
@@ -68,5 +66,4 @@ function AllReviews() {
         </div>
     );
 }
-
 export default AllReviews;
