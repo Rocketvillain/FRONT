@@ -5,10 +5,11 @@ import React, { useState, useEffect } from 'react';
 function MyPet() {
 
     const [pets, setPets] = useState([]); // 기본 펫 정보를 상태로 사용
-    //const [newImage, setNewImage] = useState('/images/defaultPet.png'); // 새 펫 이미지 상태
     const [editMode, setEditMode] = useState(null);  // 수정 모드 상태
     const [addPetMode, setAddPetMode] = useState(false); // 추가 모드 상태
+    const [selectedImage, setSelectedImage] = useState(null);
     const [newPet, setNewPet] = useState({ //새로운 펫 정보 초기화
+
         petId: '',
         petName: '',
         species: '',
@@ -23,13 +24,16 @@ function MyPet() {
     const token = localStorage.getItem('token'); // 저장된 토큰 가져오기
     console.log(token); // 토큰 출력
 
+
     // 백엔드 API에서 저장된 펫 불러오기
     useEffect(() => {
         const fetchPets = async () => {
+
             try {
                 const response = await axios.get('http://localhost:8080/api/v1/pets/myPet',{
                     headers: {
                     Authorization: `${token}`, // 토큰을 헤더에 포함
+                    
                 },
               });       
                console.log(response.data);
@@ -37,8 +41,12 @@ function MyPet() {
                 const petsData = response.data.results.pets || []; 
                 
                 if(Array.isArray(petsData)){
-                const mappedPets = petsData.map(pet => ({
+               
 
+                const mappedPets = petsData.map(pet => {
+                    // const storedImage = localStorage.getItem(`petImage_${pet.petId}`); //localstorage에서 이미지 가져오기
+                   
+                    return{
                     petId:pet.petId,
                     petName: pet.petName,
                     species: pet.species || '',
@@ -46,15 +54,14 @@ function MyPet() {
                     weight: pet.weight,
                     age: pet.age,
                     kind: pet.kind || '',
-                    image: pet.image || ' ',
-
-                }));
+                    image: pet.image ? `${pet.image}`:`/images/defaultPet.png`,
+                    };
+                });
 
                 setPets(mappedPets); //상태 업데이트
                 console.log(mappedPets); // 매핑된 펫 정보 확인
                 
             } else{
-                    console.log("petsData는 배열이 아닙니다.", petsData);
                     setPets([])
                 }
             }catch (error) {
@@ -68,25 +75,43 @@ function MyPet() {
 
     // 새 펫 추가하기
     const handleAddPet = async () => {
+        console.log("선택된 이미지 ", selectedImage);
+        
         try {
             const formData = new FormData();
-            formData.append('petName', newPet.petName);
-            formData.append('species', newPet.species);
-            formData.append('gender', newPet.gender);
-            formData.append('weight', newPet.weight);
-            formData.append('age', newPet.age);
-            formData.append('kind', newPet.kind);
-            formData.append('image', newPet.image); // Base64 URL 또는 파일 객체 추가
+    
+            // 새로운 펫 정보 객체 생성
+            const petInfo = {
+                petName: newPet.petName,
+                species: newPet.species,
+                gender: newPet.gender,
+                weight: newPet.weight,
+                age: newPet.age,
+                kind: newPet.kind,
+            };
+    
+            // petInfo를 JSON 문자열로 추가
+            formData.append('petInfo', JSON.stringify(petInfo));
+    
+            // 선택한 이미지를 fromData에 추가
+            if (selectedImage){
+                formData.append('image',selectedImage)
+            } else{
+                console.error("이미지가 선택 x");
+            }
 
-            const response = await axios.post('http://localhost:8080/api/v1/pets/create', formData,{
+            const response = await axios.post('http://localhost:8080/api/v1/pets/create', formData, {
                 headers: {
                     Authorization: `${token}`, // 토큰을 헤더에 포함
+                    'Content-Type': 'multipart/form-data',
                 }
             }); // 백엔드 API 경로
-
-            const addedPet = response.data.results.pet; 
-            setPets([...pets, addedPet]); // 상태 업데이트
-            setNewPet({ // 새 펫 정보 초기화
+    
+            const addedPet = response.data.results.pet;
+            // 새 펫 추가 후 상태 업데이트
+            setPets([...pets, { ...addedPet, image:response.data.results.imagePath }]); // 이미지 포함
+            setNewPet({ 
+                petId: '', 
                 petName: '',
                 species: '',
                 gender: '',
@@ -95,9 +120,10 @@ function MyPet() {
                 kind: '',
                 image: '',
             });
-             setAddPetMode(false); // 추가 모드 종료
+            setSelectedImage(null); //선택된 이미지 초기화
+            setAddPetMode(false); // 추가 모드 종료
         } catch (error) {
-            console.error("펫 등록 중 오류 발생", error);
+             console.error("펫 등록 중 오류 발생", error);
         }
     };
 
@@ -106,81 +132,96 @@ function MyPet() {
         setNewPet({ ...newPet, [field]: value });
     };
 
-    // 파일 선택 시 처리 및 로컬 스토리지에 저장
+    // 파일 선택 시 처리 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-        reader.onload = (e) => {
-            const imgUrl = e.target.result; // Base64 URL
-            const img = new Image();
-            img.src = imgUrl;
+            reader.onload = (e) => {
+                const imgUrl = e.target.result; // Base64 URL
+                const img = new Image();
+                img.src = imgUrl;
+    
+                img.onload = () => {
+                    // 이미지의 너비와 높이를 확인
+                    if (img.width < 180 || img.height < 180) {
 
-            img.onload = () => {
-                // 이미지의 너비와 높이를 확인
-                if (img.width < 180 || img.height < 180) {
-                    handleNewPetChange('image', imgUrl); // 이미지 URL 설정
-                    // 로컬 스토리지에 이미지 저장 (선택 사항)
-                    localStorage.setItem('newPetImage', imgUrl);
-                } else {
-                    alert("이미지는 180x180 픽셀 이상일 수 없습니다."); // 경고 메시지
-                    event.target.value = ""; // 파일 입력 초기화
-                }
+                        setSelectedImage(file) //실제 파일 객체를 상태에 저장
+                        handleNewPetChange('image', imgUrl); // 미리보기용 이미지 URL 설정
+                        setNewPet({ ...newPet, image: imgUrl }); // 상태 업데이트
+                    } else {
+                        alert("이미지는 180x180 픽셀 이상일 수 없습니다."); // 경고 메시지
+                        event.target.value = ""; // 파일 입력 초기화
+                    }
+                };
             };
-        };
-         reader.readAsDataURL(file); // 파일을 Data URL로 읽기
+            reader.readAsDataURL(file); // 파일을 Data URL로 읽기
+        } else {
+            console.error("파일이 선택되지 않았습니다.");
         }
-    };
-
-     // 파일 선택 창 열기
-     const handleFileInputClick = (id) => {
-        document.getElementById(`fileInput-${id}`).click();
     };
 
     // 펫 정보 수정하기
     const handleEditToggle = async (petId) => {
         if (editMode === petId) {
             try {
-                
-                // 수정할 펫 정보 찾기
                 const petToUpdate = pets.find(pet => pet.petId === petId);
-                console.log('수정할 펫 정보:',petToUpdate);
-                
-                
-                // 서버에 수정 요청 전송
-                const response = await axios.put(`http://localhost:8080/api/v1/pets/update/${petId}`, {
-                    petId: petToUpdate.petId, // 펫 id는 포함되어 있음
+                if(!petToUpdate) return;
+
+                const formData = new FormData();
+                formData.append('petInfo', new Blob([JSON.stringify({
+                    petId: petToUpdate.petId,
                     petName: petToUpdate.petName,
-                    species : petToUpdate.species,
-                    gender : petToUpdate.gender,
+                    species: petToUpdate.species,
+                    gender: petToUpdate.gender,
                     weight: petToUpdate.weight,
                     age: petToUpdate.age,
                     kind: petToUpdate.kind,
-                    image: petToUpdate.image || null, // 이미지가 없으면 null로 설정
+                })],{type: 'application/json'}));
 
-                },{
-                    headers:{
+                if(selectedImage) {
+                    formData.append('image', selectedImage)
+                }else {
+                    console.warn("새로운 이미지가 선택되지 않았습니다."); // 경고 메시지
+                }
+
+                const response = await axios.put(`http://localhost:8080/api/v1/pets/update/${petId}`, formData, {
+                    headers: {
                         Authorization: `${token}`,
+                        'Content-Type' : 'multipart/form-data'
                     },
+                });
 
-                }); 
-                
-                
-                // 수정된 펫 정보
-                const updatedPet = response.data.results.pet; //응답 구조에 변경
-                console.log('업데이트 된 펫 조회',updatedPet);
-                
+                if (response.data && response.data.results && response.data.results.pet) {
+                    const updatedPet = response.data.results.pet;
+                    setPets(pets.map(pet => (pet.petId === petId ? updatedPet : pet)));
+                }
 
-                // 상태 업데이트
+                const updatedPet = response.data.results.pet;
                 const updatedPets = pets.map(pet => (pet.petId === petId ? updatedPet : pet));
-                
                 setPets(updatedPets);
                 setEditMode(null); // 수정 모드 종료
             } catch (error) {
-                console.error('펫 수정 중에 오류가 발생했습니다.', error);
+                console.error('펫 수정 중 오류 발생', error);
             }
         } else {
             setEditMode(petId); // 수정 모드 시작
+        }
+    };
+
+    // 이미지 파일 선택 시 처리
+    const handleImageChange = (event, petId) => {
+        const file = event.target.files[0];
+        console.log("선택된 이미지: ", selectedImage);
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const imgUrl = e.target.result;
+                handleInfoChange(petId, 'image', imgUrl); // 상태 업데이트
+                setSelectedImage(file); // 선택한 파일을 상태에 저장
+            };
+            reader.readAsDataURL(file);
+        } else{
         }
     };
 
@@ -216,11 +257,21 @@ function MyPet() {
             <h2>마이 펫</h2>
             {pets.map((pet) => (
                 <div className="pet-card" key={pet.petId}>
+                    <div>
+                      {editMode === pet.petId && (
+                            <input
+                                type="file"
+                                id={`fileInput-${pet.petId}`} //각 쳇에 대한 고유 ID설정
+                                accept = "image/*"
+                                onChange={(e) => handleImageChange(e,pet.petId)}
+                            />
+                        )}
                     <img
-                        src={pet.image || `/images/${pet.name}.png`}  // 기본 경로 유지
+                        src={pet.image || `/images/defaultPet.png`}  // 기본 경로 유지
                         alt={pet.petName}
                         className="pet-image"
                     />
+                    </div>
                     <div className="pet-info">
                         <p>이름:
                             {editMode === pet.petId ? (
