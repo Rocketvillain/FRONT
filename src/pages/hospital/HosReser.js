@@ -16,7 +16,7 @@ function HosReser() {
 
     // Redux 스토어에서 병원 리스트 가져오기
     const hospitals = useSelector(state => state.hospital.hospitals);
-
+    
     // 컴포넌트가 마운트될 때 병원 데이터를 가져오는 액션 호출
     useEffect(() => {
         dispatch(allHospitalAPI()); // 병원 목록 불러오기
@@ -46,7 +46,6 @@ function HosReser() {
         setFilteredHospitals([]); // 자동완성 목록 숨기기
         document.querySelector('.hos-reser-input').focus(); // 검색창에 포커스 설정
         displayHospitalOnMap(hospital);
-        navigate(`/hosdetail/${hospital.hosId}`);
     };
 
     // 병원 검색 (엔터 또는 검색 버튼 클릭 시)
