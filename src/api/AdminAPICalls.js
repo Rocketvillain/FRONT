@@ -1,8 +1,8 @@
-import { adminGetAllUsers } from "../modules/AdminUserModule";
+import { adminGetAllUsers } from "../modules/UserModule";
 import { request } from "./Apis";
-import { adminUpdateHospital, adminDeleteHospital } from '../modules/AdminHosModule';
-import { adminGetAllReservations } from '../modules/AdminReserModule';
-import { adminGetAllReviews } from "../modules/AdminReviewModule";
+import { adminUpdateHospital, adminDeleteHospital } from '../modules/HospitalModule';
+import { adminGetAllReservations } from "../modules/ReservationModule"; 
+import { adminGetAllReviews } from "../modules/ReviewModule";
 
 // 관리자용 전체 유저 조회 API 호출
 export function adminGetAllUsersAPI() {

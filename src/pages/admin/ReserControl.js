@@ -5,7 +5,7 @@ import { adminGetAllReservationsAPI } from '../../api/AdminAPICalls';
 
 function ReserControl() {
     const dispatch = useDispatch();
-    const reservations = useSelector(state => state.adminReser.reservations);
+    const reservations = useSelector(state => state.reservation.reservations || []);
     console.log('reservations', reservations);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -75,6 +75,28 @@ function ReserControl() {
     // 페이지 변경 핸들러
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+    };
+
+    const handleFirstPage = () => {
+        setCurrentPage(1);
+    };
+
+    const handleLastPage = () => {
+        setCurrentPage(totalPages);
+    };
+
+    // ◀ 버튼: 이전 페이지로 이동
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // ▶ 버튼: 다음 페이지로 이동
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     return (
@@ -148,7 +170,6 @@ function ReserControl() {
                                                 : reservation.state === 'activated' ? '승인'
                                                     : ''}
                                     </td>
-
                                 </tr>
                             );
                         })
@@ -158,11 +179,13 @@ function ReserControl() {
                         </tr>
                     )}
                 </tbody>
-
             </table>
 
             <div className="reser-control-pagination">
-                <button onClick={() => handlePageChange(1)} disabled={currentPage === 1 || filteredReservations.length === 0}>
+                <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredReservations.length === 0}>
+                    ◁◁
+                </button>
+                <button onClick={handlePrevPage} disabled={currentPage === 1 || filteredReservations.length === 0}>
                     ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
@@ -174,8 +197,11 @@ function ReserControl() {
                         {index + 1}
                     </button>
                 ))}
-                <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages || filteredReservations.length === 0}>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages || filteredReservations.length === 0}>
                     ▶
+                </button>
+                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredReservations.length === 0}>
+                    ▷▷
                 </button>
             </div>
         </div>

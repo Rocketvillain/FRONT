@@ -7,7 +7,7 @@ import '../../css/admin/ReviewControl.css'; // CSS 파일을 추가합니다.
 
 function ReviewControl() {
     const dispatch = useDispatch();
-    const reviews = useSelector(state => state.adminReviews.reviews || []);
+    const reviews = useSelector(state => state.review.reviews);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 10; // 한 페이지에 보여줄 리뷰 수
@@ -62,6 +62,20 @@ function ReviewControl() {
 
     const handleLastPage = () => {
         setCurrentPage(totalPages);
+    };
+
+    // ◀ 버튼: 이전 페이지로 이동
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // ▶ 버튼: 다음 페이지로 이동
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     // const handleReportClick = () => {
@@ -138,6 +152,9 @@ function ReviewControl() {
 
             <div className="review-control-pagination">
                 <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredReviews.length === 0}>
+                    ◁◁
+                </button>
+                <button onClick={handlePrevPage} disabled={currentPage === 1 || filteredReviews.length === 0}>
                     ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
@@ -149,9 +166,13 @@ function ReviewControl() {
                         {index + 1}
                     </button>
                 ))}
-                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredReviews.length === 0}>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages || filteredReviews.length === 0}>
                     ▶
                 </button>
+                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredReviews.length === 0}>
+                    ▷▷
+                </button>
+
             </div>
         </div>
     );
