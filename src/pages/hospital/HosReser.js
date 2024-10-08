@@ -16,7 +16,7 @@ function HosReser() {
 
     // Redux 스토어에서 병원 리스트 가져오기
     const hospitals = useSelector(state => state.hospital.hospitals);
-    
+
     // 컴포넌트가 마운트될 때 병원 데이터를 가져오는 액션 호출
     useEffect(() => {
         dispatch(allHospitalAPI()); // 병원 목록 불러오기
@@ -29,7 +29,6 @@ function HosReser() {
                 hospital.name.toLowerCase().includes(searchTerm.toLowerCase()) // 병원 이름 필터링
             );
             setFilteredHospitals(filtered); // 필터링된 병원 리스트 업데이트
-
             // 검색 중인 병원의 위치를 지도에서 자동으로 이동
             if (filtered.length > 0) {
                 displayHospitalOnMap(filtered[0]); // 첫 번째 검색 결과로 지도 이동
@@ -46,6 +45,7 @@ function HosReser() {
         setFilteredHospitals([]); // 자동완성 목록 숨기기
         document.querySelector('.hos-reser-input').focus(); // 검색창에 포커스 설정
         displayHospitalOnMap(hospital);
+        navigate(`/hosdetail/${hospital.hosId}`);
     };
 
     // 병원 검색 (엔터 또는 검색 버튼 클릭 시)
@@ -63,13 +63,19 @@ function HosReser() {
         if (e.key === 'ArrowDown') {
             // 아래 화살표로 탐색
             setSelectedIndex(prevIndex => Math.min(prevIndex + 1, filteredHospitals.length - 1));
+            if (filteredHospitals[selectedIndex + 1]) {
+                displayHospitalOnMap(filteredHospitals[selectedIndex + 1]);
+            }
         } else if (e.key === 'ArrowUp') {
             // 위 화살표로 탐색
             setSelectedIndex(prevIndex => Math.max(prevIndex - 1, 0));
+            if (filteredHospitals[selectedIndex - 1]) {
+                displayHospitalOnMap(filteredHospitals[selectedIndex - 1]);
+            }
         } else if (e.key === 'Enter') {
             // 엔터를 눌렀을 때
             if (selectedIndex >= 0 && filteredHospitals[selectedIndex]) {
-                handleSelectHospital(filteredHospitals[selectedIndex].name); // 선택된 항목 자동완성
+                handleSelectHospital(filteredHospitals[selectedIndex]); // 선택된 항목 자동완성
             } else {
                 handleSearch(); // 검색 실행
             }
@@ -82,28 +88,23 @@ function HosReser() {
         geocoder.addressSearch(hospital.address, (result, status) => {
             if (status === window.kakao.maps.services.Status.OK) {
                 const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-
                 // 지도 중심을 병원 위치로 이동
                 map.setCenter(coords);
-
                 // 기존 마커가 있으면 제거
                 if (marker) {
                     marker.setMap(null);
                 }
-
                 // 새로운 마커 생성
                 const newMarker = new window.kakao.maps.Marker({
                     map: map,
                     position: coords
                 });
                 setMarker(newMarker);
-
                 // 마커 클릭 시 병원 이름을 표시하는 인포윈도우 설정
                 window.kakao.maps.event.addListener(newMarker, 'click', () => {
                     infowindow.setContent(`<div style="padding:5px; color:#28467a; text-align:center; font-weight:bold;">${hospital.name}🏥</div>`);
                     infowindow.open(map, newMarker);
                 });
-
                 // 인포윈도우에 병원 이름 표시
                 infowindow.setContent(`<div style="padding:5px; color:#28467a; text-align:center; font-weight:bold;">${hospital.name}🏥</div>`);
                 infowindow.open(map, newMarker);
@@ -119,10 +120,8 @@ function HosReser() {
                 center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 지도 중심 좌표 (서울)
                 level: 7 // 지도 확대 수준
             };
-
             const createdMap = new window.kakao.maps.Map(mapContainer, mapOption); // 지도 생성
             const createdInfowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 }); // 인포윈도우 생성
-
             setMap(createdMap);
             setInfowindow(createdInfowindow);
         }
@@ -154,7 +153,7 @@ function HosReser() {
                         {filteredHospitals.map((hospital, index) => (
                             <div
                                 key={hospital.hosId}
-                                onClick={() => handleSelectHospital(hospital.name)} // 병원 선택 시 이름 자동완성
+                                onClick={() => handleSelectHospital(hospital)} // 병원 선택 시 이름 자동완성
                                 className={`hos-reser-search-result-item ${index === selectedIndex ? 'selected' : ''}`} // 선택된 항목에 하이라이트
                             >
                                 {hospital.name} - {hospital.address}
@@ -164,7 +163,7 @@ function HosReser() {
                 )}
             </div>
             {/* 지도 표시할 영역 */}
-            <div id="map" style={{ width: '600px', height: '300px' }}></div>
+            <div id="map" style={{ width: '100%', height: '350px' }}></div>
         </div>
     );
 }

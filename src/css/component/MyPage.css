@@ -189,56 +189,73 @@ body {
 
 
 
+.my-pet {
+    max-height: 100vh; /* 화면 전체 높이만큼 사용 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    padding-right: 20px; /* 스크롤 바로 인한 여유 공간 */
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100hv;
+    position: relative;
+}
+
+.my-pet h2 {
+    margin-left: 20px;
+}
 
 /* 전체 카드 레이아웃 설정 */
-.pet-card {
+.my-pet-pet-card, .my-pet-empty-card, .my-pet-add-pet-form{
     display: flex;
-    justify-content: space-between; /* 이미지와 정보를 양쪽에 배치 */
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3px;
     padding: 20px;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    margin-top: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: white; /* 카드 배경을 흰색으로 설정 */
-    width: calc(100% - 40px); /* 카드 너비 설정, 스크롤 바 때문에 여유를 둠 */
-    max-width: 900px; /* 카드의 최대 너비를 설정 */
-    height: 250px; /* 카드의 높이를 고정 */
-    box-sizing: border-box; /* padding과 border를 width에 포함시킴 */
+    background-color: white; 
+    width: 800px; 
+    height: 300px; /* 추가 카드도 동일한 높이로 고정 */
+    box-sizing: border-box;
+    overflow: hidden; /* 넘치는 부분을 숨김 */
+    margin-left: 20px;
+    text-align: center;
 }
 
 /* 반려동물 이미지 스타일 */
-.pet-image {
+.my-pet-pet-image {
     width: 150px; /* 이미지 크기 고정 */
     height: 150px; /* 이미지 높이 고정 */
     object-fit: cover; /* 이미지를 카드 영역에 맞춰 자르기 */
     border-radius: 10px;
-    margin-right: 20px;
+    margin-left: 80px;
 }
 
 /* 반려동물 정보 섹션 */
-.pet-info {
+.my-pet-pet-info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    height: 100%;
 }
 
 /* 반려동물 정보 텍스트 스타일 */
-.pet-info > p {
+.my-pet-pet-info > p {
     margin: 5px 0; /* 각 정보 항목 간의 간격 */
     font-size: 16px; /* 텍스트 크기 조정 */
 }
 
 /* 버튼 그룹 섹션 (수정, 삭제) */
-.button-group {
+.my-pet-button-group {
     display: flex;
     gap: 10px; /* 버튼 간격 설정 */
     margin-top: 10px;
 }
 
 /* 수정 버튼 스타일 */
-.update-btn, .pet-delete-btn {
+.my-pet-update-btn, .my-pet-delete-btn {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -251,44 +268,25 @@ body {
     line-height: 20px; /* 텍스트의 세로 정렬 */
 }
 
-.update-btn {
+.my-pet-update-btn {
     background-color: #43ABAE;
     color: white;
 }
 
 /* 삭제 버튼의 색상 */
-.pet-delete-btn {
+.my-pet-delete-btn {
     background-color: #f15f5f;
     color: white;
     position: relative; /* 상대 위치 지정 */
 }
 
 /* 버튼 호버 시 색상 변경 */
-.update-btn:hover, .delete-btn:hover {
+.my-pet-update-btn:hover, .my-pet-delete-btn:hover {
     background-color: #35898a;
 }
 
-/* 빈 카드 스타일 */
-.empty-card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    border: 2px dashed #ddd; /* 빈 카드는 점선으로 구분 */
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    width: calc(100% - 40px);;
-    max-width: 900px;
-    height: 250px;
-    box-sizing: border-box;
-    cursor: pointer; /* 빈 카드에 클릭 가능 */
-
-}
-
 /* + 버튼을 담은 컨테이너 */
-.add-pet-container {
+.my-pet-add-pet-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -297,7 +295,7 @@ body {
 }
 
 /* + 버튼 스타일 */
-.add-pet-btn {
+.my-pet-add-pet-btn {
     background-color: #43ABAE;
     color: white;
     border: none;
@@ -311,33 +309,13 @@ body {
     align-items: center;
 }
 
-.add-pet-btn:hover {
+.my-pet-add-pet-btn:hover {
     background-color: #35898a;
 }
 
 
-/* 추가 부분 */
-
-.add-pet-form {
-    display: flex;
-    justify-content: space-between; /* 이미지와 정보를 양쪽에 배치 */
-    align-items: flex-start;
-    gap: 3px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: white; /* 카드 배경을 흰색으로 설정 */
-    width: calc(100% - 40px); /* 카드 너비 설정, 스크롤 바 때문에 여유를 둠 */
-    max-width: 900px; /* 카드의 최대 너비를 설정 */
-    height: 250px; /* 카드의 높이를 고정 */
-    box-sizing: border-box; /* padding과 border를 width에 포함시킴 */
-}
-
 /* 추가 반려동물 정보 섹션 */
-.add-pet-info{
+.my-pet-add-pet-info {
     width: 300px;
     height: 180px;
     margin-top: 5px;
@@ -348,28 +326,26 @@ body {
 }
 
 /* 추가 반려동물 정보 텍스트 스타일 */
-.add-pet-info > p {
-    
+.my-pet-add-pet-info > p {
     margin: 5px 0; /* 각 정보 항목 간의 간격 */
     font-size: 16px; /* 텍스트 크기 조정 */
 }
 
 /* 추가 이미지 스타일 */
-.create-pet-image {
+.my-pet-create-pet-image {
     margin-top: 5px;
     width: 250px;
     height: 200px;
     flex-direction: column; /* 세로 방향으로 정렬 */
     align-items: center; /* 가운데 정렬 */
-
 }
 
-.buttond-group{
+.my-pet-buttond-group {
     margin-top: 5px;
 }
 
 /* 추가, 삭제 버튼 스타일 */
-.create-btn, .cancle-btn{
+.my-pet-create-btn, .my-pet-cancel-btn {
     border: none;
     padding: 10px 20px; 
     border-radius: 5px;
@@ -383,20 +359,19 @@ body {
 }
 
 /* 추가 버튼의 색상 */
-.create-btn {
+.my-pet-create-btn {
     background-color: #43ABAE;
     color: white;
     margin-right: 5px;
 }
 
 /* 취소 버튼의 색상 */
-.cancle-btn{
+.my-pet-cancel-btn {
     background-color: #f15f5f;
     color: white;
- 
 }
 
 /* 버튼 호버 시 색상 변경 */
-.create-btn:hover, .cancle-btn:hover{
+.my-pet-create-btn:hover, .my-pet-cancel-btn:hover {
     background-color: #35898a;
 }
