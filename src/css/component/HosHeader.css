@@ -12,6 +12,7 @@
     left: 0;
     z-index: 1000;
     box-sizing: border-box;
+    font-family: 'Poor Story';
 }
 
 .hos-header-logo-container {

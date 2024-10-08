@@ -1,127 +1,159 @@
 // 마이페이지 예약현황 페이지
 import React, { useEffect, useState } from "react";
 import "../../css/ReserStatus.css";
+import { useDispatch, useSelector } from "react-redux";
+import { CancelReservation, LoadReservationByUserId } from "../../api/ReservationAPICalls";
 
 const ReserStatus = () => {
-    const [reservations, setReservations] = useState([]); // 예약 데이터를 저장, 초기값은 빈 배열[]
-    const [loading, setLoading] = useState(true); // 데이터 로딩 상태-기본값은 true이며, 예약 정보를 불러오는 중임을 표시
-    const [error, setError] = useState(null); // 데이터를 불러오는 중 발생한 오류 메시지를 저장하는 상태
+
+    const dispatch = useDispatch();
+    const reservations = useSelector(state => state.reservation.reservations);
+    console.log('유저 예약 현황', reservations);
+
+    // 예약 취소 처리 
+    const [showCancelModal, setShowCancelModal] = useState(false); // 취소 확인 모달 상태
+    const [cancelInfo, setCancelInfo] = useState({
+        reservationId: null,
+        description: null,
+        state: "request"
+    });
+
+    // 페이징 처리
+    const [currentPage, setCurrentPage] = useState(1);
+    const [reservationsPerPage] = useState(5); // 한 페이지에 표시할 예약 수
+    const totalPages = Math.ceil(reservations.length / reservationsPerPage);
+    const indexOfLastReservation = currentPage * reservationsPerPage;
+    const indexOfFirstReservation = indexOfLastReservation - reservationsPerPage;
+    const currentReservations = reservations.slice(indexOfFirstReservation, indexOfLastReservation);
+    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+    const handleFirstPage = () => setCurrentPage(1);
+    const handleLastPage = () => setCurrentPage(totalPages);
 
     // 로그인한 사용자의 ID 가져오기
-    const userId = localStorage.getItem('userId')?.trim(); // 또는 sessionStorage.getItem('userId');
+    const userId = useSelector(state => state.user.userInfo.userId);
 
     useEffect(() => {
-        const fetchReservations = async () => {
-            try {
-                // 사용자 ID를 쿼리 파라미터로 전달
-                const response = await fetch(`/api/reservations?userId=${userId}`);
-                if (!response.ok) {
-                    throw new Error("데이터를 불러오는데 실패했습니다.");
-                }
-                const data = await response.json();
-                setReservations(data);
-                setLoading(false);
-            } catch (err) {
-                setError(err.message);
-                setLoading(false);
-            }
-        };
+        dispatch(LoadReservationByUserId(userId));
+    }, [dispatch]);
 
-        if (userId) {
-            fetchReservations(); // 로그인한 사용자의 예약 정보만 가져옴
+    const openCancelModal = () => {
+        setShowCancelModal(true);
+    }
+
+    const handleCancel = async () => {
+        const result = await dispatch(CancelReservation(cancelInfo));
+        console.log('asdjfhsadhfdsf',result);
+
+        if (result.httpStatusCode === 200) {
+            dispatch(LoadReservationByUserId(userId));
         } else {
-            setError("사용자 정보가 없습니다.");
-            setLoading(false);
+            console.log('서버와의 통신이 원할하지 않습니다.');
         }
-    }, [userId]);
 
-    const handleCancel = async (id) => {
-        try {
-            // 서버에 취소 요청을 보냅니다.
-            const response = await fetch(`/api/cancelReservation`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ reservationId: id }),
-            });
-    
-            if (!response.ok) {
-                throw new Error('취소 요청에 실패했습니다.');
-            }
-    
-            // 취소 요청이 성공하면, 상태를 '취소 요청 중'으로 변경합니다.
-            setReservations(
-                reservations.map((reservation) =>
-                    reservation.id === id ? { ...reservation, status: "취소 요청 중" } : reservation
-                )
-            );
-        } catch (error) {
-            console.error('취소 요청 중 오류 발생:', error);
-            // 오류 처리를 위한 로직 추가 가능
-        }
+        setShowCancelModal(false);
+        alert(`예약을 취소하였습니다!`)
     };
-    
-
-    // 데이터를 불러오는 동안 텍스트 표시
-    if (loading) {
-        return <p>로딩 중...</p>;
-    }
-
-    if (error) {
-        return <p>오류 발생: {error}</p>;
-    }
 
     return (
         <div className="reservation-status">
-            <h2>예약 현황</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2>예약 현황</h2>
+                <img src="/images/logo2.png" id="reservation-logo"></img>
+            </div>
+            <div id="reservation-line"></div>
             <table className="reservation-table">
                 <thead>
-                    <tr>
-                        <th>예약번호</th>
+                    <tr style={{height: '45px'}}>
+                        <th>번호</th>
                         <th>예약자명</th>
                         <th>병원명</th>
                         <th>예약 유형</th>
                         <th>예약 날짜</th>
                         <th>예약 상태</th>
+                        <th>비고(취소사유)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {reservations.map((reservation) => (
-                        <tr key={reservation.id}>
-                            <td>{reservation.id}</td>
-                            <td>{reservation.name}</td>
-                            <td>{reservation.hospital}</td>
-                            <td>{reservation.type}</td>
-                            <td>{reservation.date}</td>
+                    {currentReservations.length > 0 ? (
+                        currentReservations.map((reservation) => (
+                        <tr key={reservation.reservationId}>
+                            <td>{reservation.reservationId}</td>
+                            <td>{reservation.userId}</td>
+                            <td>{reservation.hosName}</td>
+                            <td>{reservation.clinicName}</td>
+                            <td>{`${reservation.reservationTime[0]}-${reservation.reservationTime[1]}-${reservation.reservationTime[2]} ${reservation.reservationTime[3].toString().padStart(2, '0')}:${reservation.reservationTime[4].toString().padStart(2, '0')}`}</td>
+                            <td>{reservation.state === 'activated'
+                                    ? '승인'
+                                    : reservation.state === 'request'
+                                    ? '취소 요청'
+                                    : reservation.state === 'canceled'
+                                    ? '취소됨'
+                                    : '확인요망'}</td>
                             <td>
-                                {reservation.status === "승인" ? (
+                                {reservation.state === "activated" ? (
                                     <>
-                                        <span>{reservation.status}</span>
                                         <button
                                             className="cancel-btn"
-                                            onClick={() => handleCancel(reservation.id)}
+                                            onClick={() => {
+                                                setCancelInfo({
+                                                    ...cancelInfo,
+                                                    reservationId: reservation.reservationId,
+                                                    description: reservation.description
+                                                })
+                                                openCancelModal();
+                                            }}
                                         >
                                             취소
                                         </button>
                                     </>
-                                ) : (
-                                    <span>{reservation.status}</span>
+                                ) : reservation.state === "canceled" ? (
+                                    <span>{reservation.description}</span>
+                                    )
+                                        : (
+                                            <p style={{margin: '0'}}>-</p>
                                 )}
                             </td>
                         </tr>
-                    ))}
+                        ))
+                    ) : (
+                            <tr>
+                                <td colSpan='7'>예약 기록이 없습니다.</td>
+                            </tr>
+                    )
+                }
                 </tbody>
             </table>
-            <div className="pagination">
-                <button>◀</button>
-                <button className="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>▶</button>
+            <div className="pagination" style={{}}>
+                <button onClick={handleFirstPage} disabled={currentPage === 1}>
+                ◀
+                </button>
+                {[...Array(totalPages)].map((_, index) => (
+                <button
+                    key={index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={index + 1 === currentPage ? 'active' : ''}
+                >
+                    {index + 1}
+                </button>
+                ))}
+                <button onClick={handleLastPage} disabled={currentPage === totalPages}>
+                ▶
+                </button>
             </div>
+
+            {/* 취소 확인 모달 */}
+            {showCancelModal && (
+                <div className="cancel-confirm-modal">
+                    <div className="cancel-confirm-modal-header">
+                        <img src="/images/cancel_confirm.png"></img>
+                        <span>예약을 취소 하시겠습니까?</span>
+                    </div>
+                    <div className="cancel-confirm-modal-button">
+                        <button id="cancel-confirm-modal-button-yes" onClick={handleCancel}>예</button>
+                        <button id="cancel-confirm-modal-button-no" onClick={() => setShowCancelModal(false)}>아니오</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

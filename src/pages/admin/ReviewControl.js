@@ -1,32 +1,38 @@
 //  관리자 후기 관리 페이지
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminGetAllReviewsAPI } from '../../api/AdminAPICalls';
 import '../../css/admin/ReviewControl.css'; // CSS 파일을 추가합니다.
 
 function ReviewControl() {
+    const dispatch = useDispatch();
+    const reviews = useSelector(state => state.review.reviews);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const reviewsPerPage = 5; // 한 페이지에 보여줄 리뷰 수
+    const reviewsPerPage = 10; // 한 페이지에 보여줄 리뷰 수
     const [isSearching, setIsSearching] = useState(false);
-    const [reviews] = useState([
-        { id: 1, userId: 'ohgiraffers', author: '권순혁', hospital: 'Bear동물병원', reservationType: '미용', content: '제가 원하던 모습으로 잘 해주셨습니다.', createdDate: '2024-09-28', lastModifiedDate: null },
-        { id: 2, userId: 'hospital', author: '박호찬', hospital: '강아지 동물병원', reservationType: '수술', content: '덕분에 저희 오리가 잘 치료받았습니다.', createdDate: '2024-09-20', lastModifiedDate: null },
-        { id: 3, userId: 'hospizza', author: '지동혁', hospital: '야옹이 동물병원', reservationType: '진료', content: '직원분들이 친절해서 잘 진료받고 갔습니다.', createdDate: '2024-09-13', lastModifiedDate: null },
-        { id: 4, userId: 'user123', author: '박성운', hospital: '맞아용 동물병원', reservationType: '진료', content: '덕분에 저희 동물이 새롭게 변했습니다.', createdDate: '2024-09-07', lastModifiedDate: '2024-09-08' },
-        { id: 5, userId: 'kingwe', author: '위쌈바', hospital: '몰라용 동물병원', reservationType: '미용', content: '너무 불친절했어요.', createdDate: '2024-09-01', lastModifiedDate: null },
-        { id: 6, userId: 'queenkim', author: '킹강효', hospital: '로켓은 동물병원', reservationType: '진료', content: '여기 병원 진짜 쓰레기.', createdDate: '2024-08-29', lastModifiedDate: '2024-09-01' },
-        { id: 7, userId: 'jackyang', author: '양하운', hospital: '악동 동물병원', reservationType: '수술', content: '덕분에 저희 뽀미가 살 수 있게 됐습니다.', createdDate: '2024-09-17', lastModifiedDate: null }
-        // 더미 리뷰 데이터를 추가하세요
-    ]);
-
     const [filteredReviews, setFilteredReviews] = useState(reviews); // 처음에는 전체 리뷰 목록을 표시
+
+    useEffect(() => {
+        console.log('adminGetAllReviewsAPI : ', adminGetAllReviewsAPI);
+
+        dispatch(adminGetAllReviewsAPI());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (reviews.length > 0) {
+            setFilteredReviews(reviews);
+        }
+    }, [reviews]);
+
     const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
     const navigate = useNavigate();
 
     // 검색 실행 처리
     const handleSearch = () => {
         const filtered = reviews.filter(review =>
-            review.userId.toLowerCase().includes(searchTerm.toLowerCase())
+            review.reservation.userId.userId.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredReviews(filtered);
         setIsSearching(true); // 검색이 진행되었음을 표시
@@ -58,9 +64,23 @@ function ReviewControl() {
         setCurrentPage(totalPages);
     };
 
-    const handleReportClick = () => {
-        navigate('/reportscontrol');
+    // ◀ 버튼: 이전 페이지로 이동
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
     };
+
+    // ▶ 버튼: 다음 페이지로 이동
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    // const handleReportClick = () => {
+    //     navigate('/reportscontrol');
+    // };
 
     // 페이징 처리
     const indexOfLastReview = currentPage * reviewsPerPage;
@@ -72,7 +92,7 @@ function ReviewControl() {
         <div className="review-control-container">
             <h2 className="review-control-title">일반 후기</h2>
 
-            <button className="review-control-report-button" onClick={handleReportClick}>신고 요청된 후기</button>
+            {/* <button className="review-control-report-button" onClick={handleReportClick}>신고 요청된 후기</button> */}
 
             <div className="review-control-search-bar">
                 <input
@@ -98,7 +118,7 @@ function ReviewControl() {
                         <th>아이디</th>
                         <th>작성자</th>
                         <th>병원</th>
-                        <th>예약유형</th>
+                        <th>예약<br />유형</th>
                         <th>작성내용</th>
                         <th>작성날짜</th>
                         <th>최종 수정 날짜</th>
@@ -106,16 +126,20 @@ function ReviewControl() {
                 </thead>
                 <tbody>
                     {currentReviews.length > 0 ? (
-                        currentReviews.map(review => (
-                            <tr key={review.id}>
-                                <td>{review.id}</td>
-                                <td>{review.userId}</td>
-                                <td>{review.author}</td>
-                                <td>{review.hospital}</td>
-                                <td>{review.reservationType}</td>
-                                <td>{review.content}</td>
-                                <td>{review.createdDate}</td>
-                                <td>{review.lastModifiedDate ? review.lastModifiedDate : 'N/A'}</td>
+                        currentReviews.map((review, index) => (
+                            <tr key={index}>
+                                <td>{review.reservation.reservationId}</td> {/* 예약 ID */}
+                                <td>{review.reservation.userId.userId}</td> {/* 사용자 ID */}
+                                <td>{review.reservation.userId.userName}</td> {/* 사용자 이름 */}
+                                <td>{review.reservation.hosId.name}</td> {/* 병원 이름 */}
+                                <td>{review.reservation.clinicType.clinicName}</td> {/* 진료 유형 */}
+                                <td>{review.content}</td> {/* 리뷰 내용 */}
+                                <td>{`${review.createdDate[0]}-${review.createdDate[1].toString().padStart(2, '0')}-${review.createdDate[2].toString().padStart(2, '0')}`}</td> {/* 리뷰 작성일 */}
+                                <td>
+                                    {review.lastModifiedDate
+                                        ? `${review.lastModifiedDate[0]}-${review.lastModifiedDate[1].toString().padStart(2, '0')}-${review.lastModifiedDate[2].toString().padStart(2, '0')}`
+                                        : 'N/A'}
+                                </td> {/* 마지막 수정일 */}
                             </tr>
                         ))
                     ) : (
@@ -127,7 +151,10 @@ function ReviewControl() {
             </table>
 
             <div className="review-control-pagination">
-                <button onClick={handleFirstPage} disabled={currentPage === 1}>
+                <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredReviews.length === 0}>
+                    ◁◁
+                </button>
+                <button onClick={handlePrevPage} disabled={currentPage === 1 || filteredReviews.length === 0}>
                     ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
@@ -139,9 +166,13 @@ function ReviewControl() {
                         {index + 1}
                     </button>
                 ))}
-                <button onClick={handleLastPage} disabled={currentPage === totalPages}>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages || filteredReviews.length === 0}>
                     ▶
                 </button>
+                <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredReviews.length === 0}>
+                    ▷▷
+                </button>
+
             </div>
         </div>
     );

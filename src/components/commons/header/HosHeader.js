@@ -34,7 +34,7 @@ function HosHeader() {
     return (
         <div className="hos-header-container">
             <div className="hos-header-logo-container">
-                <NavLink to="/" exact className="hos-header-logo-link">
+                <NavLink to="/" className="hos-header-logo-link">
                     <img className="hos-header-mainImage" src="/images/logo.png" alt="메인 이미지" />
                     <span>Healing Pets</span>
                 </NavLink>

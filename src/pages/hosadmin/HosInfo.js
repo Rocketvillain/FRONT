@@ -7,48 +7,29 @@ import '../../css/HosInfo.css';
 
 function HosInfo() {
 
-    const [hospitalData, setHospitalData] = useState({
-        name: '',
-        address: '',
-        ownerName: '',
-        businessNo: '',
-        info: '',
-        ownerImage: '',
-        infoImage: ''
-    });
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     // 유저 아이디
-    const userHosId = useSelector(state => state.user.userInfo.hosId);
-    console.log(userHosId);
-    
+    const userHosId = useSelector(state => state.user.userInfo.hosId); 
     // 유저 데이터
     const user = useSelector(state => state.user)    
-    console.log(user);
-    
     // 병원 데이터
     const hospital = useSelector(state => state.hospital.hospital);
-    console.log(hospital);
-    
 
+    const [hospitalData, setHospitalData] = useState({
+        name: hospital.name,
+        address: hospital.address,
+        ownerName: hospital.ownerName,
+        businessNo: hospital.businessNo,
+        info: hospital.info,
+        ownerImage: hospital.ownerImage,
+        infoImage: hospital.infoImage
+    });
+    
     useEffect(() => {
-        if (hospital) {
-            setHospitalData({
-                name: hospital.name,
-                address: hospital.address,
-                ownerName: hospital.ownerName,
-                businessNo: hospital.businessNo,
-                info: hospital.info,
-                ownerImage: hospital.ownerImage,
-                infoImage: hospital.infoImage
-            });
-        } else {
-            // 병원 정보를 처음 불러올 때 API 호출
-            dispatch(hospitalDetailAPI(userHosId));
-        }
-    }, [dispatch, hospital, userHosId]);
+        dispatch(hospitalDetailAPI(userHosId));
+    }, [dispatch]);
 
      // 입력 필드 값 변경 시 상태 업데이트
     const handleChange = (e) => {

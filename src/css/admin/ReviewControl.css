@@ -1,7 +1,7 @@
 .review-control-container {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; 
 }
 
 .review-control-title {
@@ -15,7 +15,9 @@
 .review-control-search-bar {
     display: flex;
     margin-bottom: 20px;
-    transform: translate(750px);
+    justify-content: flex-end;
+    margin-left: auto;
+
 }
 
 .review-control-search-input {
@@ -44,14 +46,25 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    table-layout: fixed;
+    
 }
 
-.review-control-table th, .review-control-table td {
+.review-control-table th {
+    border: 1px solid #ccc;
+    text-align: center;
+    white-space: nowrap;
+    height: 40px;
+}
+
+.review-control-table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
-    word-wrap: break-word; /* 긴 단어가 있으면 줄 바꿈 */
-    white-space: normal;
+    /* white-space: nowrap; */
+    white-space: normal; /* 줄바꿈을 허용하여 내용을 모두 표시 */
+    word-wrap: break-word; /* 긴 단어를 자동으로 줄바꿈 */
+    height: 40px;
 }
 
 .review-control-table th {
@@ -80,19 +93,18 @@
     white-space: nowrap;
 }
 .review-control-table th:nth-child(5), .review-control-table td:nth-child(5) { /* 예약유형 */
-    width: 10%;
+    width: 6%;
     white-space: nowrap;
 }
 .review-control-table th:nth-child(6), .review-control-table td:nth-child(6) { /* 작성내용 */
-    width: 30%;
-    white-space: nowrap; /* 가장 넓게 설정하여 긴 내용을 표시할 수 있도록 함 */
+    width: 77%;
 }
 .review-control-table th:nth-child(7), .review-control-table td:nth-child(7) { /* 작성날짜 */
-    width: 10%;
+    width: 13%;
     white-space: nowrap;
 }
 .review-control-table th:nth-child(8), .review-control-table td:nth-child(8) { /* 최종 수정 날짜 */
-    width: 10%;
+    width: 13%;
     white-space: nowrap;
 }
 
@@ -102,6 +114,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 .review-control-pagination button {

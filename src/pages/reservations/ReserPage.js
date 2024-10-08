@@ -29,7 +29,7 @@ function ReserPage() {
     const [disabledDates, setDisabledDates] = useState([]); // 비활성화할 날짜 배열
 
     /* 예약 정보 */
-    const reservations = useSelector(state => state.reservation.Reservations); // 예약 정보 불러오기
+    const reservations = useSelector(state => state.reservation.reservations); // 예약 정보 불러오기
     const [clinicType, setClinicType] = useState(''); // 선택된 진료 유형 상태
     const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜 상태
     const [selectedTime, setSelectedTime] = useState(null); // 선택된 시간 상태
