@@ -100,7 +100,13 @@ function ClinicHistory({ addReview, reviews = [] }) {
                                 <td>{reservations.hosName}</td>
                                 <td>{reservations.clinicName}</td>
                                 <td>{`${reservations.reservationTime[0]}-${reservations.reservationTime[1]}-${reservations.reservationTime[2]}`}</td>
-                                <td>{reservations.state}</td>
+                                <td>{reservations.state === 'activated'
+                                    ? '승인'
+                                    : reservations.state === 'request'
+                                    ? '취소 요청'
+                                    : reservations.state === 'canceled'
+                                    ? '취소됨'
+                                    : '확인요망'}</td>
                                 <td>
                                     {!isReviewWritten(reservations.reservationId) && (
                                         <button className="reviewUpdatebutton" onClick={() => handleReviewWrite(reservations)}>

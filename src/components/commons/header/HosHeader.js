@@ -31,6 +31,10 @@ function HosHeader() {
         window.location.href = '/';
     };
 
+    const refresh = () => {
+        window.location.href = '/hosinfo';
+    }
+
     return (
         <div className="hos-header-container">
             <div className="hos-header-logo-container">
@@ -56,7 +60,7 @@ function HosHeader() {
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/hosinfo" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/hosinfo" onClick={refresh} style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>마이페이지</span>
                     </NavLink>
                 </li>

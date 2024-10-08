@@ -16,7 +16,11 @@ function HosInfo() {
     const user = useSelector(state => state.user)    
     // 병원 데이터
     const hospital = useSelector(state => state.hospital.hospital);
-
+    
+    useEffect(() => {
+        dispatch(hospitalDetailAPI(userHosId));
+    }, [dispatch]);
+    
     const [hospitalData, setHospitalData] = useState({
         name: hospital.name,
         address: hospital.address,
@@ -27,9 +31,6 @@ function HosInfo() {
         infoImage: hospital.infoImage
     });
     
-    useEffect(() => {
-        dispatch(hospitalDetailAPI(userHosId));
-    }, [dispatch]);
 
      // 입력 필드 값 변경 시 상태 업데이트
     const handleChange = (e) => {
