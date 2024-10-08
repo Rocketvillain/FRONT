@@ -7,7 +7,7 @@ import '../../css/admin/ReviewControl.css'; // CSS 파일을 추가합니다.
 
 function ReviewControl() {
     const dispatch = useDispatch();
-    const reviews = useSelector(state => state.adminReviews.reviews || []);
+    const reviews = useSelector(state => state.review.reviews);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 10; // 한 페이지에 보여줄 리뷰 수

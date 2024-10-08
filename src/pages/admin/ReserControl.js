@@ -5,7 +5,7 @@ import { adminGetAllReservationsAPI } from '../../api/AdminAPICalls';
 
 function ReserControl() {
     const dispatch = useDispatch();
-    const reservations = useSelector(state => state.adminReser.reservations);
+    const reservations = useSelector(state => state.reservation.reservations || []);
     console.log('reservations', reservations);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -170,7 +170,6 @@ function ReserControl() {
                                                 : reservation.state === 'activated' ? '승인'
                                                     : ''}
                                     </td>
-
                                 </tr>
                             );
                         })
@@ -180,7 +179,6 @@ function ReserControl() {
                         </tr>
                     )}
                 </tbody>
-
             </table>
 
             <div className="reser-control-pagination">
@@ -205,7 +203,6 @@ function ReserControl() {
                 <button onClick={handleLastPage} disabled={currentPage === totalPages || filteredReservations.length === 0}>
                     ▷▷
                 </button>
-
             </div>
         </div>
     );

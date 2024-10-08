@@ -239,7 +239,7 @@ function HosControl() {
 
             <div className="hos-control-pagination">
                 <button onClick={handleFirstPage} disabled={currentPage === 1 || filteredHospitals.length === 0}>
-                    ◁◁
+                    ◁◁  
                 </button>
                 <button onClick={handlePrevPage} disabled={currentPage === 1 || filteredHospitals.length === 0}>
                     ◀
