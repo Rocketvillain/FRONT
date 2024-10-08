@@ -94,55 +94,54 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     margin-left: 20px;
 }
 
-.myinfo {
+.my-info {
     display: flex;
     flex-direction: column;
     gap: 20px;
     /* 필드 간격 */
-    flex-grow: 1;
-    /* 남은 공간을 차지하도록 설정 */
-
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px; /* 내부 여백 설정 */
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.info-section {
+.my-info-section {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     /* 필드 간격 */
+    height: 20px;
 }
 
-.info-section label {
+.my-info-section label {
     font-weight: bold;
     margin-bottom: 5px;
+    margin-left: 130px;
 }
 
-.info-section input {
-    width: 100%;
+.my-info-section input {
+    width: 600px;
     padding: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    margin-left: 130px;
 }
 
-.button-container {
-    position: absolute;
-    /* 절대 위치 설정 */
-    bottom: 40px;
-    /* 하단에서 20px 위로 */
-    right: 20px;
-    /* 오른쪽에서 20px 떨어지게 설정 */
-    transition: all 0.5s ease;
-    /* 부드러운 애니메이션 적용 */
-    transform: translateX(-360px);
+.my-info-button-container {
+    left: 700px;
+    bottom: -700px;
+    display: flex;
+    position: relative;
 }
 
 /* 기본 버튼 스타일 */
-.checkbutton {
+.my-info-checkbutton {
     background-color: #28467A;
     color: white;
     padding: 10px 20px;
@@ -150,7 +149,7 @@ body {
     cursor: pointer;
 }
 
-.updatebutton {
+.my-info-updatebutton {
     background-color: #43ABAE;
     color: white;
     padding: 10px 20px;
@@ -160,17 +159,16 @@ body {
     box-shadow: none;
 }
 
-.profile-image-container {
+.my-info-profile-image-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
     /* 개인정보 헤더 바로 밑에 위치 */
 }
 
-
-.profile-image-preview {
+.my-info-profile-image-preview {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -179,15 +177,17 @@ body {
     margin-bottom: 10px;
 }
 
-
-.info-note {
+.my-info-note {
     color: red;
     font-size: 12px;
+    margin-left: 130px;
 }
 
-.info-note p {
+.my-info-note p {
     gap: 3px;
 }
+
+
 
 
 /* 전체 카드 레이아웃 설정 */

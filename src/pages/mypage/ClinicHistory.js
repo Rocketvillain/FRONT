@@ -75,7 +75,7 @@ function ClinicHistory({ addReview, reviews = [] }) {
     return (
         <div className="clinic-history">
             <h2>진료 기록</h2>
-            <table className="clinic-table">
+            <table className="clinic-history-clinic-table">
                 <thead>
                     <tr>
                         <th>예약번호</th>
@@ -98,7 +98,7 @@ function ClinicHistory({ addReview, reviews = [] }) {
                             <td>{record.status}</td>
                             <td>
                                 {!isReviewWritten(record.id) && (
-                                    <button className="reviewUpdatebutton" onClick={() => handleReviewWrite(record)}>
+                                    <button className="clinic-history-reviewUpdatebutton" onClick={() => handleReviewWrite(record)}>
                                         리뷰 쓰기🖋
                                     </button>
                                 )}
@@ -108,12 +108,12 @@ function ClinicHistory({ addReview, reviews = [] }) {
                 </tbody>
             </table>
 
-            <div className="pagination">
+            <div className="clinic-history-pagination">
                 <button onClick={handleFirstPage} disabled={currentPage === 1}>
                     ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
-                    <button key={index + 1} onClick={() => handlePageChange(index + 1)} className={index + 1 === currentPage ? "active" : ""}>
+                    <button key={index + 1} onClick={() => handlePageChange(index + 1)} className={index + 1 === currentPage ? "clinic-history-active" : ""}>
                         {index + 1}
                     </button>
                 ))}
@@ -123,8 +123,8 @@ function ClinicHistory({ addReview, reviews = [] }) {
             </div>
 
             {isModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+                <div className="clinic-history-modal-overlay">
+                    <div className="clinic-history-modal-content">
                         <h2>{selectedRecord.date} 진료 후기</h2>
                         <textarea
                             value={reviewContent}
@@ -132,11 +132,11 @@ function ClinicHistory({ addReview, reviews = [] }) {
                             rows="5"
                             placeholder="후기 내용을 입력하세요"
                         />
-                        <div className="modal-buttons">
-                            <button className="writebutton" onClick={handleSaveReview}>
+                        <div className="clinic-history-modal-buttons">
+                            <button className="clinic-history-writebutton" onClick={handleSaveReview}>
                                 작성
                             </button>
-                            <button className="writeclosebutton" onClick={handleCloseModal}>
+                            <button className="clinic-history-writeclosebutton" onClick={handleCloseModal}>
                                 취소
                             </button>
                         </div>
