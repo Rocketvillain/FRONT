@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminGetAllReviewsAPI } from '../../api/AdminAPICalls';
 import '../../css/admin/ReviewControl.css'; // CSS 파일을 추가합니다.
+import { adminGetAllReservationsAPI } from '../../api/AdminAPICalls';
 
 function ReviewControl() {
     const dispatch = useDispatch();
     const reviews = useSelector(state => state.review.reviews);
+    const reservations = useSelector(state => state.reservation.reservations);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 10; // 한 페이지에 보여줄 리뷰 수
@@ -17,14 +19,23 @@ function ReviewControl() {
     useEffect(() => {
         console.log('adminGetAllReviewsAPI : ', adminGetAllReviewsAPI);
 
+        // reviews API 호출
         dispatch(adminGetAllReviewsAPI());
+
+        // reservation API 호출
+        dispatch(adminGetAllReservationsAPI());
     }, [dispatch]);
 
     useEffect(() => {
-        if (reviews.length > 0) {
-            setFilteredReviews(reviews);
+        if (reviews.length > 0 && reservations.length > 0) {
+            const mergedReviews = reviews.map(review => {
+                const reservation = reservations.find(res => res.reservationId === review.reservation?.reservationId);
+                return { ...review, reservation: reservation || review.reservation }; // reservation이 있으면 덮어씌우기
+            });
+            console.log('mergedReviews: ', mergedReviews);
+            setFilteredReviews(mergedReviews);
         }
-    }, [reviews]);
+    }, [reviews, reservations]);
 
     const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
     const navigate = useNavigate();
@@ -86,6 +97,9 @@ function ReviewControl() {
     const indexOfLastReview = currentPage * reviewsPerPage;
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
     const currentReviews = filteredReviews.slice(indexOfFirstReview, indexOfLastReview);
+
+    console.log(currentReviews);
+
 
 
     return (
