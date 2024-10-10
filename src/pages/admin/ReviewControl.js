@@ -143,10 +143,10 @@ function ReviewControl() {
                         currentReviews.map((review, index) => (
                             <tr key={index}>
                                 <td>{review.reservation.reservationId}</td> {/* 예약 ID */}
-                                <td>{review.reservation.userId.userId}</td> {/* 사용자 ID */}
-                                <td>{review.reservation.userId.userName}</td> {/* 사용자 이름 */}
-                                <td>{review.reservation.hosId.name}</td> {/* 병원 이름 */}
-                                <td>{review.reservation.clinicType.clinicName}</td> {/* 진료 유형 */}
+                                <td>{review.reservation.userId}</td> {/* 사용자 ID */}
+                                <td>{review.reservation.userName}</td> {/* 사용자 이름 */}
+                                <td>{review.reservation.hosName}</td> {/* 병원 이름 */}
+                                <td>{review.reservation.clinicName}</td> {/* 진료 유형 */}
                                 <td>{review.content}</td> {/* 리뷰 내용 */}
                                 <td>{`${review.createdDate[0]}-${review.createdDate[1].toString().padStart(2, '0')}-${review.createdDate[2].toString().padStart(2, '0')}`}</td> {/* 리뷰 작성일 */}
                                 <td>
