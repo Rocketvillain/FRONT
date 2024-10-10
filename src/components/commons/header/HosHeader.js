@@ -1,13 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import '../../../css/component/HosHeader.css';
 import { useDispatch } from 'react-redux';
 import { logOut as userLogOut } from "../../../modules/UserModule";
 import { reset as resetHospital } from "../../../modules/HospitalModule";
 import { reset as resetHospitalSchedule } from "../../../modules/HospitalScheduleModule";
 import { reset as resetReservation } from "../../../modules/ReservationModule";
+import { reset as resetReview } from "../../../modules/ReviewModule";
 
 function HosHeader() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const activeStyle = {
         color: 'black',
@@ -26,10 +28,19 @@ function HosHeader() {
         dispatch(resetHospital());
         dispatch(resetHospitalSchedule());
         dispatch(resetReservation());
+        dispatch(resetReview());
 
         // 로그아웃 후 메인 페이지로 리다이렉트
-        window.location.href = '/';
+        navigate('/');
     };
+
+    const ReviewControl = () => {
+        window.location.href = '/hosreviewcontrol';
+    }
+
+    const refresh = () => {
+        window.location.href = '/hosinfo';
+    }
 
     return (
         <div className="hos-header-container">
@@ -46,7 +57,7 @@ function HosHeader() {
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/hosreviewcontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/hosreviewcontrol" onClick={ReviewControl} style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>후기관리</span>
                     </NavLink>
                 </li>
@@ -56,7 +67,7 @@ function HosHeader() {
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/hosinfo" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/hosinfo" onClick={refresh} style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>마이페이지</span>
                     </NavLink>
                 </li>

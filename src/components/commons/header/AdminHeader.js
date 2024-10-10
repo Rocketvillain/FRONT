@@ -1,14 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import '../../../css/component/AdminHeader.css';
 import { useDispatch } from "react-redux";
 import { logOut as userLogOut } from "../../../modules/UserModule";
 import { reset as resetHospital } from "../../../modules/HospitalModule";
 import { reset as resetHospitalSchedule } from "../../../modules/HospitalScheduleModule";
 import { reset as resetReservation } from "../../../modules/ReservationModule";
+import { reset as resetReview } from "../../../modules/ReviewModule";
+
 
 function AdminHeader() {
 
     const dispatch = useDispatch(); 
+    const navigate = useNavigate();
     
     const activeStyle = {
         // backgroundColor: 'white',
@@ -28,9 +31,10 @@ function AdminHeader() {
         dispatch(resetHospital());
         dispatch(resetHospitalSchedule());
         dispatch(resetReservation());
+        dispatch(resetReview());
 
         // 로그아웃 후 메인 페이지로 리다이렉트
-        window.location.href = '/';
+        navigate('/');
     };
 
     return(

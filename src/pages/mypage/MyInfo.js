@@ -19,7 +19,7 @@ function MyInfo() {
         name: '',
         email: '',
         phone: '',
-        pwd: '', 
+        pwd: '',
         pwdCheck: '',
         image: userData.image // 프로필 이미지 경로
     });
@@ -102,7 +102,7 @@ function MyInfo() {
             alert('전화번호는 공백이 될 수 없습니다!')
             return;
         }
-        
+
         const modifyUserInfo = {
             userId: id,
             name,
@@ -113,27 +113,8 @@ function MyInfo() {
 
         dispatch(updateUserInfo(id, modifyUserInfo)); // Redux 액션으로 정보 업데이트
         alert('정보가 성공적으로 수정되었습니다.');
-        
+
     };
-
-    useLayoutEffect(() => {
-        const handleResize = () => {
-            if (pageContentRef.current) {
-                const pageContentRect = pageContentRef.current.getBoundingClientRect();
-                setButtonPosition({
-                    right: window.innerWidth - pageContentRect.right + 20, // 오른쪽에 맞춰서 고정
-                    bottom: window.innerHeight - pageContentRect.bottom + 20, // 하단에 맞춰서 고정
-                });
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-        handleResize(); // 처음 렌더링 시 위치 설정
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
     useEffect(() => {
 
@@ -151,10 +132,8 @@ function MyInfo() {
     }, [userData]);
 
     return (
-        <div className="page-content">
-            <div className="myinfo">
-                {/* 개인 정보 헤더 */}
-                <h1>개인 정보</h1>
+        <div className="my-info">
+            <h2>개인 정보</h2>
 
                 <div className="info-section">
                     {/* 프로필 이미지 등록 관련 내용 */}
@@ -175,52 +154,49 @@ function MyInfo() {
                         <button type="button" className="updatebutton" onClick={handleFileInputClick}>등록</button>
                     </div>
 
-                    {/* 사용자 정보 입력 폼 */}
-                    <label>ID</label>
-                    <input name="id" type="text" value={userInfo.id} disabled />
+                {/* 사용자 정보 입력 폼 */}
+                <label>ID</label>
+                <input name="id" type="text" value={userInfo.id} disabled />
 
-                    <label>NAME</label>
-                    <input name="name" type="text" value={userInfo.name} onChange={handleInputChange} />
+                <label>NAME</label>
+                <input name="name" type="text" value={userInfo.name} onChange={handleInputChange} />
 
-                    <label>EMAIL</label>
-                    <input name="email" type="text" value={userInfo.email} onChange={handleInputChange} />
+                <label>EMAIL</label>
+                <input name="email" type="text" value={userInfo.email} onChange={handleInputChange} />
 
-                    <label>PHONE</label>
-                    <input name="phone" type="text" value={userInfo.phone} onChange={handleInputChange} />
+                <label>PHONE</label>
+                <input name="phone" type="text" value={userInfo.phone} onChange={handleInputChange} />
 
-                    <label>PWD</label>
-                    <input name="pwd" type="password" value={userInfo.pwd} onChange={handleInputChange} placeholder="새로운 비밀번호를 입력하세요" />
+                <label>PWD</label>
+                <input name="pwd" type="password" value={userInfo.pwd} onChange={handleInputChange} placeholder="새로운 비밀번호를 입력하세요" />
 
-                    <label>PWD 확인</label>
-                    <input name="pwdCheck" type="password" value={userInfo.pwdCheck} onChange={handleInputChange} placeholder="비밀번호를 다시 입력하세요" />
+                <label>PWD 확인</label>
+                <input name="pwdCheck" type="password" value={userInfo.pwdCheck} onChange={handleInputChange} placeholder="비밀번호를 다시 입력하세요" />
 
-                    {/* ※문구들은 비밀번호 필드 아래로 이동 */}
-                    <p className="info-note">
-                        *비밀번호는 반드시 특수문자와 함께 8자리 이상 입력해주세요.
+                {/* ※문구들은 비밀번호 필드 아래로 이동 */}
+                    <div className="my-info-note">
+                        <p style={{ color: 'red' }}>
+                            *비밀번호는 반드시 특수문자와 함께 8자리 이상 입력해주세요.
+                        </p>
                         <p style={{ color: 'red' }}>
                             ※이메일 또는 전화번호를 통해 예약 메시지를 수신할 수 있습니다.
                             <br />
                             ※정보를 수정하신 후 확인 버튼을 클릭하셔야 정보 수정이 완료됩니다.
-                            <p style={{ color: 'blue' }}>※회원 이미지는 선택사항입니다.</p>
                         </p>
-                    </p>
-                </div>
+                        <p style={{ color: 'blue' }}>
+                            ※회원 이미지는 선택사항입니다.
+                        </p>
+
+                    </div>
             </div>
 
-            {/* 확인 버튼은 page-content 오른쪽 하단에 위치 */}
-            <div
-                ref={buttonRef}
-                className="button-container"
-                style={{
-                    position: 'fixed',
-                    right: `${buttonPosition.right}px`,
-                    bottom: `${buttonPosition.bottom}px`,
-                }}
-            >
-                <button className="checkbutton" onClick={handleSave}>확인</button>
+            {/* 확인 버튼 */}
+            <div className="my-info-button-container">
+                <button className="my-info-checkbutton" onClick={handleSave}>확인</button>
             </div>
         </div>
     );
+
 }
 
 export default MyInfo;

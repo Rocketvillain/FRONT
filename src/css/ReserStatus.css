@@ -72,31 +72,31 @@
     background-color: #ff3333;
 }
 
-.pagination {
-    position: absolute;
-    left: 53%;
-    bottom: 215px;
-    text-align: center;
+.reser-status-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
 }
 
-.pagination button {
-    background-color: white;
-    border: 1px solid #ddd;
-    color: #333;
-    padding: 8px 16px;
-    margin: 0 4px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.pagination button:hover {
-    background-color: #f2f2f2;
-}
-
-.pagination .active {
-    background-color: #333;
-    color: white;
+.reser-status-pagination button {
+    background-color: transparent;
     border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.reser-status-pagination .reser-status-active {
+    color: black;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+}
+
+.reser-status-pagination button:hover {
+    background-color: #f0f0f0;
 }
 
 .cancel-confirm-modal {
@@ -151,7 +151,7 @@
 }
 
 #cancel-confirm-modal-button-yes {
-    width: 60px;
+    width: 80px;
 }
 
 #cancel-confirm-modal-button-no {

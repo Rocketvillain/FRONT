@@ -6,15 +6,15 @@ import '../../css/hosAdmin/HosReviewControl.css';
 function HosReviewControl() {
     
     const dispatch = useDispatch();
-    const reviews = useSelector(state => state.review.hospital);
+    const reviews = useSelector(state => state.review.reviews);
     console.log("reviews : ----- ", reviews);
     
-    const hosId = useSelector(state => state.hospital.hospital.hosId);
+    const hosId = useSelector(state => state.user.userInfo.hosId);
     console.log("hosId : ", hosId);
     
     useEffect(() => {
         dispatch(reviewDetailAPI(hosId));
-    }, [dispatch, hosId]);
+    }, [dispatch]);
     
     const [currentPage, setCurrentPage] = useState(1);
     const [reviewsPerPage] = useState(5); // 한 페이지에 표시할 후기 수
