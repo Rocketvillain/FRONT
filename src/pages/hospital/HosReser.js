@@ -104,6 +104,7 @@ function HosReser() {
                 window.kakao.maps.event.addListener(newMarker, 'click', () => {
                     infowindow.setContent(`<div style="padding:5px; color:#28467a; text-align:center; font-weight:bold;">${hospital.name}🏥</div>`);
                     infowindow.open(map, newMarker);
+                    navigate(`/hosdetail/${hospital.hosId}`); // 마커 클릭 시 병원 상세 페이지 이동
                 });
                 // 인포윈도우에 병원 이름 표시
                 infowindow.setContent(`<div style="padding:5px; color:#28467a; text-align:center; font-weight:bold;">${hospital.name}🏥</div>`);

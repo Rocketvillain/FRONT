@@ -225,11 +225,12 @@ body {
 
 /* 반려동물 이미지 스타일 */
 .my-pet-pet-image {
-    width: 150px; /* 이미지 크기 고정 */
-    height: 150px; /* 이미지 높이 고정 */
+    width: 180px; /* 이미지 크기 고정 */
+    height: 180px; /* 이미지 높이 고정 */
     object-fit: cover; /* 이미지를 카드 영역에 맞춰 자르기 */
     border-radius: 10px;
-    margin-left: 80px;
+    margin-left: 40px;
+    margin-top: 40px;
 }
 
 /* 반려동물 정보 섹션 */
@@ -238,20 +239,32 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    height: 100%;
+    margin-left: 60px;
+    text-align: left;
+    
 }
 
 /* 반려동물 정보 텍스트 스타일 */
-.my-pet-pet-info > p {
+.my-pet-pet-info p {
     margin: 5px 0; /* 각 정보 항목 간의 간격 */
     font-size: 16px; /* 텍스트 크기 조정 */
+}
+
+.my-pet-pet-info input {
+    width: 360px;
+    margin-left: 10px; 
+}
+
+.my-pet-pet-info input.my-pet-pet-info-species {
+    margin-left: 25px;
 }
 
 /* 버튼 그룹 섹션 (수정, 삭제) */
 .my-pet-button-group {
     display: flex;
     gap: 10px; /* 버튼 간격 설정 */
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-left: 3px;
 }
 
 /* 수정 버튼 스타일 */
@@ -316,32 +329,59 @@ body {
 
 /* 추가 반려동물 정보 섹션 */
 .my-pet-add-pet-info {
-    width: 300px;
-    height: 180px;
-    margin-top: 5px;
+    display: block;
     flex-direction: column;
     justify-content: space-between;
-    gap: 7px;
-    width: 100%;
+    width: 400px;
+    margin-right: 100px;
+    text-align: left;
+    margin-bottom: 80px;
+    margin-top: 40px;
 }
 
 /* 추가 반려동물 정보 텍스트 스타일 */
-.my-pet-add-pet-info > p {
-    margin: 5px 0; /* 각 정보 항목 간의 간격 */
-    font-size: 16px; /* 텍스트 크기 조정 */
+.my-pet-add-pet-info input {
+    font-size: 13px; /* 텍스트 크기 조정 */
+    width: 100%;
 }
 
 /* 추가 이미지 스타일 */
 .my-pet-create-pet-image {
-    margin-top: 5px;
-    width: 250px;
-    height: 200px;
-    flex-direction: column; /* 세로 방향으로 정렬 */
-    align-items: center; /* 가운데 정렬 */
+    width: 180px; /* 이미지 크기 고정 */
+    height: 180px; /* 이미지 높이 고정 */
+    object-fit: cover; /* 이미지를 카드 영역에 맞춰 자르기 */
+    border-radius: 10px;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+.my-pet-create-pet-image.image-empty {
+    border: 2px solid #28467A !important; /* 이미지가 없을 때 테두리 표시 */
+}
+
+.my-pet-create-pet-image.image-loaded {
+    border: none !important; /* 이미지가 있으면 테두리 없음 */
+}
+
+.my-pet-preview-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+}
+
+.image-placeholder {
+    border-radius: 10px;
+    width: 180px; /* 이미지 크기 고정 */
+    height: 180px; /* 이미지 높이 고정 */
+    object-fit: cover; /* 이미지를 카드 영역에 맞춰 자르기 */
 }
 
 .my-pet-buttond-group {
-    margin-top: 5px;
+    display: flex;
+    gap: 10px; /* 버튼 간격 설정 */
+    margin-top: 30px;
+    margin-left: 3px;
 }
 
 /* 추가, 삭제 버튼 스타일 */
