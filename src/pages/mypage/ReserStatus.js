@@ -42,7 +42,7 @@ const ReserStatus = () => {
 
     const handleCancel = async () => {
         const result = await dispatch(CancelReservation(cancelInfo));
-        console.log('asdjfhsadhfdsf',result);
+        console.log('asdjfhsadhfdsf', result);
 
         if (result.httpStatusCode === 200) {
             dispatch(LoadReservationByUserId(userId));
@@ -63,7 +63,7 @@ const ReserStatus = () => {
             <div id="reservation-line"></div>
             <table className="reservation-table">
                 <thead>
-                    <tr style={{height: '45px'}}>
+                    <tr style={{ height: '45px' }}>
                         <th>번호</th>
                         <th>예약자명</th>
                         <th>병원명</th>
@@ -76,70 +76,71 @@ const ReserStatus = () => {
                 <tbody>
                     {currentReservations.length > 0 ? (
                         currentReservations.map((reservation) => (
-                        <tr key={reservation.reservationId}>
-                            <td>{reservation.reservationId}</td>
-                            <td>{reservation.userId}</td>
-                            <td>{reservation.hosName}</td>
-                            <td>{reservation.clinicName}</td>
-                            <td>{`${reservation.reservationTime[0]}-${reservation.reservationTime[1]}-${reservation.reservationTime[2]} ${reservation.reservationTime[3].toString().padStart(2, '0')}:${reservation.reservationTime[4].toString().padStart(2, '0')}`}</td>
-                            <td>{reservation.state === 'activated'
+                            <tr key={reservation.reservationId}>
+                                <td>{reservation.reservationId}</td>
+                                <td>{reservation.userId}</td>
+                                <td>{reservation.hosName}</td>
+                                <td>{reservation.clinicName}</td>
+                                <td>{`${reservation.reservationTime[0]}-${reservation.reservationTime[1]}-${reservation.reservationTime[2]} ${reservation.reservationTime[3].toString().padStart(2, '0')}:${reservation.reservationTime[4].toString().padStart(2, '0')}`}</td>
+                                <td>{reservation.state === 'activated'
                                     ? '승인'
                                     : reservation.state === 'request'
-                                    ? '취소 요청'
-                                    : reservation.state === 'canceled'
-                                    ? '취소됨'
-                                    : '확인요망'}</td>
-                            <td>
-                                {reservation.state === "activated" ? (
-                                    <>
-                                        <button
-                                            className="cancel-btn"
-                                            onClick={() => {
-                                                setCancelInfo({
-                                                    ...cancelInfo,
-                                                    reservationId: reservation.reservationId,
-                                                    description: reservation.description
-                                                })
-                                                openCancelModal();
-                                            }}
-                                        >
-                                            취소
-                                        </button>
-                                    </>
-                                ) : reservation.state === "canceled" ? (
-                                    <span>{reservation.description}</span>
+                                        ? '취소 요청'
+                                        : reservation.state === 'canceled'
+                                            ? '취소됨'
+                                            : '확인요망'}</td>
+                                <td>
+                                    {reservation.state === "activated" ? (
+                                        <>
+                                            <button
+                                                className="cancel-btn"
+                                                onClick={() => {
+                                                    setCancelInfo({
+                                                        ...cancelInfo,
+                                                        reservationId: reservation.reservationId,
+                                                        description: reservation.description
+                                                    })
+                                                    openCancelModal();
+                                                }}
+                                            >
+                                                취소
+                                            </button>
+                                        </>
+                                    ) : reservation.state === "canceled" ? (
+                                        <span>{reservation.description}</span>
                                     )
                                         : (
-                                            <p style={{margin: '0'}}>-</p>
-                                )}
-                            </td>
-                        </tr>
+                                            <p style={{ margin: '0' }}>-</p>
+                                        )}
+                                </td>
+                            </tr>
                         ))
                     ) : (
-                            <tr>
-                                <td colSpan='7'>예약 기록이 없습니다.</td>
-                            </tr>
+                        <tr>
+                            <td colSpan='7'>예약 기록이 없습니다.</td>
+                        </tr>
                     )
-                }
+                    }
                 </tbody>
             </table>
-            <div className="pagination" style={{}}>
+            <div className="reser-status-pagination">
                 <button onClick={handleFirstPage} disabled={currentPage === 1}>
-                ◀
+                    ◀
                 </button>
                 {[...Array(totalPages)].map((_, index) => (
-                <button
-                    key={index + 1}
-                    onClick={() => handlePageChange(index + 1)}
-                    className={index + 1 === currentPage ? 'active' : ''}
-                >
-                    {index + 1}
-                </button>
+                    <button
+                        key={index + 1}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={index + 1 === currentPage ? "reser-status-active" : ""}
+                    >
+                        {index + 1}
+                    </button>
                 ))}
                 <button onClick={handleLastPage} disabled={currentPage === totalPages}>
-                ▶
+                    ▶
                 </button>
             </div>
+
 
             {/* 취소 확인 모달 */}
             {showCancelModal && (

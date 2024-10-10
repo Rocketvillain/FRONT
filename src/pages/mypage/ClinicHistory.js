@@ -102,7 +102,7 @@ function ClinicHistory() {
     return (
         <div className="clinic-history">
             <h2>진료 기록</h2>
-            <table className="clinic-table">
+            <table className="clinic-history-clinic-table">
                 <thead>
                     <tr>
                         <th>예약번호</th>
@@ -132,7 +132,7 @@ function ClinicHistory() {
                                     : '확인요망'}</td>
                                 <td>
                                     {!(reservations.review) && (reservations.state === 'activated') && (
-                                        <button className="reviewUpdatebutton" onClick={() => handleReviewWrite(reservations.reservationId)}>
+                                        <button className="clinic-history-reviewUpdatebutton" onClick={() => handleReviewWrite(reservations.reservationId)}>
                                             리뷰 쓰기🖋
                                         </button>
                                     )}
@@ -147,10 +147,12 @@ function ClinicHistory() {
                 </tbody>
             </table>
 
-            <div className="pagination">
-                <button onClick={handleFirstPage} disabled={currentPage === 1}>◀</button>
+            <div className="clinic-history-pagination">
+                <button onClick={handleFirstPage} disabled={currentPage === 1}>
+                    ◀
+                </button>
                 {[...Array(totalPages)].map((_, index) => (
-                    <button key={index + 1} onClick={() => handlePageChange(index + 1)} className={index + 1 === currentPage ? "active" : ""}>
+                    <button key={index + 1} onClick={() => handlePageChange(index + 1)} className={index + 1 === currentPage ? "clinic-history-active" : ""}>
                         {index + 1}
                     </button>
                 ))}
@@ -159,8 +161,8 @@ function ClinicHistory() {
 
             {/* 리뷰 작성 모달 */}
             {isModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+                <div className="clinic-history-modal-overlay">
+                    <div className="clinic-history-modal-content">
                         <h3>{selectedReservation.hosName}의 진료 후기를 작성합니다.</h3>
                         <textarea
                             value={reviewContent.content}
@@ -172,9 +174,9 @@ function ClinicHistory() {
                             rows="5"
                             placeholder="내용을 입력하세요"
                         />
-                        <div className="modal-buttons">
-                            <button className="writebutton" onClick={handleOpenConfirmation}>작성</button>
-                            <button className="writeclosebutton" onClick={handleCloseModal}>취소</button>
+                        <div className="clinic-history-modal-buttons">
+                            <button className="clinic-history-writebutton" onClick={handleOpenConfirmation}>작성</button>
+                            <button className="clinic-history-writeclosebutton" onClick={handleCloseModal}>취소</button>
                         </div>
                     </div>
                 </div>
@@ -182,12 +184,12 @@ function ClinicHistory() {
 
             {/* 작성 확인 모달 */}
             {isConfirmationOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+                <div className="clinic-history-modal-overlay">
+                    <div className="clinic-history-modal-content">
                         <h3>작성을 완료하시겠습니까?</h3>
                         <div className="modal-buttons">
-                            <button className="confirm-btn" onClick={handleSaveReview}>확인</button>
-                            <button className="cancel-btn" onClick={handleCloseConfirmation}>취소</button>
+                            <button className="clinic-history-confirm-btn" onClick={handleSaveReview}>확인</button>
+                            <button className="clinic-history-cancel-btn" onClick={handleCloseConfirmation}>취소</button>
                         </div>
                     </div>
                 </div>

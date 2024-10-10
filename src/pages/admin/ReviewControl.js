@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminGetAllReviewsAPI } from '../../api/AdminAPICalls';
 import '../../css/admin/ReviewControl.css'; // CSS 파일을 추가합니다.
+import { adminGetAllReservationsAPI } from '../../api/AdminAPICalls';
 
 function ReviewControl() {
     const dispatch = useDispatch();
     const reviews = useSelector(state => state.review.reviews);
+    const reservations = useSelector(state => state.reservation.reservations);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 10; // 한 페이지에 보여줄 리뷰 수
@@ -17,14 +19,23 @@ function ReviewControl() {
     useEffect(() => {
         console.log('adminGetAllReviewsAPI : ', adminGetAllReviewsAPI);
 
+        // reviews API 호출
         dispatch(adminGetAllReviewsAPI());
+
+        // reservation API 호출
+        dispatch(adminGetAllReservationsAPI());
     }, [dispatch]);
 
     useEffect(() => {
-        if (reviews.length > 0) {
-            setFilteredReviews(reviews);
+        if (reviews.length > 0 && reservations.length > 0) {
+            const mergedReviews = reviews.map(review => {
+                const reservation = reservations.find(res => res.reservationId === review.reservation?.reservationId);
+                return { ...review, reservation: reservation || review.reservation }; // reservation이 있으면 덮어씌우기
+            });
+            console.log('mergedReviews: ', mergedReviews);
+            setFilteredReviews(mergedReviews);
         }
-    }, [reviews]);
+    }, [reviews, reservations]);
 
     const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
     const navigate = useNavigate();
@@ -87,6 +98,9 @@ function ReviewControl() {
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
     const currentReviews = filteredReviews.slice(indexOfFirstReview, indexOfLastReview);
 
+    console.log(currentReviews);
+
+
 
     return (
         <div className="review-control-container">
@@ -129,10 +143,10 @@ function ReviewControl() {
                         currentReviews.map((review, index) => (
                             <tr key={index}>
                                 <td>{review.reservation.reservationId}</td> {/* 예약 ID */}
-                                <td>{review.reservation.userId.userId}</td> {/* 사용자 ID */}
-                                <td>{review.reservation.userId.userName}</td> {/* 사용자 이름 */}
-                                <td>{review.reservation.hosId.name}</td> {/* 병원 이름 */}
-                                <td>{review.reservation.clinicType.clinicName}</td> {/* 진료 유형 */}
+                                <td>{review.reservation.userId}</td> {/* 사용자 ID */}
+                                <td>{review.reservation.userName}</td> {/* 사용자 이름 */}
+                                <td>{review.reservation.hosName}</td> {/* 병원 이름 */}
+                                <td>{review.reservation.clinicName}</td> {/* 진료 유형 */}
                                 <td>{review.content}</td> {/* 리뷰 내용 */}
                                 <td>{`${review.createdDate[0]}-${review.createdDate[1].toString().padStart(2, '0')}-${review.createdDate[2].toString().padStart(2, '0')}`}</td> {/* 리뷰 작성일 */}
                                 <td>
