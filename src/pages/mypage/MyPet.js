@@ -100,6 +100,8 @@ function MyPet() {
                 console.error("이미지가 선택 x");
             }
 
+            console.log('formData',formData);
+
             const response = await axios.post('http://localhost:8080/api/v1/pets/create', formData, {
                 headers: {
                     Authorization: `${token}`, // 토큰을 헤더에 포함
