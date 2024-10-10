@@ -96,9 +96,14 @@ function MyPet() {
             // 선택한 이미지를 fromData에 추가
             if (selectedImage){
                 formData.append('image',selectedImage)
+                console.log('selectedImage',selectedImage);
+                
+                
             } else{
                 console.error("이미지가 선택 x");
             }
+
+            console.log('formData',formData);
 
             const response = await axios.post('http://localhost:8080/api/v1/pets/create', formData, {
                 headers: {
