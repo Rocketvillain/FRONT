@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadReservationByUserId } from '../../api/ReservationAPICalls'; 
+import { addReviewAPI, updatedReviewAPI, deletedReviewAPI } from '../../api/ReviewAPICalls';
 import '../../css/ClinicHistory.css';
 
 function ClinicHistory({ addReview, reviews = [] }) {
 
     const dispatch = useDispatch();
     const reservations = useSelector(state => state.reservation.reservations);
+    console.log("잘 들어갔니 예약아?? : ", reservations);
+
+    // 로그인한 사용자의 ID 가져오기
+    const userId = useSelector(state => state.user.userInfo.userId);
+    
+    const review = useSelector(state =>
+        state.review.reviews.filter(review => review.userId === userId)
+    );
+    console.log("잘 들어갔니 리뷰야?? : ", review);
+    
+
+    useEffect(() => {
+        dispatch(LoadReservationByUserId(userId), addReviewAPI(userId));
+    }, [dispatch, userId]);
 
     const [clinicHistory, setClinicHistory] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
@@ -17,15 +32,10 @@ function ClinicHistory({ addReview, reviews = [] }) {
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 6;
 
-    // 로그인한 사용자의 ID 가져오기
-    const userId = useSelector(state => state.user.userInfo.userId);
+    
 
     useEffect(() => {
-        dispatch(LoadReservationByUserId(userId));
-    }, [dispatch, userId]);
-
-    useEffect(() => {
-        // 지난 예약 기록 필터링
+        // 지난 예약 기록 필터링(오늘 날짜보다 이전 예약 날짜 기록을 보여줌)
         const now = new Date();
         const pastReservations = reservations.filter((reservation) => {
             const [year, month, day] = reservation.reservationTime;
@@ -134,6 +144,7 @@ function ClinicHistory({ addReview, reviews = [] }) {
                 <button onClick={handleLastPage} disabled={currentPage === totalPages}>▶</button>
             </div>
 
+                {/* 진료 후 리뷰를 작성하는 모달 창 */}
             {isModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content">

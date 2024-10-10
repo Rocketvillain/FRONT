@@ -1,4 +1,4 @@
-import { allReview, reviewDetail, reviewDetailByUser, } from "../modules/ReviewModule";
+import { addReview, allReview, deletereview, reviewDetail, reviewDetailByUser, updateReview, } from "../modules/ReviewModule";
 import { request } from "./Apis";
 
 
@@ -15,7 +15,7 @@ export function allReviewAPI() {
             return result;
             
         }  catch (error) {
-            console.log('API error : ', error);
+            console.error('API error : ', error);
         }
     };
     
@@ -35,7 +35,7 @@ export function reviewDetailAPI(hosId) {
             return result;
             
         }  catch (error) {
-            console.log('API error : ', error);
+            console.error('API error : ', error);
         }
     };
 
@@ -55,8 +55,47 @@ export function reviewDetailByUserIdAPI(userId) {
             return result;
             
         }  catch (error) {
-            console.log('API error : ', error);
+            console.error('API error : ', error);
         }
     };
 
+}
+
+// 리뷰 등록 API 호출
+export function addReviewAPI(createReviewDTO) {
+    return async (dispatch) => {
+        try {
+            const result = await request('POST', '/api/v1/review/', createReviewDTO);
+            dispatch(addReview(result.results.review));
+        } catch (error) {
+            console.error('Error adding add review : ', error);
+            
+        }
+    };
+}
+
+// 리뷰 수정 API 호출
+export function updatedReviewAPI(reviewId, createReviewDTO) {
+    return async (dispatch) => {
+        try {
+            const result = await request('PUT', `/api/v1/review/${reviewId}`, createReviewDTO);
+            dispatch(updateReview(result.results.review));
+        } catch (error) {
+            console.error('Error adding update review : ', error);
+            
+        }
+    };
+}
+
+// 리뷰 삭제 API 호출
+export function deletedReviewAPI(reviewId){
+    return async (dispatch) => {
+        try {
+            await request('DELETE', `/api/v1/review/${reviewId}`);
+            dispatch(deletereview(reviewId))
+        } catch (error) {
+            console.error('Error adding delete review : ', error);
+            
+        }
+    }
 }
