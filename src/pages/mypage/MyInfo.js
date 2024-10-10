@@ -13,6 +13,7 @@ function MyInfo() {
     const [image, setImage] = useState(null); // 미리보기 이미지
     const userData = useSelector((state) => state.user.userInfo); // userInfo 불러오기
 
+    
     const [userInfo, setUserInfo] = useState({
         id: '',
         name: '',
@@ -20,7 +21,7 @@ function MyInfo() {
         phone: '',
         pwd: '',
         pwdCheck: '',
-        profileImage: '' // 프로필 이미지 경로
+        image: userData.image // 프로필 이미지 경로
     });
 
     const buttonRef = useRef(null);
@@ -32,30 +33,33 @@ function MyInfo() {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             const formData = new FormData();
-            formData.append('profileImage', file);
-
+            formData.append('image', file);
+           
+            
             // 서버로 이미지 파일 업로드
-            fetch('/api/uploadProfileImage', {
-                method: 'POST',
+            fetch(`http://localhost:8080/api/v1/user/image/${userData.userId}`, {
+                method: 'PUT',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // 업로드된 이미지 경로를 상태로 저장
-                        setUserInfo((prevUserInfo) => ({
-                            ...prevUserInfo,
-                            profileImage: data.imageUrl
-                        }));
-                        setImage(data.imageUrl); // 미리보기 이미지 설정
-                    } else {
-                        alert('이미지 업로드에 실패했습니다.');
-                    }
-                })
-                .catch(error => {
-                    console.error('이미지 업로드 오류:', error);
-                    setImage(null); // 업로드 실패 시 기본 이미지로 되돌리기
-                });
+
+            .then(response => response.json())
+            .then(data => {
+                console.log('data',data);
+                
+                if (data.httpStatusCode === 200) {
+                    // 업로드된 이미지 경로를 상태로 저장
+                    setUserInfo((prevUserInfo) => ({
+                        ...prevUserInfo,
+                        image: 'http://localhost:8080/uploads/' + data.results.user2.image
+                    }));
+                } else {
+                    alert('이미지 업로드에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('이미지 업로드 오류:', error);
+                setImage(null); // 업로드 실패 시 기본 이미지로 되돌리기
+            });
         }
     };
 
@@ -76,7 +80,7 @@ function MyInfo() {
     // 정보 수정 후 서버에 저장하는 함수
     const handleSave = () => {
 
-        const { id, name, email, phone, pwd, pwdCheck, profileImage } = userInfo;
+        const { id, name, email, phone, pwd, pwdCheck, image } = userInfo;
 
         // 비밀번호 유효성 검사
         if (pwd !== pwdCheck) {
@@ -113,42 +117,42 @@ function MyInfo() {
     };
 
     useEffect(() => {
-        // dispatch(getUserInfo(jwtDecode(localStorage.getItem('token')).sub));
 
         if (userData) {
-            setUserInfo({
-                id: userData.userId || '',
-                name: userData.userName || '',
-                email: userData.email || '',
-                phone: userData.phone || '',
-                pwd: '',
-                pwdCheck: '',
-                profileImage: '' // 프로필 이미지 경로
-            });
-        }
+        setUserInfo({
+            id: userData.userId || '',
+            name: userData.userName || '',
+            email: userData.email || '',
+            phone: userData.phone || '',
+            pwd: '', 
+            pwdCheck: '',
+            
+        });
+        } 
     }, [userData]);
 
     return (
         <div className="my-info">
             <h2>개인 정보</h2>
 
-            <div className="my-info-section">
-                {/* 프로필 이미지 등록 관련 내용 */}
-                <div className="my-info-profile-image-container">
-                    <img
-                        src={image ? image : '/images/beforeUser.png'}
-                        alt="Profile"
-                        className="my-info-profile-image-preview"
-                    />
-                    <input
-                        id="fileInput"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        style={{ display: 'none' }} // 파일 선택 창을 숨김
-                    />
-                    <button type="button" className="my-info-updatebutton" onClick={handleFileInputClick}>등록</button>
-                </div>
+                <div className="info-section">
+                    {/* 프로필 이미지 등록 관련 내용 */}
+                    <div className="profile-image-container">
+                        <label>프로필 이미지</label>
+                        <img
+                            src={userInfo.image ? 'http://localhost:8080/uploads/'+userInfo.image : '/images/beforeUser.png'}
+                            alt="Profile"
+                            className="profile-image-preview"
+                        />
+                        <input
+                            id="fileInput"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            style={{ display: 'none' }} // 파일 선택 창을 숨김
+                        />
+                        <button type="button" className="updatebutton" onClick={handleFileInputClick}>등록</button>
+                    </div>
 
                 {/* 사용자 정보 입력 폼 */}
                 <label>ID</label>
