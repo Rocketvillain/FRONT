@@ -1,4 +1,4 @@
-import { addReview, allReview, deletereview, reviewDetail, reviewDetailByUser, updateReview, } from "../modules/ReviewModule";
+import { addReview, allReview, reviewDetail, reviewDetailByUser, } from "../modules/ReviewModule";
 import { request } from "./Apis";
 
 
@@ -69,33 +69,40 @@ export function addReviewAPI(createReviewDTO) {
             dispatch(addReview(result.results.review));
         } catch (error) {
             console.error('Error adding add review : ', error);
-            
-        }
-    };
-}
-
-// 리뷰 수정 API 호출
-export function updatedReviewAPI(reviewId, createReviewDTO) {
-    return async (dispatch) => {
-        try {
-            const result = await request('PUT', `/api/v1/review/${reviewId}`, createReviewDTO);
-            dispatch(updateReview(result.results.review));
-        } catch (error) {
-            console.error('Error adding update review : ', error);
-            
-        }
-    };
-}
-
-// 리뷰 삭제 API 호출
-export function deletedReviewAPI(reviewId){
-    return async (dispatch) => {
-        try {
-            await request('DELETE', `/api/v1/review/${reviewId}`);
-            dispatch(deletereview(reviewId))
-        } catch (error) {
-            console.error('Error adding delete review : ', error);
-            
         }
     }
+
+}
+
+// 마이페이지 나의 후기 내용 변경
+export function updateReviewContent(reviewInfo) {
+    console.log('리뷰 내용 변경...');
+
+    return async () => {
+        try{
+            const result = await request('PUT', `/api/v1/review/${reviewInfo.reviewId}`,reviewInfo);
+            console.log('리뷰 변경 정보 호출 result : ', result);
+
+            return result;
+            
+        }  catch (error) {
+            console.log('API error : ', error);
+        }
+    };
+}
+
+// 후기 삭제
+export function deleteReview(reviewId) {
+    console.log('리뷰 삭제...');
+
+    return async () => {
+        try{
+            const result = await request('DELETE', `/api/v1/review/${reviewId}`);
+
+            return result;
+            
+        }  catch (error) {
+            console.log('API error : ', error);
+        }
+    };
 }
