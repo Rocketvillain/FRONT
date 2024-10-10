@@ -1,49 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadReservationByUserId } from '../../api/ReservationAPICalls'; 
-import { addReviewAPI, updatedReviewAPI, deletedReviewAPI } from '../../api/ReviewAPICalls';
+import { addReviewAPI } from '../../api/ReviewAPICalls';
 import '../../css/ClinicHistory.css';
 
-function ClinicHistory({ addReview, reviews = [] }) {
+function ClinicHistory() {
 
     const dispatch = useDispatch();
     const reservations = useSelector(state => state.reservation.reservations);
     console.log("잘 들어갔니 예약아?? : ", reservations);
-
-    // 로그인한 사용자의 ID 가져오기
     const userId = useSelector(state => state.user.userInfo.userId);
     
-    const review = useSelector(state =>
-        state.review.reviews.filter(review => review.userId === userId)
-    );
-    console.log("잘 들어갔니 리뷰야?? : ", review);
-    
+    useEffect(() => {
+        dispatch(LoadReservationByUserId(userId));
+    }, [dispatch]);
 
     useEffect(() => {
-        dispatch(LoadReservationByUserId(userId), addReviewAPI(userId));
-    }, [dispatch, userId]);
+            // 지난 예약 기록 필터링(오늘 날짜보다 이전 예약 날짜 기록을 보여줌)
+            const now = new Date();
+            const pastReservations = reservations.filter((reservations) => {
+                const [year, month, day] = reservations.reservationTime;
+                const reservationDate = new Date(year, month - 1, day);
+                return reservationDate < now;
+            });
+            setClinicHistory(pastReservations);
+        }, [reservations]);
 
+    // 사용자의 지난 예약 기록
     const [clinicHistory, setClinicHistory] = useState([]);
+    
+    // 모달창
     const [isModalOpen, setModalOpen] = useState(false);
-    const [selectedRecord, setSelectedRecord] = useState(null);
-    const [reviewContent, setReviewContent] = useState("");
-    const [writtenReviews, setWrittenReviews] = useState(new Set());
+    const [isConfirmationOpen, setConfirmationOpen] = useState(false); // 작성 확인 모달 상태
+    const [isCompleteOpen, setCompleteOpen] = useState(false); // 작성 완료 모달 상태
+    
+    // 사용자가 작성하려는 리뷰와 관련된 예약 정보
+    const [selectedReservation, setSelectedReservation] = useState(null);
+
+    // 사용자가 입력한 리뷰 내용 저장
+    const [reviewContent, setReviewContent] = useState({
+        content: ""
+    });
 
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 6;
-
-    
-
-    useEffect(() => {
-        // 지난 예약 기록 필터링(오늘 날짜보다 이전 예약 날짜 기록을 보여줌)
-        const now = new Date();
-        const pastReservations = reservations.filter((reservation) => {
-            const [year, month, day] = reservation.reservationTime;
-            const reservationDate = new Date(year, month - 1, day);
-            return reservationDate < now;
-        });
-        setClinicHistory(pastReservations);
-    }, [reservations]);
 
     const indexOfLastRecord = currentPage * recordsPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -55,35 +55,48 @@ function ClinicHistory({ addReview, reviews = [] }) {
     const handleFirstPage = () => setCurrentPage(1);
     const handleLastPage = () => setCurrentPage(totalPages);
 
-    const handleReviewWrite = (record) => {
-        setSelectedRecord(record);
+    // 리뷰 작성
+    const handleReviewWrite = (reservationId) => {
+        setSelectedReservation(reservationId);
+        setReviewContent({
+            ...reviewContent,
+            content: ""
+        });
         setModalOpen(true);
     };
 
+    // 리뷰 작성 모달 닫기
     const handleCloseModal = () => {
         setModalOpen(false);
-        setReviewContent("");
     };
 
+
+    // 작성 확인 모달 열기
+    const handleOpenConfirmation = () => {
+        setConfirmationOpen(true);
+    };
+
+    // 작성 확인 모달 닫기
+    const handleCloseConfirmation = () => {
+        setConfirmationOpen(false);
+    };
+
+    // 리뷰 작성 완료 및 API 호출
     const handleSaveReview = () => {
-        if (selectedRecord) {
-            const newReview = {
-                id: selectedRecord.id,
-                name: selectedRecord.name,
-                hospital: selectedRecord.hospital,
-                type: selectedRecord.type,
-                date: selectedRecord.date,
-                status: selectedRecord.status,
-                reviewText: reviewContent,
-            };
-            addReview(newReview); 
-            setWrittenReviews((prev) => new Set(prev).add(selectedRecord.id));
+        if (selectedReservation) {
+            console.log(reviewContent);
+            
+            dispatch(addReviewAPI(selectedReservation,reviewContent))
+                .then(() => {
+                    setCompleteOpen(true);
+                    setTimeout(() => {
+                        setCompleteOpen(false);
+                    }, 1000); // 1초 뒤에 완료 모달 자동 닫기
+                });
+            handleCloseConfirmation();
             handleCloseModal();
+            window.location.href="/myinfo/clinichistory"
         }
-    };
-
-    const isReviewWritten = (recordId) => {
-        return reviews.some((review) => review.id === recordId) || writtenReviews.has(recordId);
     };
 
     return (
@@ -118,8 +131,8 @@ function ClinicHistory({ addReview, reviews = [] }) {
                                     ? '취소됨'
                                     : '확인요망'}</td>
                                 <td>
-                                    {!isReviewWritten(reservations.reservationId) && (
-                                        <button className="clinic-history-reviewUpdatebutton" onClick={() => handleReviewWrite(reservations)}>
+                                    {!(reservations.review) && (reservations.state === 'activated') && (
+                                        <button className="clinic-history-reviewUpdatebutton" onClick={() => handleReviewWrite(reservations.reservationId)}>
                                             리뷰 쓰기🖋
                                         </button>
                                     )}
@@ -146,25 +159,47 @@ function ClinicHistory({ addReview, reviews = [] }) {
                 <button onClick={handleLastPage} disabled={currentPage === totalPages}>▶</button>
             </div>
 
-                {/* 진료 후 리뷰를 작성하는 모달 창 */}
+            {/* 리뷰 작성 모달 */}
             {isModalOpen && (
                 <div className="clinic-history-modal-overlay">
                     <div className="clinic-history-modal-content">
-                        <h2>{selectedRecord.date} 진료 후기</h2>
+                        <h3>{selectedReservation.hosName}의 진료 후기를 작성합니다.</h3>
                         <textarea
-                            value={reviewContent}
-                            onChange={(e) => setReviewContent(e.target.value)}
+                            value={reviewContent.content}
+                            onChange={(e) => setReviewContent({
+                                ...reviewContent,
+                                content: e.target.value
+                            })
+                            }
                             rows="5"
-                            placeholder="후기 내용을 입력하세요"
+                            placeholder="내용을 입력하세요"
                         />
                         <div className="clinic-history-modal-buttons">
-                            <button className="clinic-history-writebutton" onClick={handleSaveReview}>
-                                작성
-                            </button>
-                            <button className="clinic-history-writeclosebutton" onClick={handleCloseModal}>
-                                취소
-                            </button>
+                            <button className="clinic-history-writebutton" onClick={handleOpenConfirmation}>작성</button>
+                            <button className="clinic-history-writeclosebutton" onClick={handleCloseModal}>취소</button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* 작성 확인 모달 */}
+            {isConfirmationOpen && (
+                <div className="clinic-history-modal-overlay">
+                    <div className="clinic-history-modal-content">
+                        <h3>작성을 완료하시겠습니까?</h3>
+                        <div className="modal-buttons">
+                            <button className="clinic-history-confirm-btn" onClick={handleSaveReview}>확인</button>
+                            <button className="clinic-history-cancel-btn" onClick={handleCloseConfirmation}>취소</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* 작성 완료 모달 */}
+            {isCompleteOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>작성 완료되었습니다!</h3>
                     </div>
                 </div>
             )}

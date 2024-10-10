@@ -12,8 +12,6 @@ export const REVIEW_DETAIL = 'review/REVIEW_DETAIL';
 export const ADMIN_GET_ALL_REVIEWS = 'review/ADMIN_GET_ALL_REVIEWS'; // 관리자 리뷰 조회 액션 타입
 export const REVIEW_DETAIL_BY_USER = 'review/REVIEW_DETAIL_BY_USER';
 export const ADD_REVIEW = 'review/ADD_REVIEW';
-export const UPDATE_REVIEW = 'review/UPDATE_REVIEW';
-export const DELETE_REVIEW = 'review/DELETE_REVIEW';
 export const RESET = 'review/RESET';
 
 /* 리뷰 관련 액션 함수 */
@@ -23,8 +21,6 @@ export const { review : {
     adminGetAllReviews, 
     reviewDetailByUser, 
     addReview,
-    updateReview,
-    deletereview,
     reset,
 
 }} = createActions({    
@@ -34,8 +30,6 @@ export const { review : {
     [ADMIN_GET_ALL_REVIEWS]: (reviews) => reviews, // 관리자 리뷰 액션 생성 함수
     [REVIEW_DETAIL_BY_USER] : (data) => (data),
     [ADD_REVIEW] : (data) => data,
-    [UPDATE_REVIEW] : (data) => data,
-    [DELETE_REVIEW] : (data) => data,
     [RESET]: () => ({}),
 
 });
@@ -84,24 +78,7 @@ const reviewReducer = handleActions(
                 addReview: [...state, payload],
             };
         },
-
-        /* 리뷰 수정 */
-        [UPDATE_REVIEW]: (state, {payload}) => {
-            return {
-                ...state,
-                updateReview: state.review.map(review =>
-                    review.id === payload.id ? payload : review
-                ),
-            };
-        },
-
-        /* 리뷰 삭제 */
-        [DELETE_REVIEW]: (state, {payload}) => {
-            return {
-                ...state,
-                deletereview: state.review.filter(review => review.id !== payload),
-            };
-        },
+        
         [RESET]: () => {
             return initialState;
         },
