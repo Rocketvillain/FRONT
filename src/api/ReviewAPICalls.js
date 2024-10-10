@@ -62,11 +62,11 @@ export function reviewDetailByUserIdAPI(userId) {
 }
 
 // 리뷰 등록 API 호출
-export function addReviewAPI(createReviewDTO) {
+export function addReviewAPI(reservationId,createReviewDTO) {
+
     return async (dispatch) => {
         try {
-            const result = await request('POST', '/api/v1/review/', createReviewDTO);
-            dispatch(addReview(result.results.review));
+            const result = await request('POST', `/api/v1/review/${reservationId}`, createReviewDTO);
         } catch (error) {
             console.error('Error adding add review : ', error);
         }

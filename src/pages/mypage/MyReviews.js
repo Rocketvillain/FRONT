@@ -21,6 +21,8 @@ function MyReviews() {
 
     // 리뷰 정보
     const reviews = useSelector(state => state.review.userReview || []);
+    console.log('reviews',reviews);
+    
     
 
     useEffect(() => {
