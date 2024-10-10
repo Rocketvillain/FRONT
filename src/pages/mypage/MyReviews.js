@@ -1,21 +1,21 @@
 import React, { useEffect,useState } from 'react';
 import '../../css/MyReviews.css';
-import { reviewDetailByUserIdAPI } from '../../api/ReviewAPICalls';
+import { deleteReview, reviewDetailByUserIdAPI, updateReviewContent } from '../../api/ReviewAPICalls';
 import { useDispatch, useSelector } from 'react-redux';
 
 function MyReviews() {
     const dispatch = useDispatch();
 
-    const [deletedReviews, setDeletedReviews] = useState([]); // 삭제된 후기 ID 목록
     const [selectedReview, setSelectedReview] = useState(null); // 선택된 후기 상태
     const [isModalOpen, setModalOpen] = useState(false); // 후기 수정 모달 상태
     const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false); // 수정 확인 모달 상태
     const [isDeleteConfirmationModalOpen, setDeleteConfirmationModalOpen] = useState(false); // 삭제 확인 모달 상태
-    const [reviewContent, setReviewContent] = useState(''); // 후기 내용 상태
-
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 5;
+    
+    // 후기 정보
 
+    
     // 사용자 정보
     const userId = useSelector(state => state.user.userInfo.userId);
 
@@ -28,7 +28,6 @@ function MyReviews() {
 
     const handleViewReview = (review) => {
         setSelectedReview(review);
-        setReviewContent(review.reviewText); // 후기 내용 설정
         setModalOpen(true);
     };
 
@@ -37,38 +36,40 @@ function MyReviews() {
     };
 
     const handleReviewChange = (e) => {
-        setReviewContent(e.target.value);
+        setSelectedReview({
+            ...selectedReview,
+            content: e.target.value
+        })
     };
 
     const handleSaveReview = () => {
-        const updatedReviews = reviews.map((review) =>
-            review.id === selectedReview.id ? { ...review, reviewText: reviewContent } : review
-        );
+        dispatch(updateReviewContent(selectedReview));
+        dispatch(reviewDetailByUserIdAPI(userId));
         // 부모 상태를 수정해야 한다면 상위로 상태를 끌어올려야 함
         setModalOpen(false);
         setConfirmationModalOpen(true); 
     };
 
     const handleDeleteReview = (reviewId) => {
-        setDeletedReviews([...deletedReviews, reviewId]); // 삭제된 후기를 ID 목록에 추가
+        dispatch(deleteReview(reviewId));
         setDeleteConfirmationModalOpen(true);
     };
 
     const handleCloseDeleteConfirmationModal = () => {
         setDeleteConfirmationModalOpen(false);
+        window.location.href = '/myinfo/myreviews'
     };
 
     const handleCloseConfirmationModal = () => {
         setConfirmationModalOpen(false);
+        window.location.href = '/myinfo/myreviews'
     };
-
-    const visibleReviews = reviews.filter((review) => !deletedReviews.includes(review.id));
 
     const indexOfLastRecord = currentPage * recordsPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-    const currentRecords = visibleReviews.slice(indexOfFirstRecord, indexOfLastRecord);
+    const currentRecords = reviews.slice(indexOfFirstRecord, indexOfLastRecord);
 
-    const totalPages = Math.ceil(visibleReviews.length / recordsPerPage);
+    const totalPages = Math.ceil(reviews.length / recordsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -106,7 +107,7 @@ function MyReviews() {
                             <td>{`${review.reservationTime[0]}-${review.reservationTime[1]}-${review.reservationTime[2]} ${review.reservationTime[3].toString().padStart(2, '0')}:${review.reservationTime[4].toString().padStart(2, '0')}`}</td>
                             <td>
                                 <button className="view-btn" onClick={() => handleViewReview(review)}>조회</button>
-                                <button className="review-delete-btn" onClick={() => handleDeleteReview(review.id)}>삭제</button>
+                                <button className="review-delete-btn" onClick={() => handleDeleteReview(review.reviewId)}>삭제</button>
                             </td>
                         </tr>
                     ))}
@@ -134,7 +135,7 @@ function MyReviews() {
                     <div className="modal-content">
                         <h2>{selectedReview.date} 진료 후기</h2>
                         <textarea
-                            value={reviewContent}
+                            value={selectedReview.content}
                             onChange={handleReviewChange}
                             rows="5"
                             placeholder="후기 내용을 입력하세요"

@@ -60,3 +60,36 @@ export function reviewDetailByUserIdAPI(userId) {
     };
 
 }
+
+// 마이페이지 나의 후기 내용 변경
+export function updateReviewContent(reviewInfo) {
+    console.log('리뷰 내용 변경...');
+
+    return async () => {
+        try{
+            const result = await request('PUT', `/api/v1/review/${reviewInfo.reviewId}`,reviewInfo);
+            console.log('리뷰 변경 정보 호출 result : ', result);
+
+            return result;
+            
+        }  catch (error) {
+            console.log('API error : ', error);
+        }
+    };
+}
+
+// 후기 삭제
+export function deleteReview(reviewId) {
+    console.log('리뷰 삭제...');
+
+    return async () => {
+        try{
+            const result = await request('DELETE', `/api/v1/review/${reviewId}`);
+
+            return result;
+            
+        }  catch (error) {
+            console.log('API error : ', error);
+        }
+    };
+}
