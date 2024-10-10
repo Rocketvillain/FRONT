@@ -23,7 +23,7 @@ export const ADMIN_UPDATE_USER_STATE = 'user/ADMIN_UPDATE_USER_STATE';
 /* 유저 관련 액션 함수 */
 export const { user : { login, logOut, loadUserInfo, updateUser, loadPetInfo, adminGetAllUsers, adminUpdateUserState }} = createActions({
     [LOGIN]: ({ token, userInfo }) => ({ token, userInfo }),
-    [LOG_OUT]: (res = initialState) => ({ res }),
+    [LOG_OUT]: () => ({ }),
     [LOAD_USER_INFO]: (data) => (data),
     [UPDATE_USER]: (modifyUserInfo) => (modifyUserInfo),
     [LOAD_PET_INFO]: (data) => (data),
@@ -45,7 +45,7 @@ const userReducer = handleActions(
                 token: token,
             } 
         },
-        [LOG_OUT]: (state) => {
+        [LOG_OUT]: () => {
             localStorage.removeItem('token');  // 로그인 토큰 삭제
             return initialState;
         },

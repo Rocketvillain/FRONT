@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import '../../../css/component/HosHeader.css';
 import { useDispatch } from 'react-redux';
 import { logOut as userLogOut } from "../../../modules/UserModule";
@@ -9,6 +9,7 @@ import { reset as resetReview } from "../../../modules/ReviewModule";
 
 function HosHeader() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const activeStyle = {
         color: 'black',
@@ -30,8 +31,12 @@ function HosHeader() {
         dispatch(resetReview());
 
         // 로그아웃 후 메인 페이지로 리다이렉트
-        window.location.href = '/';
+        navigate('/');
     };
+
+    const ReviewControl = () => {
+        window.location.href = '/hosreviewcontrol';
+    }
 
     const refresh = () => {
         window.location.href = '/hosinfo';
@@ -52,7 +57,7 @@ function HosHeader() {
                     </NavLink>
                 </li>
                 <li className="hos-header-nav-item">
-                    <NavLink to="/hosreviewcontrol" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                    <NavLink to="/hosreviewcontrol" onClick={ReviewControl} style={({ isActive }) => (isActive ? activeStyle : undefined)}>
                         <span>후기관리</span>
                     </NavLink>
                 </li>
