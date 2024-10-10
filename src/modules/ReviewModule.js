@@ -14,6 +14,7 @@ export const REVIEW_DETAIL_BY_USER = 'review/REVIEW_DETAIL_BY_USER';
 export const ADD_REVIEW = 'review/ADD_REVIEW';
 export const UPDATE_REVIEW = 'review/UPDATE_REVIEW';
 export const DELETE_REVIEW = 'review/DELETE_REVIEW';
+export const RESET = 'review/RESET';
 
 /* 리뷰 관련 액션 함수 */
 export const { review : { 
@@ -24,8 +25,9 @@ export const { review : {
     addReview,
     updateReview,
     deletereview,
+    reset,
 
-}} = createActions({
+}} = createActions({    
 
     [ALL_REVIEW]: (data) => (data),
     [REVIEW_DETAIL] : (data) => (data),
@@ -34,6 +36,7 @@ export const { review : {
     [ADD_REVIEW] : (data) => data,
     [UPDATE_REVIEW] : (data) => data,
     [DELETE_REVIEW] : (data) => data,
+    [RESET]: () => ({}),
 
 });
 
@@ -99,7 +102,9 @@ const reviewReducer = handleActions(
                 deletereview: state.review.filter(review => review.id !== payload),
             };
         },
-
+        [RESET]: () => {
+            return initialState;
+        },
 
     },
     initialState

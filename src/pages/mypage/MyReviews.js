@@ -20,7 +20,8 @@ function MyReviews() {
     const userId = useSelector(state => state.user.userInfo.userId);
 
     // 리뷰 정보
-    const reviews = useSelector(state => state.review.userReview);
+    const reviews = useSelector(state => state.review.userReview || []);
+    
 
     useEffect(() => {
         dispatch(reviewDetailByUserIdAPI(userId));
@@ -69,7 +70,7 @@ function MyReviews() {
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
     const currentRecords = reviews.slice(indexOfFirstRecord, indexOfLastRecord);
 
-    const totalPages = Math.ceil(reviews.length / recordsPerPage);
+    const totalPages = Math.max(1, Math.ceil(reviews.length / recordsPerPage));
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -98,7 +99,8 @@ function MyReviews() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentRecords.map((review) => (
+                    {reviews.length > 0 ?
+                    (currentRecords.map((review) => (
                         <tr key={review.reservationId}>
                             <td>{review.reservationId}</td>
                             <td>{review.userName}</td>
@@ -110,7 +112,12 @@ function MyReviews() {
                                 <button className="review-delete-btn" onClick={() => handleDeleteReview(review.reviewId)}>삭제</button>
                             </td>
                         </tr>
-                    ))}
+                    ))) : (
+                        <tr>
+                          <td colSpan='9'>검색 결과가 없습니다.</td>
+                        </tr>
+                      )
+                }
                 </tbody>
             </table>
 
