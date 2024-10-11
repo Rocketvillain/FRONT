@@ -49,7 +49,7 @@ const reviewReducer = handleActions(
 
             return {
                 ...state,
-                hospital: payload,
+                reviews: payload,
             }
             
         },

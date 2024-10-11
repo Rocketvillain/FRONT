@@ -250,7 +250,6 @@ function HosReserControl() {
         <div className='user-control-modal'>
           <div className='user-control-modal-content'>
             <p>예약을 취소하시겠습니까?</p>
-            <label>취소 사유</label>
             <textarea
               placeholder='취소 사유를 입력해주세요'
               onChange={handleDescriptionChange}

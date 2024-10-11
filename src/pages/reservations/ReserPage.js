@@ -38,7 +38,7 @@ function ReserPage() {
     const [description, setDescription] = useState();
 
     useEffect(() => {
-        dispatch(getPetInfo(user.userId)); // 펫 정보 업데이트
+        dispatch(getPetInfo()); // 펫 정보 업데이트
         dispatch(hospitalDetailAPI(hosId)); // 병원 정보 업데이트
         dispatch(LoadReservation(hosId)) // 예약 정보 업데이트
         dispatch(fetchHospitalSchedulesAPI(hosId)) // 병원 일정 업데이트
@@ -88,7 +88,7 @@ function ReserPage() {
             const availableTimes = [];
 
             // 1시간 간격으로 시간 배열 생성
-            for (let hour = startHour; hour <= endHour; hour++) {
+            for (let hour = startHour; hour <= endHour - 1; hour++) {
                 // 점심 시간 제외
                 if (hour === lunchStartHour) {
                     continue; // 점심 시간 시작 시 제외

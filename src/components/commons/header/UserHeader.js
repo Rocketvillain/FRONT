@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut as userLogOut } from "../../../modules/UserModule";
 import { reset as resetHospital } from "../../../modules/HospitalModule";
@@ -9,6 +9,7 @@ import '../../../css/component/UserHeader.css';
 
 function UserHeader() {
     const dispatch = useDispatch(); 
+    const navigate = useNavigate();
 
     const handleLogout = () => {
 
@@ -21,7 +22,7 @@ function UserHeader() {
 
 
         // 로그아웃 후 메인 페이지로 리다이렉트
-        window.location.href = '/';
+        navigate('/');
     };
 
     return (
