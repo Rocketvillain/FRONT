@@ -38,7 +38,7 @@ function ReserPage() {
     const [description, setDescription] = useState();
 
     useEffect(() => {
-        dispatch(getPetInfo(user.userId)); // 펫 정보 업데이트
+        dispatch(getPetInfo()); // 펫 정보 업데이트
         dispatch(hospitalDetailAPI(hosId)); // 병원 정보 업데이트
         dispatch(LoadReservation(hosId)) // 예약 정보 업데이트
         dispatch(fetchHospitalSchedulesAPI(hosId)) // 병원 일정 업데이트

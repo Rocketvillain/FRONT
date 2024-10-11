@@ -87,14 +87,14 @@ export function updateUserInfo(id, modifyUserInfo) {
 }
 
 // 유저의 펫 정보 불러오기
-export function getPetInfo(userId) {
+export function getPetInfo() {
 
     console.log('유저 펫 정보 불러오기...');
 
     return async (dispatch) => {
 
         try {
-            const result = await request('GET', `/api/v1/pets/${userId}`);
+            const result = await request('GET', `/api/v1/pets/myPet`);
             console.log('result : ', result); // 서버에서 받아온 data 정보
 
             const data = result.results.pets;
