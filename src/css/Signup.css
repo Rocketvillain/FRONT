@@ -232,3 +232,16 @@ button:active {
   display: inline-block;
 }
 
+.signup-code-check-button {
+  padding: 12px 15px;
+  font-size: 14px;
+  margin-top: 20px;
+  background-color: #28467A;
+  height: 40px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 0px;
+  font-family: 'Poor Story';
+}
+
