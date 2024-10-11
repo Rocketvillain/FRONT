@@ -187,7 +187,7 @@ function ClinicHistory() {
                 <div className="clinic-history-modal-overlay">
                     <div className="clinic-history-modal-content">
                         <h3>작성을 완료하시겠습니까?</h3>
-                        <div className="modal-buttons">
+                        <div className="clinic-history-modal-buttons">
                             <button className="clinic-history-confirm-btn" onClick={handleSaveReview}>확인</button>
                             <button className="clinic-history-cancel-btn" onClick={handleCloseConfirmation}>취소</button>
                         </div>
@@ -197,8 +197,8 @@ function ClinicHistory() {
 
             {/* 작성 완료 모달 */}
             {isCompleteOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+                <div className="clinic-history-modal-overlay">
+                    <div className="clinic-history-modal-content">
                         <h3>작성 완료되었습니다!</h3>
                     </div>
                 </div>
