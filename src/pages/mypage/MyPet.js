@@ -287,6 +287,8 @@ function MyPet() {
             return pet;
         });
         setPets(updatedPets);
+        console.log("updatedPets",updatedPets);
+        
     };
 
 
